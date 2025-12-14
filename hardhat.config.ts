@@ -51,6 +51,13 @@ const config: HardhatUserConfig = {
           url: process.env.BASE_RPC_URL,
           enabled: true
         }
+      }),
+      // Support Ethereum mainnet forking for PoC
+      ...(process.env.ETHEREUM_RPC_URL && {
+        forking: {
+          url: process.env.ETHEREUM_RPC_URL,
+          enabled: true
+        }
       })
     },
     ...(process.env.GOERLI_RPC_URL && {
