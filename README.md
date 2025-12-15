@@ -278,17 +278,37 @@ See [Autonomous Monitoring Guide](./docs/AUTONOMOUS_MONITORING.md) for complete 
 - **Inclusion Estimation**: Predict transaction confirmation times with priority fee optimization
 - **L2 Performance Monitoring**: Track flashblock metrics, L1 finalization, and uptime
 
-### 📊 Rated Network Integration (New - December 2024)
+### 📊 MEV Intelligence Suite (New - December 2024)
+**Complete visibility into MEV flows with unified intelligence from three leading data sources:**
+
+#### Rated Network Integration
 - **Validator Performance Metrics**: Real-time effectiveness tracking for Ethereum validators
 - **Operator Statistics**: Infrastructure quality and reliability data
 - **Builder Performance Analytics**: Market share, block value, and efficiency metrics
-- **MEV Relay Health Monitoring**: Relay uptime and success rate tracking
 - **Network Statistics**: Overall Ethereum network health and validator distribution
-- **Builder Data Adapter**: Enhance BuilderRegistry with real-time Rated Network data
-- **Performance Rankings**: Automated builder scoring and ranking system
-- **TypeScript SDK**: Full-featured API client with caching, rate limiting, and retry logic
 
-See [Rated Network Integration Guide](./docs/integrations/RATED_NETWORK_INTEGRATION.md) for complete documentation.
+#### Relayscan Integration  
+- **Builder Profit Tracking**: Real-time profit data for all builders
+- **Relay Statistics**: Performance and uptime monitoring
+- **Market Share Analysis**: Live builder dominance and concentration metrics
+- **Historical Data**: 24h, 7d, and 30d trend analysis
+
+#### mevboost.pics Integration
+- **Complete MEV Flow Visualization**: See ALL in and out flows 💰
+- **Builder→Relay→Validator Flows**: Full value chain tracking
+- **Proposer Payment Analysis**: Validator compensation breakdown
+- **Builder Retention Rates**: MEV profit distribution insights
+
+#### MEV Intelligence Hub
+- **Unified Data Model**: Combines all three sources for complete intelligence
+- **Builder Recommendations**: Data-driven selection for TheWarden
+- **Market Concentration Analysis**: Herfindahl index for competition metrics
+- **Reliability Scoring**: Composite scores based on multiple factors
+- **TypeScript SDKs**: Full-featured API clients with caching and rate limiting
+
+**Try it:** `npm run example:mev-intelligence`
+
+See [MEV Intelligence Documentation](./docs/integrations/MEV_INTELLIGENCE.md) for complete guide.
 
 ### 🔧 Production Infrastructure
 - **Configuration System**: Structured configs for chains, tokens, pools, and protocols
