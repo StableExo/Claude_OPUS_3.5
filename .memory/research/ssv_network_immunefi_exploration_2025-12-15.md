@@ -277,6 +277,12 @@ SSV Network has undergone **4 major audits** by Quantstamp:
 
 **Audit Reports Location**: `/tmp/ssv-network/contracts/audits/`
 
+**IMPORTANT**: Vulnerabilities already documented in published audit reports (if unfixed) are **NOT eligible** for bounty rewards. Before reporting, verify:
+1. Check if issue appears in any audit report
+2. If documented, verify if fix was implemented in subsequent releases
+3. Test on latest deployed contracts to confirm if vulnerability still exists
+4. Only report if genuinely novel or if documented issue remains unfixed despite claiming resolution
+
 ---
 
 ## Attack Surface Analysis
@@ -636,12 +642,17 @@ ssvNetwork.initialize(...);
 
 **Test Scenarios**:
 ```solidity
-// Test: Deploy malicious whitelist
+// Test: Deploy malicious whitelist with expensive operation
 contract MaliciousWhitelist is ISSVWhitelistingContract {
     function isWhitelisted(address, uint256, bytes calldata) 
-        external pure returns (bool) {
-        // Infinite loop or expensive operation
-        while(true) {}
+        external view returns (bool) {
+        // Intentionally expensive operation (DoS attack example)
+        // This would consume all gas and revert the transaction
+        uint256 sum = 0;
+        for (uint256 i = 0; i < 10000000; i++) {
+            sum += i;
+        }
+        return sum > 0;
     }
 }
 ```
@@ -674,7 +685,7 @@ cd /tmp/ssv-network
 slither . --exclude-dependencies
 
 # Run specific detectors
-slither . --detect reentrancy-eth,uninitialized-state,suicidal
+slither . --detect reentrancy-eth,uninitialized-state,suicidal-func
 ```
 
 ### Phase 2: Dynamic Analysis 🔄 (In Progress)

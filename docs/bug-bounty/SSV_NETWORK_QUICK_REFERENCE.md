@@ -13,6 +13,7 @@
 - **Payment**: SSV tokens (USD-denominated)
 - **KYC**: Required
 - **Review**: SSV DAO Grants committee
+- **Distribution**: First half of month after approval
 
 ## 💰 Reward Tiers
 
