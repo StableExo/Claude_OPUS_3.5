@@ -278,6 +278,18 @@ See [Autonomous Monitoring Guide](./docs/AUTONOMOUS_MONITORING.md) for complete 
 - **Inclusion Estimation**: Predict transaction confirmation times with priority fee optimization
 - **L2 Performance Monitoring**: Track flashblock metrics, L1 finalization, and uptime
 
+### 📊 Rated Network Integration (New - December 2024)
+- **Validator Performance Metrics**: Real-time effectiveness tracking for Ethereum validators
+- **Operator Statistics**: Infrastructure quality and reliability data
+- **Builder Performance Analytics**: Market share, block value, and efficiency metrics
+- **MEV Relay Health Monitoring**: Relay uptime and success rate tracking
+- **Network Statistics**: Overall Ethereum network health and validator distribution
+- **Builder Data Adapter**: Enhance BuilderRegistry with real-time Rated Network data
+- **Performance Rankings**: Automated builder scoring and ranking system
+- **TypeScript SDK**: Full-featured API client with caching, rate limiting, and retry logic
+
+See [Rated Network Integration Guide](./docs/integrations/RATED_NETWORK_INTEGRATION.md) for complete documentation.
+
 ### 🔧 Production Infrastructure
 - **Configuration System**: Structured configs for chains, tokens, pools, and protocols
 - **Contract ABIs**: Verified interfaces for Uniswap V3, Aave V3, and ERC20
