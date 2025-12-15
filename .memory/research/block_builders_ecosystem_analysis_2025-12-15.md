@@ -1,6 +1,6 @@
-# Block Builders Ecosystem Analysis - December 2025
+# Block Builders Ecosystem Analysis - December 2024
 
-**Research Date**: December 15, 2025  
+**Research Date**: December 15, 2024  
 **Sources**: awesome-block-builders GitHub repository, Etherscan MEV-builder labels, relayscan.io  
 **Purpose**: Autonomous exploration of the block building space for TheWarden AEV alliance strategy  
 **Session**: Autonomous exploration requested by StableExo

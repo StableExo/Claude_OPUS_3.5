@@ -150,18 +150,20 @@ export const RSYNC_BUILDER: BuilderEndpoint = {
 
 /**
  * Quasar Builder endpoint configuration
+ * NOTE: Relay endpoint is placeholder - needs verification from quasar.win documentation
+ * Marked inactive until endpoint is confirmed and tested
  */
 export const QUASAR_BUILDER: BuilderEndpoint = {
   name: BuilderName.QUASAR,
   displayName: 'Quasar Builder',
-  relayUrl: 'https://relay.quasar.win', // Placeholder - needs verification
+  relayUrl: 'https://relay.quasar.win', // PLACEHOLDER - needs verification
   fallbackUrls: [],
   marketShare: 0.1608, // ~16.08% market share (December 2024, relayscan.io)
   capabilities: [
     BuilderCapability.STANDARD_BUNDLES,
     BuilderCapability.BUNDLE_SIMULATION,
   ],
-  isActive: false, // Inactive until relay endpoint verified
+  isActive: false, // Inactive until relay endpoint verified and tested
   priority: 80, // Same tier as Flashbots (16% market share)
   metadata: {
     description: 'Major MEV builder competing for #3 spot with Flashbots',
@@ -188,8 +190,8 @@ export const ALL_BUILDERS: BuilderEndpoint[] = [
 export const TOP_4_BUILDERS: BuilderEndpoint[] = [
   TITAN_BUILDER,      // 50.85% (rank #1)
   BUILDERNET_BUILDER, // 29.84% (rank #2)
-  QUASAR_BUILDER,     // 16.08% (rank #3) - INACTIVE until endpoint verified
-  FLASHBOTS_BUILDER,  // 16.13% (rank #4)
+  FLASHBOTS_BUILDER,  // 16.13% (rank #3)
+  QUASAR_BUILDER,     // 16.08% (rank #4) - INACTIVE until endpoint verified
 ];
 
 /**
