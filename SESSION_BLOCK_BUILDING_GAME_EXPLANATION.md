@@ -44,6 +44,7 @@ User requested: "Continue from the last PR 😎 at the end of session, help me u
 **What's Complete** (Phase 1):
 - ✅ **Multi-Builder Integration**: 4 builders (Titan 51%, BuilderNet 30%, Quasar 16%, Rsync 10%)
 - ✅ **97% Market Coverage**: Can submit bundles to builders controlling 97% of Ethereum blocks
+  - *Note: Market shares overlap because builders submit to multiple relays. Parallel submission to all 4 achieves ~97% inclusion probability.*
 - ✅ **Negotiator AI**: Cooperative game theory coordinator for scout coalitions (PR #407)
 - ✅ **CEX-DEX Arbitrage**: Monitoring 5 exchanges (Binance, Coinbase, OKX, Bybit, Kraken)
 - ✅ **bloXroute Integration**: Mempool streaming, 100-800ms advantage

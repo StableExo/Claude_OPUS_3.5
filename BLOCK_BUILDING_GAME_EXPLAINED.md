@@ -134,6 +134,8 @@ With TheWarden's Negotiator:
 
 **Combined Coverage**: ~97% of Ethereum blocks
 
+**Note**: Market shares sum to >100% because builders submit to multiple relays. Some blocks are built by multiple builders competing. When submitting to all 4 simultaneously, TheWarden achieves ~97% inclusion probability (accounting for overlap).
+
 **What This Means**:
 - When TheWarden submits a bundle, it goes to 4 builders simultaneously
 - 97% chance at least one builder includes it in a block
