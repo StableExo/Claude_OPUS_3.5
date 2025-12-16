@@ -1,6 +1,8 @@
 # Running TheWarden Autonomously on Mainnet
 
-**Status**: ✅ **OPERATIONAL** - TheWarden is configured and ready for autonomous operation on Base mainnet
+**Status**: ✅ **OPERATIONAL** - TheWarden is configured for multiple mainnet operations:
+- **Arbitrage Mode**: Base mainnet (Chain ID 8453)
+- **Bug Hunt Mode**: BSC mainnet (Chain ID 56) - Ankr bug bounty
 
 ## Quick Start
 
@@ -18,15 +20,21 @@ cat .env | head -5
 ## Configuration Summary
 
 ### Network Configuration
+
+#### Arbitrage Mode (Base)
 - **Chain**: Base (Chain ID: 8453)
+- **RPC**: Alchemy (Base mainnet)
+- **Purpose**: DEX arbitrage opportunities
+
+#### Bug Hunt Mode (BSC)
+- **Chain**: BSC (Chain ID: 56)  
+- **RPC**: Alchemy (BSC mainnet)
+- **Purpose**: Ankr security testing / bug bounty
+
+### Common Configuration
 - **Environment**: Production
 - **Mode**: DRY_RUN=true (Safe mode - no real transactions)
-- **RPC**: Alchemy (Base mainnet)
-
-### Wallet Information
-- **Address**: 0x4c1b46Be097024E5712EB3f97b46D2ECf2b531d7
-- **Balance**: 0.0 ETH (requires funding for live trading)
-- **Multi-sig**: Configured at 0x48a6e6695a7d3e8c76eb014e648c072db385df6c
+- **Multi-sig**: Configured for profit allocation
 
 ### Trading Parameters
 - **Scan Interval**: 800ms
