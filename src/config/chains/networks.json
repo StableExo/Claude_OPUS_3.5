@@ -41,7 +41,9 @@
   "base": {
     "chainId": 8453,
     "name": "Base",
-    "rpcUrl": "https://mainnet.base.org",
+    "rpcUrl": "https://base-mainnet.core.chainstack.com/684bfe8c4e2198682d391a2d1d24ed08",
+    "rpcUrlBackup": "https://mainnet.base.org",
+    "websocketUrl": "wss://base-mainnet.core.chainstack.com/684bfe8c4e2198682d391a2d1d24ed08",
     "explorer": "https://basescan.org",
     "nativeCurrency": {
       "name": "Ethereum",
@@ -49,7 +51,19 @@
       "decimals": 18
     },
     "blockTime": 2,
-    "gasLimit": 30000000
+    "gasLimit": 30000000,
+    "type": "OP_STACK",
+    "gasOptimization": {
+      "baseFeeGwei": 0.03,
+      "maxGasPrice": 0.5,
+      "advantage": "1600x cheaper than Ethereum"
+    },
+    "features": {
+      "rollupBoost": true,
+      "flashblocks": true,
+      "websocket": true,
+      "archive": true
+    }
   },
   "optimism": {
     "chainId": 10,
