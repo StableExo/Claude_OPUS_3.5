@@ -90,6 +90,17 @@ import {
   Phase3Components,
   getPhase3Status,
 } from './core/Phase3Initializer';
+import {
+  loadPhase4Config,
+  validatePhase4Config,
+  getPhase4ConfigSummary,
+} from './config/phase4.config';
+import {
+  initializePhase4Components,
+  shutdownPhase4Components,
+  Phase4Components,
+  getPhase4Status,
+} from './core/Phase4Initializer';
 import { extractOpportunityFeatures } from './ai/featureExtraction';
 // featuresToArray reserved for ML features
 import { featuresToArray as _featuresToArray } from './ai/featureExtraction';
@@ -329,6 +340,9 @@ class TheWarden extends EventEmitter {
 
   // Phase 3 components
   private phase3Components?: Phase3Components;
+
+  // Phase 4 components
+  private phase4Components?: Phase4Components;
 
   // Profitable Infrastructure components (CEX-DEX + bloXroute)
   private cexMonitor?: any; // CEXLiquidityMonitor - imported dynamically to avoid circular deps
@@ -596,6 +610,38 @@ class TheWarden extends EventEmitter {
 
       logger.info('═══════════════════════════════════════════════════════════');
       logger.info('✓ Phase 3 initialization complete');
+      logger.info('═══════════════════════════════════════════════════════════');
+
+      // Initialize Phase 4 components
+      logger.info('═══════════════════════════════════════════════════════════');
+      logger.info('🏭 INITIALIZING PHASE 4: Production Infrastructure 🏭');
+      logger.info('═══════════════════════════════════════════════════════════');
+
+      const phase4Config = loadPhase4Config();
+
+      // Validate Phase 4 configuration
+      const phase4Validation = validatePhase4Config(phase4Config);
+      if (!phase4Validation.valid) {
+        logger.error('Phase 4 configuration errors:');
+        phase4Validation.errors.forEach((err) => logger.error(`  - ${err}`));
+      }
+      if (phase4Validation.warnings.length > 0) {
+        logger.warn('Phase 4 configuration warnings:');
+        phase4Validation.warnings.forEach((warn) => logger.warn(`  - ${warn}`));
+      }
+
+      // Log Phase 4 configuration summary
+      logger.info(getPhase4ConfigSummary(phase4Config));
+
+      // Initialize Phase 4 components with provider and wallet
+      this.phase4Components = await initializePhase4Components(
+        phase4Config,
+        this.provider,
+        this.wallet
+      );
+
+      logger.info('═══════════════════════════════════════════════════════════');
+      logger.info('✓ Phase 4 initialization complete');
       logger.info('═══════════════════════════════════════════════════════════');
 
       // Initialize Profitable Infrastructure (CEX-DEX + bloXroute)
@@ -1681,6 +1727,12 @@ class TheWarden extends EventEmitter {
       await shutdownPhase3Components(this.phase3Components);
     }
 
+    // Phase 4: Shutdown components
+    if (this.phase4Components) {
+      logger.info('[Phase4] Shutting down Phase 4 components...');
+      await shutdownPhase4Components(this.phase4Components);
+    }
+
     // Profitable Infrastructure: Shutdown components
     logger.info('[ProfitableInfra] Shutting down CEX-DEX and bloXroute...');
     if (this.cexMonitor) {
@@ -1798,6 +1850,42 @@ class TheWarden extends EventEmitter {
       if (phase3Status.security.enabled) {
         logger.info('Security Components: ENABLED');
         logger.info(`  Security Patterns: ${phase3Status.security.patterns || 0}`);
+      }
+    }
+
+    // Phase 4 Status
+    if (this.phase4Components) {
+      const phase4Status = getPhase4Status(this.phase4Components);
+      logger.info('─────────────────────────────────────────────────────────');
+      logger.info('PHASE 4 STATUS');
+      logger.info('─────────────────────────────────────────────────────────');
+
+      if (phase4Status.swarm.enabled) {
+        logger.info('Swarm Intelligence: ENABLED');
+        if (phase4Status.swarm.instances) {
+          logger.info(`  Total Votes: ${phase4Status.swarm.instances}`);
+        }
+        if (phase4Status.swarm.consensus) {
+          logger.info(`  Consensus: ${(phase4Status.swarm.consensus * 100).toFixed(0)}%`);
+        }
+      }
+
+      if (phase4Status.treasury.enabled) {
+        logger.info('Treasury Management: ENABLED');
+        logger.info(`  Auto Rotation: ${phase4Status.treasury.autoRotation ? 'ON' : 'OFF'}`);
+      }
+
+      if (phase4Status.provenance.enabled) {
+        logger.info('Provenance Tracking: ENABLED');
+        logger.info(`  On-chain: ${phase4Status.provenance.onChain ? 'YES' : 'NO'}`);
+      }
+
+      if (phase4Status.redteam.enabled) {
+        logger.info('Red-team Dashboard: ENABLED');
+      }
+
+      if (phase4Status.fuzzer.enabled) {
+        logger.info('MEV Fuzzer: ENABLED');
       }
     }
 
