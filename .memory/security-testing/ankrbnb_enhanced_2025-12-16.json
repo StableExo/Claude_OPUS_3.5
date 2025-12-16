@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "generatedAt": "2025-12-16T01:59:19.950Z",
+    "runtime": "122.09s",
+    "contract": "ankrBNB",
+    "chain": "BSC",
+    "address": "0x52F24a5e03aee338Da5fd9Df68D2b6FAe1178827",
+    "enhanced": true,
+    "functionsDecoded": 0
+  },
+  "statistics": {
+    "blocksScanned": 58,
+    "transactionsAnalyzed": 0,
+    "functionsDecoded": 0,
+    "highRiskCalls": 0,
+    "vulnerabilitiesDetected": 0,
+    "alertsGenerated": 0,
+    "scanRate": "0.48 blocks/s",
+    "decodingRate": "0.00 functions/s"
+  },
+  "findings": [],
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "informational": 0
+  }
+}
