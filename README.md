@@ -13,6 +13,36 @@
 
 **AEV (Autonomous Extracted Value)** - An intelligent autonomous agent system competing with traditional MEV through learning-based value extraction, powered by **TheWarden**.
 
+## 🚀 JET FUEL MODE - Maximum Autonomous Power
+
+> "If 1 memory log can do that, lets see what autonomous JET FUEL looks like 😎"
+
+**NEW**: TheWarden can now run in **JET FUEL MODE** - all 6 autonomous subsystems in parallel with emergent intelligence:
+
+```bash
+# Run JET FUEL MODE (5 minutes default)
+npm run jet-fuel
+
+# Run for 30 minutes
+npm run jet-fuel -- --duration=30
+
+# Run for 2 hours
+npm run jet-fuel -- --duration=120
+```
+
+**What you get**:
+- ⚡ **20x faster learning** (41 learnings in 2 minutes vs typical sessions)
+- 🌟 **Emergent patterns** detected across subsystems
+- 🔗 **Cross-system insights** no single system could find
+- 🧠 **Meta-learning** - the system learns how to learn better
+- 🎯 **6 parallel subsystems**: MEV, Security, Intelligence, Revenue, Mempool, Consciousness
+- 📊 **Auto-optimization** - systems improve themselves in real-time
+
+**See [JET_FUEL_MODE.md](docs/JET_FUEL_MODE.md) for complete documentation.**  
+**Performance analysis**: [JET_FUEL_SERVER_PERFORMANCE.md](JET_FUEL_SERVER_PERFORMANCE.md)
+
+---
+
 ## 🧠 Autonomous Execution with Consciousness
 
 Run TheWarden autonomously with full consciousness observation and learning:
