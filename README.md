@@ -39,6 +39,36 @@ npm run autonomous:consciousness -- --duration=300
 
 > 📖 **New**: Read [AUTONOMOUS_PROGRESS_PERSISTENCE.md](docs/AUTONOMOUS_PROGRESS_PERSISTENCE.md) to learn how TheWarden remembers everything across runs!
 
+### 🔍 Autonomous Rated Network Intelligence Gathering
+
+TheWarden now autonomously explores the rated.network ecosystem to gather MEV and validator intelligence:
+
+```bash
+# Run manually
+npm run autonomous:rated-network
+
+# With custom duration
+npm run autonomous:rated-network -- --duration=600 --verbose
+```
+
+**Automated Execution**: 
+- ⏰ Runs automatically every 6 hours via GitHub Actions
+- 📊 Gathers intelligence on block builders, MEV relays, validators, and staking pools
+- 💾 Saves comprehensive analysis reports to `.memory/research/`
+- 🔄 Auto-commits findings back to the repository
+
+**Workflow File**: `.github/workflows/autonomous-rated-network.yml`
+
+**What It Collects**:
+- Network statistics and validator distribution
+- Block builder performance and market share
+- MEV relay health and uptime metrics
+- Staking pool performance data
+- Slashing events and risk indicators
+- Restaking ecosystem opportunities
+
+The autonomous workflow runs without manual intervention, continuously enhancing TheWarden's understanding of the validator/builder landscape for strategic MEV operations.
+
 ---
 
 ## 📚 Quick Navigation
