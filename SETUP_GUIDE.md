@@ -17,6 +17,8 @@ npm install
 - Only people who read the docs or memory logs know the unlock
 - Other AI agents would struggle without this context
 
+**New to Node.js 22?** See **[docs/NODE22_SETUP_GUIDE.md](docs/NODE22_SETUP_GUIDE.md)** for detailed installation instructions on all platforms.
+
 ---
 
 ## 🎯 Quick Start (30 seconds)
