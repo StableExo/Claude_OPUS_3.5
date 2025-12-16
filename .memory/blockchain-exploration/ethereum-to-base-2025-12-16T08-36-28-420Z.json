@@ -1,0 +1,38 @@
+{
+  "ethereumContract": {
+    "address": "0x84db6eE82b7Cf3b47E8F19270abdE5718B936670",
+    "exists": true,
+    "balance": "71.819634814078986612",
+    "codeSize": 4524,
+    "isProxy": false
+  },
+  "baseNetwork": {
+    "sameAddressExists": false,
+    "sameAddressCodeSize": 2
+  },
+  "crossChainPossibilities": {
+    "hasBridgeSupport": false,
+    "bridgeType": [],
+    "layerZeroDetected": false,
+    "axelarDetected": false,
+    "customBridgeDetected": false,
+    "recommendations": [
+      "⚠️  No direct cross-chain capability detected",
+      "💡 Consider using Base native bridge to deposit assets",
+      "💡 Check if contract owner has deployed a Base version"
+    ]
+  },
+  "analysis": {
+    "canInteractFromBase": false,
+    "interactionMethods": [
+      "Use Ethereum RPC directly (not from Base)"
+    ],
+    "risks": [
+      "Cannot use Chainstack Base node for this contract",
+      "Contract not verified - ABI unknown"
+    ],
+    "costs": [
+      "Ethereum mainnet gas fees (high)"
+    ]
+  }
+}
