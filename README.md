@@ -57,6 +57,10 @@ npm run ankr:attack:fork
 npm run ankr:attack:testnet
 ```
 
+**Getting Started with Testnet**:
+- 🪙 **Need testnet tokens?** See **[TESTNET_QUICK_START.md](TESTNET_QUICK_START.md)** for a 5-minute setup guide
+- 📚 **Full token guide**: [docs/TESTNET_TOKEN_GUIDE.md](docs/TESTNET_TOKEN_GUIDE.md) - Complete faucet list and wallet setup
+
 **Automated Execution**: 
 - ⏰ Runs automatically every 8 hours via GitHub Actions
 - 🔒 Uses safe modes only (MAINNET_DRY_RUN) - **Immunefi compliant**
