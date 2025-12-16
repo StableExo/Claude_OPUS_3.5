@@ -14,6 +14,12 @@
  * 3. Deployed versions on Base
  * 4. LayerZero/Axelar/other cross-chain protocols
  * 5. Proxy patterns and upgradeable contracts
+ * 
+ * API Updates:
+ * - Migrated to Etherscan V2 API (Multichain) - December 2025
+ * - Single API key works across all chains (Ethereum, Base, Optimism, etc.)
+ * - V1 API will be deprecated August 15, 2025
+ * - Documentation: https://docs.etherscan.io/supported-chains
  */
 
 import { ethers } from 'ethers';
@@ -29,7 +35,35 @@ dotenv.config();
 
 const TARGET_CONTRACT = '0x84db6eE82b7Cf3b47E8F19270abdE5718B936670';
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || '';
-const BASESCAN_API_KEY = process.env.BASESCAN_API_KEY || '';
+
+// Etherscan V2 API (Multichain) - Single API key works across all chains
+// Supported chains: https://docs.etherscan.io/supported-chains
+const ETHERSCAN_V2_CONFIG = {
+  ethereum: {
+    url: 'https://api.etherscan.io/v2/api',
+    chainid: '1',
+  },
+  base: {
+    url: 'https://api.basescan.org/v2/api',
+    chainid: '8453',
+  },
+  optimism: {
+    url: 'https://api-optimistic.etherscan.io/v2/api',
+    chainid: '10',
+  },
+  arbitrum: {
+    url: 'https://api.arbiscan.io/v2/api',
+    chainid: '42161',
+  },
+  polygon: {
+    url: 'https://api.polygonscan.com/v2/api',
+    chainid: '137',
+  },
+  bsc: {
+    url: 'https://api.bscscan.com/v2/api',
+    chainid: '56',
+  },
+};
 
 // RPC Endpoints
 const ETHEREUM_RPC = process.env.ETHEREUM_RPC_URL || 'https://eth-mainnet.public.blastapi.io';
@@ -100,42 +134,49 @@ interface ExplorationResult {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Etherscan API Functions
+// Etherscan V2 API Functions (Multichain)
 // ═══════════════════════════════════════════════════════════════
 
-async function fetchFromEtherscan(params: Record<string, string>): Promise<any> {
-  const baseUrl = 'https://api.etherscan.io/api';
+async function fetchFromEtherscan(
+  params: Record<string, string>,
+  chain: 'ethereum' | 'base' | 'optimism' | 'arbitrum' | 'polygon' | 'bsc' = 'ethereum'
+): Promise<any> {
+  const config = ETHERSCAN_V2_CONFIG[chain];
   const queryParams = new URLSearchParams({
     ...params,
+    chainid: config.chainid,
     apikey: ETHERSCAN_API_KEY,
   });
   
-  const url = `${baseUrl}?${queryParams}`;
+  const url = `${config.url}?${queryParams}`;
   
   try {
     const response = await fetch(url);
     const data = await response.json();
     
     if (data.status === '0' && data.message === 'NOTOK') {
-      console.log(`⚠️  Etherscan API error: ${data.result}`);
+      console.log(`⚠️  Etherscan API error (${chain}): ${data.result}`);
       return null;
     }
     
     return data;
   } catch (error) {
-    console.error(`❌ Failed to fetch from Etherscan:`, error);
+    console.error(`❌ Failed to fetch from Etherscan (${chain}):`, error);
     return null;
   }
 }
 
-async function getContractABI(address: string): Promise<any[] | null> {
-  console.log(`\n🔍 Fetching contract ABI from Etherscan...`);
+async function getContractABI(
+  address: string,
+  chain: 'ethereum' | 'base' = 'ethereum'
+): Promise<any[] | null> {
+  console.log(`\n🔍 Fetching contract ABI from Etherscan V2 (${chain})...`);
   
   const data = await fetchFromEtherscan({
     module: 'contract',
     action: 'getabi',
     address: address,
-  });
+  }, chain);
   
   if (data && data.result) {
     try {
@@ -152,14 +193,17 @@ async function getContractABI(address: string): Promise<any[] | null> {
   return null;
 }
 
-async function getContractSourceCode(address: string): Promise<ContractInfo | null> {
-  console.log(`\n🔍 Fetching contract source code from Etherscan...`);
+async function getContractSourceCode(
+  address: string,
+  chain: 'ethereum' | 'base' = 'ethereum'
+): Promise<ContractInfo | null> {
+  console.log(`\n🔍 Fetching contract source code from Etherscan V2 (${chain})...`);
   
   const data = await fetchFromEtherscan({
     module: 'contract',
     action: 'getsourcecode',
     address: address,
-  });
+  }, chain);
   
   if (data && data.result && data.result[0]) {
     const info = data.result[0];
@@ -225,8 +269,8 @@ async function analyzeEthereumContract(
     result.balance = ethers.formatEther(balance);
     console.log(`  💰 Balance: ${result.balance} ETH`);
     
-    // Get contract info from Etherscan
-    const contractInfo = await getContractSourceCode(address);
+    // Get contract info from Etherscan V2 (Ethereum)
+    const contractInfo = await getContractSourceCode(address, 'ethereum');
     if (contractInfo) {
       result.contractName = contractInfo.name;
       result.abi = contractInfo.abi;
@@ -302,6 +346,12 @@ async function checkBaseNetwork(
         console.log(`  ✅ Same contract bytecode confirmed!`);
       } else {
         console.log(`  ⚠️  Different contract at same address`);
+      }
+      
+      // Check if verified on BaseScan using V2 API
+      const baseContractInfo = await getContractSourceCode(address, 'base');
+      if (baseContractInfo) {
+        console.log(`  ✅ Contract verified on BaseScan: ${baseContractInfo.name}`);
       }
     } else {
       console.log(`  ❌ No contract at this address on Base`);
