@@ -39,6 +39,50 @@ npm run autonomous:consciousness -- --duration=300
 
 > 📖 **New**: Read [AUTONOMOUS_PROGRESS_PERSISTENCE.md](docs/AUTONOMOUS_PROGRESS_PERSISTENCE.md) to learn how TheWarden remembers everything across runs!
 
+### 🔒 Autonomous Ankr Bug Bounty Attack
+
+TheWarden now autonomously tests the ankrBNB contract for critical vulnerabilities as part of the Immunefi bug bounty program:
+
+```bash
+# Run in safe recon mode (read-only)
+npm run ankr:attack:recon
+
+# Run in dry-run mode (simulation only)
+npm run ankr:attack:dry-run
+
+# Run on local fork
+npm run ankr:attack:fork
+
+# Run on testnet
+npm run ankr:attack:testnet
+```
+
+**Automated Execution**: 
+- ⏰ Runs automatically every 8 hours via GitHub Actions
+- 🔒 Uses safe modes only (MAINNET_DRY_RUN) - **Immunefi compliant**
+- 🎯 Tests for 5 critical vulnerability categories worth up to $500K each
+- 💾 Saves security test reports to `.memory/security-testing/`
+- 🔄 Auto-commits findings back to the repository
+- ⚠️ **NEVER runs real attacks on mainnet** - strictly for bug bounty research
+
+**Workflow File**: `.github/workflows/autonomous-ankr-attack.yml`
+
+**Vulnerability Categories Tested** (from [Immunefi](https://immunefi.com/bug-bounty/ankr/scope/)):
+1. Direct theft of user funds ($500K)
+2. Permanent freezing of funds ($500K)
+3. MEV extraction opportunities ($500K)
+4. Predictable/manipulable RNG ($500K)
+5. Protocol insolvency ($500K)
+
+**Safety Guarantees**:
+- ✅ Only reads contract state on mainnet (RECON_ONLY mode)
+- ✅ Simulations never execute transactions (MAINNET_DRY_RUN)
+- ✅ Real attacks only on local fork or testnet
+- ✅ Full Immunefi compliance - no exploitation for profit
+- ✅ Private reporting to Immunefi for any findings
+
+The autonomous workflow runs without manual intervention, continuously hunting for vulnerabilities while maintaining strict ethical and safety standards.
+
 ---
 
 ## 📚 Quick Navigation

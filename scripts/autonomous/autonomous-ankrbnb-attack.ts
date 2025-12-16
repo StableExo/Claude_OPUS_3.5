@@ -33,6 +33,10 @@
 import { ethers } from 'ethers';
 import * as fs from 'fs/promises';
 import * as path from 'path';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 // ankrBNB Contract Configuration
 const ANKRBNB_ADDRESS = '0x52F24a5e03aee338Da5fd9Df68D2b6FAe1178827';

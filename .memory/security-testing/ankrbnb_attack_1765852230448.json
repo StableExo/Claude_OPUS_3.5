@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-12-16T02:30:30.436Z",
+  "target": "0x52F24a5e03aee338Da5fd9Df68D2b6FAe1178827",
+  "chain": "BSC Mainnet (Fork/Read-Only)",
+  "mode": "RECON_ONLY",
+  "attacker": "0x4c1b46Be097024E5712EB3f97b46D2ECf2b531d7",
+  "immunefiCompliant": true,
+  "rulesUrl": "https://immunefi.com/bug-bounty/ankr/scope/",
+  "attacks": [],
+  "summary": {
+    "total": 0,
+    "vulnerable": 0,
+    "protected": 0,
+    "potentialReward": 0
+  },
+  "nextSteps": {
+    "ifVulnerabilitiesFound": [
+      "1. Create detailed PoC script with reproduction steps",
+      "2. Test on local fork to confirm exploitation",
+      "3. Document economic impact and funds at risk",
+      "4. Submit report via https://immunefi.com/bug-bounty/ankr/",
+      "5. Wait for team validation",
+      "6. DO NOT publicly disclose",
+      "7. Coordinate disclosure timeline with Ankr team"
+    ],
+    "immunefiSubmission": "https://immunefi.com/bug-bounty/ankr/"
+  }
+}
