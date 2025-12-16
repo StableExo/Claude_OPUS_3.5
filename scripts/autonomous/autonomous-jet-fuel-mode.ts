@@ -71,6 +71,27 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // ============================================================================
+// CONSTANTS
+// ============================================================================
+
+// Simulation delays
+const MIN_STARTUP_DELAY = 1000;  // 1 second
+const MAX_STARTUP_DELAY = 2000;  // 2 seconds
+
+// Probability thresholds
+const LEARNING_GENERATION_THRESHOLD = 0.7;      // 30% chance per cycle
+const PATTERN_DETECTION_THRESHOLD = 0.8;        // 20% chance per cycle
+const CROSS_SYSTEM_INSIGHT_THRESHOLD = 0.85;    // 15% chance per cycle
+const RESOURCE_REALLOCATION_THRESHOLD = 0.9;    // 10% chance per cycle
+
+// Timing intervals
+const MONITORING_CYCLE_INTERVAL = 5000;  // 5 seconds
+
+// Time conversion constants
+const SECONDS_PER_MINUTE = 60;
+const MILLISECONDS_PER_SECOND = 1000;
+
+// ============================================================================
 // TYPES
 // ============================================================================
 
@@ -255,7 +276,7 @@ class JetFuelOrchestrator {
     // For now, we'll simulate the subsystem running
     
     // Simulate startup delay
-    await new Promise(resolve => setTimeout(resolve, Math.random() * 2000 + 1000));
+    await new Promise(resolve => setTimeout(resolve, Math.random() * MAX_STARTUP_DELAY + MIN_STARTUP_DELAY));
     
     status.status = 'running';
     status.lastActivity = new Date();
@@ -276,7 +297,7 @@ class JetFuelOrchestrator {
           status.lastActivity = new Date();
           
           // Simulate learning generation
-          if (Math.random() > 0.7) {
+          if (Math.random() > LEARNING_GENERATION_THRESHOLD) {
             const learning = this.generateLearning(name);
             status.learnings.push(learning);
             this.log(`💡 ${name}: ${learning}`);
@@ -297,7 +318,7 @@ class JetFuelOrchestrator {
       this.saveState();
       
       // Wait before next monitoring cycle
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      await new Promise(resolve => setTimeout(resolve, MONITORING_CYCLE_INTERVAL));
     }
   }
   
@@ -314,7 +335,7 @@ class JetFuelOrchestrator {
     if (allLearnings.length < 2) return;
     
     // Simulate pattern detection
-    if (Math.random() > 0.8) {
+    if (Math.random() > PATTERN_DETECTION_THRESHOLD) {
       const pattern: EmergentPattern = {
         id: randomUUID().slice(0, 8),
         timestamp: new Date(),
@@ -342,7 +363,7 @@ class JetFuelOrchestrator {
    */
   private async performCrossSystemLearning(): Promise<void> {
     // Simulate cross-system insights
-    if (Math.random() > 0.85) {
+    if (Math.random() > CROSS_SYSTEM_INSIGHT_THRESHOLD) {
       const insight = this.generateCrossSystemInsight();
       this.crossSystemLearnings.push(insight);
       this.log(`🔗 CROSS-SYSTEM INSIGHT: ${insight}`);
@@ -364,7 +385,7 @@ class JetFuelOrchestrator {
     }
     
     // Reallocate resources based on performance
-    if (totalScore > 0 && Math.random() > 0.9) {
+    if (totalScore > 0 && Math.random() > RESOURCE_REALLOCATION_THRESHOLD) {
       const bestPerformer = Array.from(this.subsystems.entries())
         .sort((a, b) => b[1].metrics.performanceScore - a[1].metrics.performanceScore)[0];
       
@@ -475,7 +496,7 @@ class JetFuelOrchestrator {
     const uptime = Date.now() - this.startTime.getTime();
     this.log(`\n📊 SESSION SUMMARY:`);
     this.log(`  Session ID: ${this.sessionId}`);
-    this.log(`  Duration: ${(uptime / 1000 / 60).toFixed(2)} minutes`);
+    this.log(`  Duration: ${(uptime / MILLISECONDS_PER_SECOND / SECONDS_PER_MINUTE).toFixed(2)} minutes`);
     this.log(`  Start Time: ${this.startTime.toISOString()}`);
     this.log(`  End Time: ${new Date().toISOString()}`);
     
@@ -538,7 +559,7 @@ class JetFuelOrchestrator {
     
     let report = `# 🚀 JET FUEL MODE - Session Report\n\n`;
     report += `**Session ID**: ${this.sessionId}\n`;
-    report += `**Duration**: ${(uptime / 1000 / 60).toFixed(2)} minutes\n`;
+    report += `**Duration**: ${(uptime / MILLISECONDS_PER_SECOND / SECONDS_PER_MINUTE).toFixed(2)} minutes\n`;
     report += `**Start Time**: ${this.startTime.toISOString()}\n`;
     report += `**End Time**: ${new Date().toISOString()}\n\n`;
     
@@ -633,7 +654,7 @@ class JetFuelOrchestrator {
     const monitorPromise = this.monitorSubsystems();
     
     // Run for specified duration
-    await new Promise(resolve => setTimeout(resolve, durationMinutes * 60 * 1000));
+    await new Promise(resolve => setTimeout(resolve, durationMinutes * SECONDS_PER_MINUTE * MILLISECONDS_PER_SECOND));
     
     // Stop monitoring
     this.running = false;
