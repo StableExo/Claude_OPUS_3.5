@@ -15,7 +15,7 @@
 
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -57,6 +57,12 @@ class AnkrSessionManager {
       'ankr_session_state.json'
     );
     this.state = this.getDefaultState();
+  }
+
+  async resetState(): Promise<void> {
+    console.log('🔄 Resetting session state...');
+    await this.saveState(this.getDefaultState());
+    console.log('✅ Session reset complete');
   }
 
   private getDefaultState(): SessionState {
@@ -277,9 +283,8 @@ async function main() {
       break;
 
     case 'reset':
-      console.log('🔄 Resetting session state...');
-      await manager.saveState(manager['getDefaultState']());
-      console.log('✅ Session reset complete');
+      await manager.loadState();
+      await manager.resetState();
       break;
 
     case 'next-block':
@@ -308,7 +313,7 @@ Usage:
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch(console.error);
 }
 

@@ -1,6 +1,6 @@
 # Testnet Token Acquisition Guide 🪙
 
-**Last Updated**: December 16, 2025  
+**Last Updated**: December 16, 2024  
 **Purpose**: Guide for acquiring testnet tokens for TheWarden testing and ANKR bug bounty work
 
 ---
@@ -309,5 +309,5 @@ Per Immunefi rules:
 
 ---
 
-**Generated**: December 16, 2025  
+**Generated**: December 16, 2024  
 **Status**: ✅ Ready for testing
