@@ -263,7 +263,7 @@ async function listConfigs() {
 
 function inferValueType(value: string): 'string' | 'number' | 'boolean' | 'json' | 'url' {
   if (value === 'true' || value === 'false') return 'boolean';
-  if (!isNaN(Number(value)) && value.trim() !== '') return 'number';
+  if (value.trim() !== '' && !isNaN(Number(value)) && !isNaN(parseFloat(value))) return 'number';
   if (value.startsWith('http://') || value.startsWith('https://') || value.startsWith('wss://')) return 'url';
   if (value.startsWith('{') || value.startsWith('[')) {
     try {
