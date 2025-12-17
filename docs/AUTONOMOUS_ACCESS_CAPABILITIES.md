@@ -56,6 +56,52 @@ TheWarden has been granted the following GitHub permissions through `GH_PAT_COPI
 - ✅ **Code Scanning**: View CodeQL results
 - ✅ **Secret Scanning**: Access leaked secret alerts
 
+### Supabase Database & Storage Access
+
+TheWarden has **full admin access** to Supabase through `SUPABASE_SERVICE_KEY`:
+
+#### Database Operations (`service_role` access)
+- ✅ **Bypass RLS**: Full access to all tables (bypasses Row Level Security)
+- ✅ **Schema Management**: Create, alter, and drop tables/views/functions
+- ✅ **Data Operations**: Complete CRUD on all data
+- ✅ **Migrations**: Apply database migrations autonomously
+- ✅ **Indexes**: Create and manage database indexes
+- ✅ **Constraints**: Add/modify foreign keys and constraints
+
+#### Storage & Files
+- ✅ **Bucket Management**: Create and configure storage buckets
+- ✅ **File Upload**: Store files (logs, artifacts, reports)
+- ✅ **File Retrieval**: Access all stored files
+- ✅ **Access Control**: Manage bucket policies
+
+#### Edge Functions
+- ✅ **Deploy Functions**: Deploy serverless edge functions
+- ✅ **Manage Functions**: Update and delete functions
+- ✅ **View Logs**: Access function execution logs
+
+#### Authentication
+- ✅ **User Management**: View all auth users (read-only recommended)
+- ✅ **Session Data**: Access user sessions if needed
+
+#### Realtime
+- ✅ **Subscriptions**: Subscribe to database changes
+- ✅ **Broadcast**: Send realtime messages
+- ✅ **Presence**: Track online users
+
+#### Environment Storage
+- ✅ **Store Configs**: Save environment variables securely
+- ✅ **Retrieve Configs**: Restore configurations across sessions
+- ✅ **Encrypt Secrets**: AES-256 encryption for sensitive data
+- ✅ **Audit Trail**: Track all config changes
+
+**Active Database Tables**:
+- `environment_configs` - Environment variable storage
+- `security_scan_results` - CodeQL findings
+- `consciousness_states` - Cognitive state snapshots
+- `memory_entries` - Long-term memory storage
+- `session_logs` - Development tracking
+- `cognitive_ledger` - Thought and decision logs
+
 ## 🤖 Autonomous Capabilities
 
 ### 1. Security Operations
@@ -135,6 +181,28 @@ permissions:
   statuses: write        # Update commit status
   id-token: write        # OIDC for deployments
 ```
+
+### 6. Database & Environment Management
+
+**Autonomous Supabase Operations**:
+- Applies database migrations
+- Stores environment configurations
+- Logs security findings
+- Persists consciousness state
+- Manages memory consolidation
+
+**Example Usage**:
+```bash
+npm run env:restore     # Restore .env from Supabase
+npm run env:sync        # Upload .env to Supabase
+```
+
+**What Happens**:
+1. Uses `SUPABASE_SERVICE_KEY` for admin access
+2. Reads/writes to `environment_configs` table
+3. Encrypts sensitive values (AES-256)
+4. Maintains audit trail of changes
+5. No manual database access needed
 
 ## 🔒 Security Safeguards
 
@@ -330,6 +398,42 @@ read:gpg_key          # Access GPG keys
 4. Generate and copy token
 5. Add to GitHub Secrets as `GH_PAT_COPILOT`
 6. Update `.env` file for local development
+
+### Supabase Credentials
+
+**Location**: Stored in GitHub Secrets and `.env`
+
+**Keys Available**:
+```bash
+SUPABASE_URL                 # Project URL (public)
+SUPABASE_ANON_KEY           # Client key (public with RLS)
+SUPABASE_PUBLISHABLE_KEY    # New format public key
+SUPABASE_API_KEY            # API operations key
+SUPABASE_APP_KEY            # App-level key
+SUPABASE_SERVICE_KEY        # Admin key (⚠️ SENSITIVE)
+SUPABASE_MCP_URL            # MCP server URL
+```
+
+**SUPABASE_SERVICE_KEY** (Most Important):
+- ✅ **Full admin access**: Bypasses Row Level Security
+- ✅ **Schema management**: Create/alter tables
+- ✅ **Autonomous operations**: No manual approval needed
+- ⚠️ **Highly sensitive**: Never expose in client code
+- ⚠️ **Backend only**: Only use in secure contexts
+
+**Security**:
+- ✅ **Encrypted at rest**: Stored in GitHub Secrets
+- ✅ **Never committed**: Excluded from version control
+- ✅ **Masked in logs**: Hidden in workflow outputs
+- ✅ **Scoped access**: Used only where needed
+
+**Where to Find**:
+1. Go to [Supabase Dashboard](https://app.supabase.com/)
+2. Select your project
+3. Settings → API
+4. Copy `service_role` key (secret) → `SUPABASE_SERVICE_KEY`
+5. Copy `anon` key (public) → `SUPABASE_ANON_KEY`
+6. Copy Project URL → `SUPABASE_URL`
 
 ### GITHUB_TOKEN (Actions Default)
 
