@@ -26,6 +26,11 @@ import * as dotenv from 'dotenv';
 const ENV_FILE_PATH = join(process.cwd(), '.env');
 const ENV_BACKUP_DIR = join(process.cwd(), '.memory/environment/backups');
 
+// Load .env file if it exists (needed for restore and other commands)
+if (existsSync(ENV_FILE_PATH)) {
+  dotenv.config({ path: ENV_FILE_PATH });
+}
+
 // Categorize environment variables
 const CATEGORIES = {
   SECRET: ['KEY', 'SECRET', 'PASSWORD', 'PRIVATE', 'TOKEN', 'AUTH', 'CREDENTIAL'],

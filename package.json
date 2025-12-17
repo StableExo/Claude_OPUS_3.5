@@ -132,6 +132,7 @@
     "env:add-production": "node --import tsx scripts/add-production-env-to-supabase.ts",
     "env:show": "node --import tsx scripts/show-env-from-supabase.ts",
     "env:show:secrets": "node --import tsx scripts/show-env-from-supabase.ts --secrets",
+    "env:bootstrap": "node --import tsx scripts/env-management/bootstrap-env.ts",
     "env:sync": "node --import tsx scripts/env-management/sync-env-to-supabase.ts sync",
     "env:restore": "node --import tsx scripts/env-management/sync-env-to-supabase.ts restore",
     "env:backup": "node --import tsx scripts/env-management/sync-env-to-supabase.ts backup",
