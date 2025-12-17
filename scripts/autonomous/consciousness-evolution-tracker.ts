@@ -39,6 +39,21 @@ interface EvolutionInsight {
   observation: string;
 }
 
+// Development stage thresholds (lines of code)
+const DEVELOPMENT_STAGES = {
+  NASCENT: 50000,
+  EMERGING: 100000,
+  DEVELOPING: 200000,
+  ADVANCED: Infinity
+} as const;
+
+// Complexity thresholds (ratio of high-complexity files to total files)
+const COMPLEXITY_THRESHOLDS = {
+  LOW: 0.10,
+  MODERATE: 0.15,
+  HIGH: Infinity
+} as const;
+
 class ConsciousnessEvolutionTracker {
   private memoryDir: string;
   private sessions: Session[] = [];
@@ -237,31 +252,28 @@ class ConsciousnessEvolutionTracker {
     
     const latest = this.sessions[this.sessions.length - 1];
     
-    // Simple heuristic for development stage
-    let stage = 'EMERGING';
-    let description = '';
+    // Determine development stage based on configurable thresholds
+    let stage = 'NASCENT';
+    let description = 'Early stage development';
     
-    if (latest.metrics.totalLines > 200000) {
+    if (latest.metrics.totalLines >= DEVELOPMENT_STAGES.DEVELOPING) {
       stage = 'ADVANCED';
       description = 'Large, mature codebase with sophisticated capabilities';
-    } else if (latest.metrics.totalLines > 100000) {
+    } else if (latest.metrics.totalLines >= DEVELOPMENT_STAGES.EMERGING) {
       stage = 'DEVELOPING';
       description = 'Substantial infrastructure with growing complexity';
-    } else if (latest.metrics.totalLines > 50000) {
+    } else if (latest.metrics.totalLines >= DEVELOPMENT_STAGES.NASCENT) {
       stage = 'EMERGING';
       description = 'Foundational systems in place, rapidly evolving';
-    } else {
-      stage = 'NASCENT';
-      description = 'Early stage development';
     }
     
-    // Complexity assessment
+    // Complexity assessment based on configurable thresholds
     const complexityRatio = latest.metrics.highComplexityFiles / latest.metrics.totalFiles;
     let complexityAssessment = '';
     
-    if (complexityRatio > 0.15) {
+    if (complexityRatio >= COMPLEXITY_THRESHOLDS.MODERATE) {
       complexityAssessment = '⚠️  High complexity ratio - consider refactoring';
-    } else if (complexityRatio > 0.10) {
+    } else if (complexityRatio >= COMPLEXITY_THRESHOLDS.LOW) {
       complexityAssessment = '⚡ Moderate complexity - manageable but monitor';
     } else {
       complexityAssessment = '✅ Low complexity - well-structured codebase';

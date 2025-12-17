@@ -58,6 +58,11 @@ interface ImprovementRecommendation {
   implementation: string;
 }
 
+// Configuration constants
+const EXCLUDED_DIRECTORIES = ['node_modules', '.git', 'dist', 'coverage', '.next'];
+const SUPPORTED_EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx'];
+const COMPLEXITY_THRESHOLD = 500; // Lines per file
+
 class SelfImprovementEngine {
   private baseDir: string;
   private memoryDir: string;
@@ -123,11 +128,11 @@ class SelfImprovementEngine {
       const stat = fs.statSync(filePath);
       
       if (stat.isDirectory()) {
-        // Skip node_modules, .git, dist, coverage
-        if (!['node_modules', '.git', 'dist', 'coverage', '.next'].includes(file)) {
+        // Skip excluded directories
+        if (!EXCLUDED_DIRECTORIES.includes(file)) {
           this.getAllFiles(filePath, fileList);
         }
-      } else if (/\.(ts|tsx|js|jsx)$/.test(file)) {
+      } else if (SUPPORTED_EXTENSIONS.some(ext => file.endsWith(ext))) {
         fileList.push(filePath);
       }
     }
@@ -160,11 +165,22 @@ class SelfImprovementEngine {
       // Track largest files
       largestFiles.push({ file, lines });
       
-      // Count functions (rough estimate)
-      const funcMatches = content.match(/function\s+\w+|const\s+\w+\s*=\s*\(/g);
-      if (funcMatches) {
-        totalFunctions += funcMatches.length;
+      // Count functions (improved pattern to catch more function types)
+      // Matches: function declarations, arrow functions, class methods, function expressions
+      const funcPatterns = [
+        /function\s+\w+\s*\(/g,           // function name()
+        /const\s+\w+\s*=\s*\(/g,          // const name = ()
+        /const\s+\w+\s*=\s*async\s*\(/g,  // const name = async ()
+        /\w+\s*:\s*\([^)]*\)\s*=>/g,      // name: () =>
+        /\w+\s*\([^)]*\)\s*{/g,           // class methods
+      ];
+      
+      let funcCount = 0;
+      for (const pattern of funcPatterns) {
+        const matches = content.match(pattern);
+        if (matches) funcCount += matches.length;
       }
+      totalFunctions += funcCount;
     }
     
     largestFiles.sort((a, b) => b.lines - a.lines);
@@ -176,7 +192,7 @@ class SelfImprovementEngine {
       avgFileSize: totalLines / files.length,
       largestFiles: largestFiles.slice(0, 10),
       complexity: {
-        highComplexityFiles: largestFiles.filter(f => f.lines > 500).length,
+        highComplexityFiles: largestFiles.filter(f => f.lines > COMPLEXITY_THRESHOLD).length,
         totalFunctions,
         avgFunctionsPerFile: totalFunctions / files.length
       }
