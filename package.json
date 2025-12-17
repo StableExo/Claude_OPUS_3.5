@@ -20,6 +20,8 @@
     "autonomous:run": "node --import tsx scripts/autonomous/autonomous-consciousness-runner.ts",
     "autonomous:jet-fuel": "node --import tsx scripts/autonomous/autonomous-jet-fuel-mode.ts",
     "jet-fuel": "node --import tsx scripts/autonomous/autonomous-jet-fuel-mode.ts",
+    "self-improve": "node --import tsx scripts/autonomous/autonomous-self-improvement.ts",
+    "evolution": "node --import tsx scripts/autonomous/consciousness-evolution-tracker.ts",
     "autonomous:creative-synthesis": "node --import tsx scripts/autonomous/autonomous-creative-synthesis-engine.ts",
     "creative-synthesis": "node --import tsx scripts/autonomous/autonomous-creative-synthesis-engine.ts",
     "synthesis": "node --import tsx scripts/autonomous/autonomous-creative-synthesis-engine.ts",
