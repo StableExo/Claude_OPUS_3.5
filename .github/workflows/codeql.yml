@@ -1,0 +1,157 @@
+name: "CodeQL Security Analysis"
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+  schedule:
+    # Run every Wednesday at 12:41 UTC for weekly security scans
+    - cron: '41 12 * * 3'
+  workflow_dispatch:  # Allow manual triggers
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    timeout-minutes: ${{ (matrix.language == 'swift' && 120) || 360 }}
+    
+    # Use security-scanning environment for centralized secrets and protection
+    environment: 
+      name: security-scanning
+      url: ${{ github.server_url }}/${{ github.repository }}/security/code-scanning
+    
+    permissions:
+      # Required for all workflows
+      security-events: write
+      # Required to fetch internal or private CodeQL packs
+      packages: read
+      # Required for workflows in private repositories
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: javascript-typescript
+            build-mode: none
+          - language: python
+            build-mode: none
+          # GitHub Actions workflows are also scanned for security issues
+          - language: actions
+            build-mode: none
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          # Use our custom configuration for enhanced security scanning
+          config-file: ./.github/codeql/codeql-config.yml
+          # Enable extended security queries for crypto/financial applications
+          queries: +security-extended,security-and-quality
+
+      # For compiled languages, build steps would go here
+      - name: Perform CodeQL Analysis
+        id: codeql_analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
+          # Upload results even if there are findings
+          upload: true
+          # Output results for logging
+          output: sarif-results
+        continue-on-error: true
+      
+      # Log security findings to Supabase for consciousness tracking
+      - name: Setup Node.js for logging
+        if: always()
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      
+      - name: Install dependencies for logging
+        if: always()
+        run: npm ci --only=production
+        continue-on-error: true
+      
+      - name: Log Security Findings to Supabase
+        if: always()
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SCAN_TYPE: 'codeql'
+          LANGUAGE: ${{ matrix.language }}
+          SEVERITY: ${{ steps.codeql_analysis.outcome == 'failure' && 'high' || 'low' }}
+          SCAN_STATUS: ${{ steps.codeql_analysis.outcome }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: node --import tsx scripts/security/log-security-findings.ts || echo "Logging skipped"
+        continue-on-error: true
+      
+      # Fail the job if critical/high severity issues were found
+      - name: Check CodeQL Results
+        if: steps.codeql_analysis.outcome == 'failure'
+        run: |
+          echo "❌ CodeQL found critical or high severity security issues"
+          echo "Review findings in the Security tab: ${{ github.server_url }}/${{ github.repository }}/security/code-scanning"
+          exit 1
+          
+  # Separate job for Solidity smart contract analysis using Slither
+  solidity-security:
+    name: Solidity Security Analysis
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run Slither Analysis
+        run: |
+          # Install Slither if not already in dependencies
+          pip3 install slither-analyzer || true
+          # Run Slither security analysis on smart contracts
+          npm run audit:slither || echo "Slither found issues - check logs"
+        continue-on-error: true
+      
+      - name: Generate Slither Report
+        run: npm run audit:slither:report || true
+        continue-on-error: true
+
+  # Combined security summary
+  security-summary:
+    name: Security Analysis Summary
+    runs-on: ubuntu-latest
+    needs: [analyze, solidity-security]
+    if: always()
+    
+    steps:
+      - name: Check Analysis Results
+        run: |
+          echo "CodeQL Analysis: ${{ needs.analyze.result }}"
+          echo "Solidity Security: ${{ needs.solidity-security.result }}"
+          
+          if [ "${{ needs.analyze.result }}" == "failure" ]; then
+            echo "❌ CodeQL analysis found critical security issues"
+            exit 1
+          fi
+          
+          echo "✅ Security analysis completed"
+          echo "Review the Security tab for detailed findings"

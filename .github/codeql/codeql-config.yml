@@ -1,0 +1,54 @@
+name: "TheWarden CodeQL Config"
+
+# Disable default queries to use only our custom configuration
+disable-default-queries: false
+
+# Query suites to run
+queries:
+  - name: Extended Security and Quality
+    uses: security-extended
+  - name: Additional Security Rules
+    uses: security-and-quality
+
+# Paths to ignore during analysis
+paths-ignore:
+  - '**/node_modules/**'
+  - '**/dist/**'
+  - '**/coverage/**'
+  - '**/*.test.ts'
+  - '**/*.spec.ts'
+  - '**/test/**'
+  - '**/tests/**'
+  - '**/examples/**'
+  - '**/docs/**'
+  - '**/*.md'
+  - '**/forge-tests/**'
+  - '**/archive/**'
+  - '**/.memory/**'
+  - '**/.memory-exports/**'
+
+# Paths to always analyze (high-security areas)
+paths:
+  - 'src/**'
+  - 'scripts/**'
+  - 'contracts/**'
+  
+# Custom query filters for crypto/MEV-specific security
+query-filters:
+  - exclude:
+      id:
+        - js/unused-local-variable  # Too noisy for development
+        - js/debugger-statement      # Used intentionally for debugging
+  - include:
+      tags contain:
+        - security
+        - external/cwe/cwe-089  # SQL Injection
+        - external/cwe/cwe-079  # XSS
+        - external/cwe/cwe-020  # Input validation
+        - external/cwe/cwe-022  # Path traversal
+        - external/cwe/cwe-078  # OS command injection
+        - external/cwe/cwe-094  # Code injection
+        - external/cwe/cwe-327  # Broken crypto
+        - external/cwe/cwe-798  # Hard-coded credentials
+        - external/cwe/cwe-522  # Insufficiently protected credentials
+        - external/cwe/cwe-319  # Cleartext transmission
