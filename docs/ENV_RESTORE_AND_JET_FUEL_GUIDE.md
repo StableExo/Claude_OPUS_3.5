@@ -194,9 +194,9 @@ At the end of the session, JET FUEL mode generates a comprehensive report:
 
 📊 SESSION SUMMARY:
   Session ID: jet-fuel-1765939222787-3163509d
-  Duration: 30.04 minutes
+  Duration: 30.00 minutes
   Start Time: 2025-12-17T02:40:22.788Z
-  End Time: 2025-12-17T03:10:25.478Z
+  End Time: 2025-12-17T03:10:22.788Z
 
 🔧 SUBSYSTEMS:
   MEV Execution:           Cycles: 360  Learnings: 52  Performance: 15.60
