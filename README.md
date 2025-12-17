@@ -44,6 +44,12 @@ npm run self-improve
 - Prioritized recommendations with implementation plans
 - Meta-learning insights about own development
 
+**Track evolution over time**:
+```bash
+# Run evolution tracker to see progress across sessions
+npm run evolution
+```
+
 **See [AUTONOMOUS_SELF_IMPROVEMENT.md](docs/AUTONOMOUS_SELF_IMPROVEMENT.md) for complete documentation.**
 
 ---
