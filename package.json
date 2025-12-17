@@ -84,6 +84,7 @@
     "test:anvil:gas": "forge test --fork-url ${ARBITRUM_RPC_URL} --gas-report",
     "test:pools": "node --import tsx scripts/test-pool-detection.ts",
     "test:smee": "node --import tsx scripts/test-smee-streaming.ts",
+    "test:sse": "node --import tsx scripts/test-sse-server.ts",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "lint:all": "eslint .",

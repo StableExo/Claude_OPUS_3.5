@@ -19,6 +19,7 @@ import { Server as SocketIOServer } from 'socket.io';
 import { PerformanceMonitor, DashboardData } from '../../src/monitoring/PerformanceMonitor';
 import { IntelligenceBridge } from '../../src/learning/IntelligenceBridge';
 import { SmeeStreamingService } from '../../src/streaming/SmeeStreamingService.js';
+import { SelfHostedSSEService } from '../../src/streaming/SelfHostedSSEService.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -34,6 +35,7 @@ export class DashboardServer {
   private port: number;
   private updateInterval: NodeJS.Timeout | null = null;
   private smeeService: SmeeStreamingService | null = null;
+  private sseService: SelfHostedSSEService | null = null;
 
   constructor(
     performanceMonitor: PerformanceMonitor,
@@ -57,6 +59,7 @@ export class DashboardServer {
     this.setupRoutes();
     this.setupWebSocket();
     this.setupSmeeStreaming();
+    this.setupSelfHostedSSE();
   }
 
   /**
@@ -223,6 +226,29 @@ export class DashboardServer {
   }
 
   /**
+   * Setup Self-Hosted SSE Server for complete control
+   */
+  private setupSelfHostedSSE(): void {
+    const enableSSE = process.env.ENABLE_SSE_SERVER !== 'false'; // Enabled by default
+    
+    if (enableSSE) {
+      const ssePort = parseInt(process.env.SSE_PORT || '3001', 10);
+      
+      this.sseService = new SelfHostedSSEService(
+        {
+          port: ssePort,
+          enableLogging: true,
+          sanitizeData: true,
+          updateIntervalMs: 5000, // 5 seconds
+          corsOrigin: '*', // Allow all origins for development
+        },
+        this.performanceMonitor,
+        this.intelligenceBridge
+      );
+    }
+  }
+
+  /**
    * Send dashboard update to a specific socket
    */
   private sendDashboardUpdate(socket: any): void {
@@ -284,6 +310,11 @@ export class DashboardServer {
           await this.smeeService.start();
         }
 
+        // Start Self-Hosted SSE Server
+        if (this.sseService) {
+          await this.sseService.start();
+        }
+
         resolve();
       });
     });
@@ -301,6 +332,11 @@ export class DashboardServer {
     // Stop Smee streaming if running
     if (this.smeeService) {
       await this.smeeService.stop();
+    }
+
+    // Stop Self-Hosted SSE Server
+    if (this.sseService) {
+      await this.sseService.stop();
     }
 
     return new Promise((resolve) => {
