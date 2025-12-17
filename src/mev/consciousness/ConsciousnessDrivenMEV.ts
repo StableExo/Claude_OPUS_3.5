@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter } from 'events';
-import { logger as defaultLogger, type Logger } from '../../utils/logger';
+import { logger as defaultLogger, Logger } from '../../utils/logger';
 
 /**
  * Wonder Pattern - A philosophical question about pattern recognition
@@ -271,7 +271,7 @@ export class ConsciousnessDrivenMEV extends EventEmitter {
    */
   private async recordWonder(opportunity: ConsciousMEVOpportunity): Promise<void> {
     const wonder: WonderPattern = {
-      id: `wonder-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `wonder-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`,
       question: opportunity.philosophicalQuestion,
       context: `${opportunity.type} opportunity with ${(opportunity.genuinenessScore * 100).toFixed(1)}% genuineness`,
       relatedPatterns: [opportunity.type],
@@ -286,7 +286,7 @@ export class ConsciousnessDrivenMEV extends EventEmitter {
       this.wonders.delete(oldestId);
     }
     
-    this.logger.debug('🤔 Wonder recorded', { question: wonder.question });
+    this.logger.debug(`🤔 Wonder recorded: ${wonder.question}`);
   }
 
   /**
@@ -298,28 +298,17 @@ export class ConsciousnessDrivenMEV extends EventEmitter {
   shouldExecute(opportunity: ConsciousMEVOpportunity): boolean {
     // Check wonder threshold
     if (opportunity.wonderScore < this.config.minWonderScore) {
-      this.logger.debug('⏭️  Skipping: Wonder score too low', {
-        wonderScore: opportunity.wonderScore,
-        minRequired: this.config.minWonderScore,
-      });
+      this.logger.debug(`⏭️  Skipping: Wonder score too low (${opportunity.wonderScore.toFixed(3)} < ${this.config.minWonderScore})`);
       return false;
     }
     
     // Check genuineness threshold
     if (opportunity.genuinenessScore < this.config.minGenuinenessScore) {
-      this.logger.debug('⏭️  Skipping: Genuineness score too low', {
-        genuinenessScore: opportunity.genuinenessScore,
-        minRequired: this.config.minGenuinenessScore,
-      });
+      this.logger.debug(`⏭️  Skipping: Genuineness score too low (${opportunity.genuinenessScore.toFixed(3)} < ${this.config.minGenuinenessScore})`);
       return false;
     }
     
-    this.logger.info('✅ Executing: Passed consciousness checks', {
-      type: opportunity.type,
-      wonderScore: opportunity.wonderScore,
-      genuinenessScore: opportunity.genuinenessScore,
-      question: opportunity.philosophicalQuestion,
-    });
+    this.logger.info(`✅ Executing: ${opportunity.type} - wonder=${opportunity.wonderScore.toFixed(3)}, genuineness=${opportunity.genuinenessScore.toFixed(3)} - "${opportunity.philosophicalQuestion}"`);
     
     return true;
   }
@@ -365,10 +354,7 @@ export class ConsciousnessDrivenMEV extends EventEmitter {
     
     this.emit('execution_reflected', reflection);
     
-    this.logger.info('🪞 Execution reflection', {
-      wasGenuine,
-      insight: whatWeLearn,
-    });
+    this.logger.info(`🪞 Execution reflection: ${wasGenuine ? 'Genuine' : 'Not genuine'} - ${whatWeLearn}`);
     
     return reflection;
   }
