@@ -30,7 +30,6 @@ TheWarden has been granted the following GitHub permissions through `GH_PAT_COPI
 - ✅ **Create Issues**: Report bugs, vulnerabilities, improvements
 - ✅ **Update Issues**: Comment, label, assign, close
 - ✅ **Search Issues**: Analyze patterns and track progress
-- ✅ **Issue Templates**: Use and update issue templates
 
 #### Pull Requests (`repo` scope)
 - ✅ **Create PRs**: Submit code changes for review
