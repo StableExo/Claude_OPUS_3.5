@@ -173,11 +173,11 @@ export class SmeeStreamingService {
 
     // Extract subsystem data if available
     if (dashboardData.subsystems) {
-      for (const [key, subsystem] of Object.entries(dashboardData.subsystems as any)) {
+      for (const [key, subsystem] of Object.entries(dashboardData.subsystems as Record<string, any>)) {
         subsystems[key] = {
-          name: subsystem.name || key,
-          healthScore: subsystem.healthScore || 0,
-          performanceScore: subsystem.performanceScore || 0,
+          name: (subsystem as any).name || key,
+          healthScore: (subsystem as any).healthScore || 0,
+          performanceScore: (subsystem as any).performanceScore || 0,
         };
       }
     }
