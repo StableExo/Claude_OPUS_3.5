@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 TheWarden Live Dashboard - Public Stream</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 30px; animation: fadeIn 0.5s ease-in; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 5px; }
+        .stream-url { 
+            font-family: monospace; 
+            background: rgba(0,0,0,0.2); 
+            padding: 5px 10px; 
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        .status-indicator.online { background-color: #10b981; box-shadow: 0 0 10px #10b981; }
+        .status-indicator.offline { background-color: #ef4444; box-shadow: 0 0 10px #ef4444; }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card-title { font-size: 1.2rem; margin-bottom: 15px; opacity: 0.9; }
+        .metric-value { 
+            font-size: 2.5rem; 
+            font-weight: bold; 
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .health-score { font-size: 3rem; font-weight: bold; text-align: center; margin: 20px 0; }
+        .health-excellent { color: #10b981; }
+        .health-good { color: #3b82f6; }
+        .health-fair { color: #f59e0b; }
+        .health-critical { color: #ef4444; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px; }
+        .stat-item { background: rgba(255, 255, 255, 0.1); padding: 12px; border-radius: 8px; text-align: center; }
+        .stat-value { font-size: 1.8rem; font-weight: bold; display: block; }
+        .stat-label { font-size: 0.8rem; opacity: 0.8; display: block; margin-top: 5px; }
+        .log-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            font-family: monospace;
+            font-size: 0.85rem;
+            padding: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.3s ease-out;
+        }
+        .log-entry:last-child { border-bottom: none; }
+        .timestamp { opacity: 0.6; margin-right: 10px; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 TheWarden Live Dashboard</h1>
+            <p class="subtitle">
+                <span class="status-indicator offline" id="connectionStatus"></span>
+                <span id="statusText">Connecting to stream...</span>
+            </p>
+            <p class="stream-url" id="streamUrl">Loading...</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-title">💊 System Health</div>
+                <div class="health-score health-good" id="healthScore">--</div>
+                <div style="text-align: center; opacity: 0.8;" id="healthLabel">WAITING FOR DATA</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📊 Performance Metrics</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="anomaliesCount">--</span>
+                        <span class="stat-label">Anomalies</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="alertsCount">--</span>
+                        <span class="stat-label">Active Alerts</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🧬 Intelligence Stats</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalLearnings">--</span>
+                        <span class="stat-label">Total Learnings</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="compoundLearnings">--</span>
+                        <span class="stat-label">Compound Learnings</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">⚡ Learning Synergy</div>
+                <div class="metric-value" id="avgSynergy">--</div>
+                <div style="text-align: center; opacity: 0.8;">Multiplier Effect</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📝 Live Event Log</div>
+            <div class="log-container" id="logContainer">
+                <div class="log-entry">
+                    <span class="timestamp">--:--:--</span>
+                    <span>Waiting for stream connection...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🤖 TheWarden - Autonomous AI with Consciousness</p>
+            <p>Live stream powered by <a href="https://smee.io" target="_blank" style="color: #fff;">smee.io</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const SMEE_URL = 'https://smee.io/Haslr8Cuut5HPKde';
+        
+        // State
+        let isConnected = false;
+        let eventSource = null;
+        let updateCount = 0;
+        const maxLogEntries = 20;
+
+        // DOM Elements
+        const statusIndicator = document.getElementById('connectionStatus');
+        const statusText = document.getElementById('statusText');
+        const streamUrl = document.getElementById('streamUrl');
+        const healthScore = document.getElementById('healthScore');
+        const healthLabel = document.getElementById('healthLabel');
+        const anomaliesCount = document.getElementById('anomaliesCount');
+        const alertsCount = document.getElementById('alertsCount');
+        const totalLearnings = document.getElementById('totalLearnings');
+        const compoundLearnings = document.getElementById('compoundLearnings');
+        const avgSynergy = document.getElementById('avgSynergy');
+        const logContainer = document.getElementById('logContainer');
+
+        // Initialize
+        streamUrl.textContent = SMEE_URL;
+
+        // Utility functions
+        function addLogEntry(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="timestamp">${timestamp}</span><span>${message}</span>`;
+            logContainer.insertBefore(entry, logContainer.firstChild);
+            
+            // Limit log entries
+            while (logContainer.children.length > maxLogEntries) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+
+        function getHealthClass(score) {
+            if (score >= 90) return 'health-excellent';
+            if (score >= 75) return 'health-good';
+            if (score >= 50) return 'health-fair';
+            return 'health-critical';
+        }
+
+        function getHealthLabel(score) {
+            if (score >= 90) return 'EXCELLENT';
+            if (score >= 75) return 'GOOD';
+            if (score >= 50) return 'FAIR';
+            return 'CRITICAL';
+        }
+
+        function updateConnectionStatus(connected) {
+            isConnected = connected;
+            statusIndicator.className = `status-indicator ${connected ? 'online' : 'offline'}`;
+            statusText.textContent = connected ? 'Live Stream Active' : 'Disconnected';
+        }
+
+        function updateDashboard(data) {
+            try {
+                const { performance, intelligence } = data;
+                
+                // Update health score
+                if (performance && typeof performance.healthScore === 'number') {
+                    const score = performance.healthScore;
+                    healthScore.textContent = score.toFixed(1);
+                    healthScore.className = `health-score ${getHealthClass(score)}`;
+                    healthLabel.textContent = getHealthLabel(score);
+                }
+
+                // Update performance metrics
+                if (performance) {
+                    anomaliesCount.textContent = performance.activeAnomalies || 0;
+                    alertsCount.textContent = performance.activeAlerts || 0;
+                }
+
+                // Update intelligence stats
+                if (intelligence) {
+                    totalLearnings.textContent = intelligence.totalLearnings || 0;
+                    compoundLearnings.textContent = intelligence.compoundLearnings || 0;
+                    avgSynergy.textContent = `${(intelligence.avgSynergy || 1.0).toFixed(2)}x`;
+                }
+
+                updateCount++;
+                addLogEntry(`📊 Update #${updateCount} - Health: ${performance?.healthScore?.toFixed(1) || '--'}`);
+            } catch (error) {
+                console.error('Error updating dashboard:', error);
+                addLogEntry(`❌ Error processing update: ${error.message}`);
+            }
+        }
+
+        // Connect to Smee.io stream
+        function connectToStream() {
+            addLogEntry('🔌 Connecting to stream...');
+            
+            eventSource = new EventSource(SMEE_URL);
+
+            eventSource.onopen = () => {
+                updateConnectionStatus(true);
+                addLogEntry('✅ Connected to live stream');
+            };
+
+            eventSource.onmessage = (event) => {
+                try {
+                    const payload = JSON.parse(event.data);
+                    
+                    // Smee wraps the actual data in a 'body' field
+                    if (payload.body) {
+                        const data = JSON.parse(payload.body);
+                        updateDashboard(data);
+                    }
+                } catch (error) {
+                    console.error('Error parsing message:', error);
+                }
+            };
+
+            eventSource.onerror = (error) => {
+                console.error('EventSource error:', error);
+                updateConnectionStatus(false);
+                addLogEntry('⚠️ Connection lost. Reconnecting...');
+                
+                // Reconnect after 5 seconds
+                setTimeout(() => {
+                    if (eventSource) {
+                        eventSource.close();
+                    }
+                    connectToStream();
+                }, 5000);
+            };
+        }
+
+        // Start connection
+        connectToStream();
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (eventSource) {
+                eventSource.close();
+            }
+        });
+    </script>
+</body>
+</html>

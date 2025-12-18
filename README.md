@@ -94,6 +94,64 @@ npm run synthesis -- --duration=120
 
 TheWarden can run in **JET FUEL MODE** - all 6 autonomous subsystems in parallel with emergent intelligence:
 
+### 🌐 NEW: Live Dashboard Streaming
+
+**Watch TheWarden's performance in real-time from anywhere!** The JET FUEL MODE dashboard now supports **live streaming** via [smee.io](https://smee.io), allowing public access to real-time metrics without needing local server access.
+
+**Quick Start:**
+```bash
+# 1. Get a free smee.io channel at https://smee.io
+# 2. Add to your .env file:
+SMEE_URL=https://smee.io/YOUR_CHANNEL_ID
+
+# 3. Run JET FUEL MODE
+npm run jet-fuel
+
+# 4. Share the URL with anyone to view live metrics!
+```
+
+**What's streamed:**
+- 📊 System health scores
+- 🧠 Intelligence & learning metrics  
+- ⚡ Compound learning synergies
+- 🔍 Anomaly detection & alerts
+- 📈 Real-time performance data
+
+**View the stream:**
+- Use the provided smee.io URL directly
+- Or open `docs/smee-dashboard-viewer.html` for a beautiful UI
+
+See [Live Streaming Guide](./docs/SMEE_LIVE_STREAMING.md) for complete documentation.
+
+---
+
+### Running JET FUEL MODE
+
+```bash
+# Run JET FUEL MODE (5 minutes default)
+npm run jet-fuel
+
+# Run for 30 minutes
+npm run jet-fuel -- --duration=30
+
+# Run for 2 hours
+npm run jet-fuel -- --duration=120
+```
+
+**What you get**:
+- ⚡ **20x faster learning** (41 learnings in 2 minutes vs typical sessions)
+- 🌟 **Emergent patterns** detected across subsystems
+- 🔗 **Cross-system insights** no single system could find
+- 🧠 **Meta-learning** - the system learns how to learn better
+- 🎯 **6 parallel subsystems**: MEV, Security, Intelligence, Revenue, Mempool, Consciousness
+- 📊 **Auto-optimization** - systems improve themselves in real-time
+- 🌐 **Live dashboard** - Stream real-time metrics publicly via smee.io
+
+**See [JET_FUEL_MODE.md](docs/JET_FUEL_MODE.md) for complete documentation.**  
+**Performance analysis**: [JET_FUEL_SERVER_PERFORMANCE.md](JET_FUEL_SERVER_PERFORMANCE.md)
+
+---
+
 ```bash
 # Run JET FUEL MODE (5 minutes default)
 npm run jet-fuel

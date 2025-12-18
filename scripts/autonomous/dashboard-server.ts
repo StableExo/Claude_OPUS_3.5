@@ -18,6 +18,8 @@ import { createServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import { PerformanceMonitor, DashboardData } from '../../src/monitoring/PerformanceMonitor';
 import { IntelligenceBridge } from '../../src/learning/IntelligenceBridge';
+import { SmeeStreamingService } from '../../src/streaming/SmeeStreamingService.js';
+import { SelfHostedSSEService } from '../../src/streaming/SelfHostedSSEService.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -32,6 +34,8 @@ export class DashboardServer {
   private intelligenceBridge: IntelligenceBridge;
   private port: number;
   private updateInterval: NodeJS.Timeout | null = null;
+  private smeeService: SmeeStreamingService | null = null;
+  private sseService: SelfHostedSSEService | null = null;
 
   constructor(
     performanceMonitor: PerformanceMonitor,
@@ -54,6 +58,8 @@ export class DashboardServer {
 
     this.setupRoutes();
     this.setupWebSocket();
+    this.setupSmeeStreaming();
+    this.setupSelfHostedSSE();
   }
 
   /**
@@ -200,6 +206,49 @@ export class DashboardServer {
   }
 
   /**
+   * Setup Smee.io streaming for public access
+   */
+  private setupSmeeStreaming(): void {
+    const smeeUrl = process.env.SMEE_URL;
+    
+    if (smeeUrl) {
+      this.smeeService = new SmeeStreamingService(
+        {
+          smeeUrl,
+          updateIntervalMs: 5000, // 5 seconds
+          enableLogging: true,
+          sanitizeData: true,
+        },
+        this.performanceMonitor,
+        this.intelligenceBridge
+      );
+    }
+  }
+
+  /**
+   * Setup Self-Hosted SSE Server for complete control
+   */
+  private setupSelfHostedSSE(): void {
+    const enableSSE = process.env.ENABLE_SSE_SERVER !== 'false'; // Enabled by default
+    
+    if (enableSSE) {
+      const ssePort = parseInt(process.env.SSE_PORT || '3001', 10);
+      
+      this.sseService = new SelfHostedSSEService(
+        {
+          port: ssePort,
+          enableLogging: true,
+          sanitizeData: true,
+          updateIntervalMs: 5000, // 5 seconds
+          corsOrigin: '*', // Allow all origins for development
+        },
+        this.performanceMonitor,
+        this.intelligenceBridge
+      );
+    }
+  }
+
+  /**
    * Send dashboard update to a specific socket
    */
   private sendDashboardUpdate(socket: any): void {
@@ -240,7 +289,7 @@ export class DashboardServer {
    */
   async start(): Promise<void> {
     return new Promise((resolve) => {
-      this.httpServer.listen(this.port, () => {
+      this.httpServer.listen(this.port, async () => {
         console.log(`\n📊 Dashboard Server Started`);
         console.log(`🌐 Dashboard URL: http://localhost:${this.port}`);
         console.log(`📡 WebSocket: Connected for real-time updates`);
@@ -256,6 +305,16 @@ export class DashboardServer {
           this.broadcastDashboardUpdate();
         }, 2000);
 
+        // Start Smee streaming if configured
+        if (this.smeeService) {
+          await this.smeeService.start();
+        }
+
+        // Start Self-Hosted SSE Server
+        if (this.sseService) {
+          await this.sseService.start();
+        }
+
         resolve();
       });
     });
@@ -268,6 +327,16 @@ export class DashboardServer {
     if (this.updateInterval) {
       clearInterval(this.updateInterval);
       this.updateInterval = null;
+    }
+
+    // Stop Smee streaming if running
+    if (this.smeeService) {
+      await this.smeeService.stop();
+    }
+
+    // Stop Self-Hosted SSE Server
+    if (this.sseService) {
+      await this.sseService.stop();
     }
 
     return new Promise((resolve) => {
