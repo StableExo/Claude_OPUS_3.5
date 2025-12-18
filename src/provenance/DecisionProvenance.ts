@@ -597,6 +597,20 @@ export class DecisionProvenance extends EventEmitter {
   isRunning(): boolean {
     return this.running;
   }
+
+  /**
+   * Check if on-chain anchoring is enabled
+   */
+  isOnChainAnchoringEnabled(): boolean {
+    return this.config.enableOnChainAnchoring;
+  }
+
+  /**
+   * Close/cleanup (alias for stop)
+   */
+  async close(): Promise<void> {
+    this.stop();
+  }
 }
 
 /**
