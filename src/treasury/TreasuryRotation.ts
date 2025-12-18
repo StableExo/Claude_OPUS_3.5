@@ -646,3 +646,18 @@ export class TreasuryRotation extends EventEmitter {
     return JSON.stringify(trail, null, 2);
   }
 }
+
+/**
+ * Factory function to create a production-ready TreasuryRotation instance
+ */
+export function createProductionTreasury(): TreasuryRotation {
+  const config: TreasuryConfig = {
+    minRotationAmount: BigInt(process.env.TREASURY_MIN_ROTATION_AMOUNT || '10000000000000000'), // 0.01 ETH
+    rotationIntervalMs: parseInt(process.env.TREASURY_ROTATION_INTERVAL_MS || '3600000'), // 1 hour
+    targetRotationPercentage: parseInt(process.env.TREASURY_TARGET_ROTATION_PERCENTAGE || '70'),
+    enableAutoRotation: process.env.TREASURY_ENABLE_AUTO_ROTATION === 'true',
+    proofRetentionDays: parseInt(process.env.TREASURY_PROOF_RETENTION_DAYS || '365'),
+  };
+
+  return new TreasuryRotation(config);
+}

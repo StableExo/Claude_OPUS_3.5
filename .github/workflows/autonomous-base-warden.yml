@@ -57,90 +57,65 @@ jobs:
           mkdir -p logs
           mkdir -p .memory/autonomous-execution
       
-      - name: Create .env file with Base network configuration
+      - name: Create .env file with Supabase configuration
         env:
-          BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
-          WALLET_PRIVATE_KEY: ${{ secrets.WALLET_PRIVATE_KEY }}
-          ALCHEMY_API_KEY: ${{ secrets.ALCHEMY_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: |
-          # Validate required secrets are set
-          if [ -z "$BASE_RPC_URL" ]; then
-            echo "::error::BASE_RPC_URL secret is not set. Please configure it in repository secrets."
-            echo "Get a free RPC URL from: https://www.alchemy.com/ or https://base.org/docs/tools/node-providers"
+          # Validate Supabase credentials
+          if [ -z "$SUPABASE_URL" ]; then
+            echo "::error::SUPABASE_URL secret is not set. Please configure it in repository secrets."
+            echo "Get your Supabase URL from: https://supabase.com/dashboard/project/_/settings/api"
             exit 1
           fi
-          if [ -z "$WALLET_PRIVATE_KEY" ]; then
-            echo "::error::WALLET_PRIVATE_KEY secret is not set. Please configure it in repository secrets."
+          if [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::SUPABASE_ANON_KEY secret is not set. Please configure it in repository secrets."
             exit 1
           fi
+          if [ -z "$SUPABASE_SERVICE_KEY" ]; then
+            echo "::warning::SUPABASE_SERVICE_KEY is not set. Some features may not work."
+          fi
           
-          # Determine dry run mode
-          DRY_RUN="${{ github.event.inputs.dry_run || 'true' }}"
-          SCAN_INTERVAL="${{ github.event.inputs.scan_interval || '800' }}"
-          
-          # Create .env file with Base network configuration
+          # Create .env file with Supabase configuration
           cat > .env << EOF
+          # === Supabase Configuration (All credentials loaded from Supabase) ===
+          USE_SUPABASE=true
+          SUPABASE_URL=$SUPABASE_URL
+          SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+          SUPABASE_SERVICE_KEY=$SUPABASE_SERVICE_KEY
+          
           # === Core Configuration ===
           NODE_ENV=production
           CHAIN_ID=8453
-          DRY_RUN=$DRY_RUN
-          
-          # === Base Network RPC ===
-          BASE_RPC_URL=$BASE_RPC_URL
-          RPC_URL=$BASE_RPC_URL
-          
-          # === Wallet Configuration ===
-          WALLET_PRIVATE_KEY=$WALLET_PRIVATE_KEY
-          
-          # === Performance Configuration ===
-          SCAN_INTERVAL=$SCAN_INTERVAL
-          MIN_PROFIT_THRESHOLD=0.15
-          MIN_PROFIT_PERCENT=0.3
-          MIN_PROFIT_ABSOLUTE=0.001
-          
-          # === DEX Configuration ===
-          ENABLE_UNISWAP_V2=true
-          ENABLE_UNISWAP_V3=true
-          ENABLE_AERODROME=true
-          ENABLE_BASESWAP=true
-          
-          # === Safety Systems ===
-          CIRCUIT_BREAKER_ENABLED=true
-          CIRCUIT_BREAKER_MAX_CONSECUTIVE_FAILURES=5
-          EMERGENCY_STOP_ENABLED=true
           
           # === Logging ===
           LOG_LEVEL=info
           ENABLE_LOGGING=true
           LOG_DIR=./logs
           
-          # === Memory & Consciousness ===
-          MEMORY_BACKGROUND_ENABLED=true
-          COGNITIVE_CONSENSUS_THRESHOLD=0.65
-          
           # === Feature Flags ===
           ENABLE_DASHBOARD=false
           ENABLE_SSE_SERVER=false
           EOF
           
-          echo "✅ Configuration created for Base network"
+          echo "✅ Supabase configuration created"
+          echo "All other credentials will be loaded from Supabase database"
           echo "Chain ID: 8453 (Base)"
-          echo "Dry Run: $DRY_RUN"
-          echo "Scan Interval: ${SCAN_INTERVAL}ms"
       
-      - name: Run TheWarden on Base Network
+      - name: Run TheWarden on Base Network (with Supabase)
         env:
           DURATION: ${{ github.event.inputs.duration || '3600' }}
         run: |
-          echo "🚀 Starting TheWarden on Base Network"
+          echo "🚀 Starting TheWarden on Base Network (Supabase Mode)"
           echo "═══════════════════════════════════════"
           echo "Chain: Base (8453)"
           echo "Duration: ${DURATION}s ($(($DURATION / 60)) minutes)"
-          echo "Dry Run: ${{ github.event.inputs.dry_run || 'true' }}"
+          echo "Credentials: Loaded from Supabase"
           echo "═══════════════════════════════════════"
           
-          # Run TheWarden with timeout
-          timeout ${DURATION}s npm run start || {
+          # Run TheWarden with Supabase bootstrap and timeout
+          timeout ${DURATION}s npm run start:supabase || {
             EXIT_CODE=$?
             if [ $EXIT_CODE -eq 124 ]; then
               echo "✅ TheWarden completed scheduled run (timeout reached)"
