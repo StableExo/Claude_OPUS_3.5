@@ -1,0 +1,243 @@
+name: Autonomous Base Network - TheWarden
+
+on:
+  # Run on a schedule - every hour for active arbitrage monitoring
+  schedule:
+    - cron: '0 * * * *'  # At the start of every hour
+  
+  # Allow manual triggering for on-demand runs
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'Runtime duration in seconds'
+        required: false
+        default: '3600'
+        type: string
+      dry_run:
+        description: 'Dry run mode (true = no real transactions)'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      scan_interval:
+        description: 'Scan interval in milliseconds'
+        required: false
+        default: '800'
+        type: string
+
+jobs:
+  base-network-arbitrage:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write        # Commit and push results
+      actions: read          # Read workflow artifacts
+      issues: write          # Create/update issues for findings
+      statuses: write        # Update commit statuses
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Create necessary directories
+        run: |
+          mkdir -p logs
+          mkdir -p .memory/autonomous-execution
+      
+      - name: Create .env file with Supabase configuration
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          # Validate Supabase credentials
+          if [ -z "$SUPABASE_URL" ]; then
+            echo "::error::SUPABASE_URL secret is not set. Please configure it in repository secrets."
+            echo "Get your Supabase URL from: https://supabase.com/dashboard/project/_/settings/api"
+            exit 1
+          fi
+          if [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::SUPABASE_ANON_KEY secret is not set. Please configure it in repository secrets."
+            exit 1
+          fi
+          if [ -z "$SUPABASE_SERVICE_KEY" ]; then
+            echo "::warning::SUPABASE_SERVICE_KEY is not set. Some features may not work."
+          fi
+          
+          # Create .env file with Supabase configuration
+          cat > .env << EOF
+          # === Supabase Configuration (All credentials loaded from Supabase) ===
+          USE_SUPABASE=true
+          SUPABASE_URL=$SUPABASE_URL
+          SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+          SUPABASE_SERVICE_KEY=$SUPABASE_SERVICE_KEY
+          
+          # === Core Configuration ===
+          NODE_ENV=production
+          CHAIN_ID=8453
+          
+          # === Logging ===
+          LOG_LEVEL=info
+          ENABLE_LOGGING=true
+          LOG_DIR=./logs
+          
+          # === Feature Flags ===
+          ENABLE_DASHBOARD=false
+          ENABLE_SSE_SERVER=false
+          EOF
+          
+          echo "✅ Supabase configuration created"
+          echo "All other credentials will be loaded from Supabase database"
+          echo "Chain ID: 8453 (Base)"
+      
+      - name: Run TheWarden on Base Network (with Supabase)
+        env:
+          DURATION: ${{ github.event.inputs.duration || '3600' }}
+        run: |
+          echo "🚀 Starting TheWarden on Base Network (Supabase Mode)"
+          echo "═══════════════════════════════════════"
+          echo "Chain: Base (8453)"
+          echo "Duration: ${DURATION}s ($(($DURATION / 60)) minutes)"
+          echo "Credentials: Loaded from Supabase"
+          echo "═══════════════════════════════════════"
+          
+          # Run TheWarden with Supabase bootstrap and timeout
+          timeout ${DURATION}s npm run start:supabase || {
+            EXIT_CODE=$?
+            if [ $EXIT_CODE -eq 124 ]; then
+              echo "✅ TheWarden completed scheduled run (timeout reached)"
+            else
+              echo "⚠️ TheWarden exited with code: $EXIT_CODE"
+              exit $EXIT_CODE
+            fi
+          }
+      
+      - name: Analyze execution results
+        if: always()
+        run: |
+          echo "📊 Analyzing execution results..."
+          
+          # Check for log files
+          if [ -f "logs/warden-output.log" ]; then
+            echo "Latest log entries:"
+            tail -50 logs/warden-output.log
+            
+            # Count opportunities found
+            OPP_COUNT=$(grep -c "Found.*potential opportunities" logs/warden-output.log 2>/dev/null || echo "0")
+            ERROR_COUNT=$(grep -c "ERROR" logs/warden-output.log 2>/dev/null || echo "0")
+            
+            echo ""
+            echo "═══════════════════════════════════════"
+            echo "Execution Summary:"
+            echo "  Opportunities Found: $OPP_COUNT"
+            echo "  Errors: $ERROR_COUNT"
+            echo "═══════════════════════════════════════"
+          else
+            echo "⚠️ No log file found"
+          fi
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "TheWarden Bot"
+          git config --global user.email "thewarden@autonomous.ai"
+      
+      - name: Commit and push execution logs
+        run: |
+          # Create execution summary
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          DRY_RUN="${{ github.event.inputs.dry_run || 'true' }}"
+          DURATION="${{ github.event.inputs.duration || '3600' }}"
+          
+          # Create summary file
+          SUMMARY_FILE=".memory/autonomous-execution/base_execution_$(date -u +%Y%m%d_%H%M%S).md"
+          
+          cat > "$SUMMARY_FILE" << 'SUMMARY_EOF'
+# TheWarden Autonomous Base Network Execution
+
+**Timestamp**: %TIMESTAMP%  
+**Chain**: Base (8453)  
+**Duration**: %DURATION%s (%DURATION_MIN% minutes)  
+**Dry Run**: %DRY_RUN%  
+**Workflow Run**: #${{ github.run_number }}
+
+## Configuration
+- Scan Interval: ${{ github.event.inputs.scan_interval || '800' }}ms
+- Min Profit Threshold: 0.15%
+- DEXes: Uniswap V2/V3, Aerodrome, BaseSwap
+
+## Execution Results
+SUMMARY_EOF
+          
+          # Replace placeholders
+          DURATION_MIN=$(($DURATION / 60))
+          sed -i "s/%TIMESTAMP%/$TIMESTAMP/g" "$SUMMARY_FILE"
+          sed -i "s/%DURATION%/$DURATION/g" "$SUMMARY_FILE"
+          sed -i "s/%DURATION_MIN%/$DURATION_MIN/g" "$SUMMARY_FILE"
+          sed -i "s/%DRY_RUN%/$DRY_RUN/g" "$SUMMARY_FILE"
+          
+          # Add log summary if available
+          if [ -f "logs/warden-output.log" ]; then
+            echo "" >> "$SUMMARY_FILE"
+            echo "### Log Summary" >> "$SUMMARY_FILE"
+            echo '```' >> "$SUMMARY_FILE"
+            tail -100 logs/warden-output.log >> "$SUMMARY_FILE"
+            echo '```' >> "$SUMMARY_FILE"
+          fi
+          
+          # Stage changes
+          git add .memory/autonomous-execution/ || true
+          git add logs/ || true
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No new execution data to commit"
+          else
+            # Create commit message
+            cat > /tmp/commit_msg.txt << 'COMMIT_EOF'
+🚀 Autonomous Base Network Execution - %TIMESTAMP%
+
+Chain: Base (8453)
+Duration: %DURATION_MIN% minutes
+Dry Run: %DRY_RUN%
+
+Generated by: autonomous-base-warden.yml
+Workflow Run: #${{ github.run_number }}
+COMMIT_EOF
+            
+            # Replace placeholders
+            sed -i "s/%TIMESTAMP%/$TIMESTAMP/g" /tmp/commit_msg.txt
+            sed -i "s/%DURATION_MIN%/$DURATION_MIN/g" /tmp/commit_msg.txt
+            sed -i "s/%DRY_RUN%/$DRY_RUN/g" /tmp/commit_msg.txt
+            
+            git commit -F /tmp/commit_msg.txt --author="TheWarden Bot <thewarden@autonomous.ai>"
+            git push
+          fi
+      
+      - name: Upload execution logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: base-execution-logs-${{ github.run_number }}
+          path: |
+            logs/*.log
+            .memory/autonomous-execution/*.md
+          retention-days: 30
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::TheWarden autonomous execution on Base network failed"
+          echo "Check the logs and workflow artifacts for details"

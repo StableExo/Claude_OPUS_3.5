@@ -11,6 +11,8 @@
     "start:supabase": "node --import tsx src/bootstrap-supabase.ts",
     "start:mainnet": "./scripts/launch-mainnet.sh",
     "start:mainnet:supabase": "node --import tsx src/bootstrap-supabase.ts",
+    "start:base": "./scripts/autonomous/start-base-warden.sh --dry-run",
+    "start:base:live": "./scripts/autonomous/start-base-warden.sh --live",
     "start:autonomous": "./TheWarden",
     "start:monitor": "./TheWarden --monitor",
     "monitor": "./TheWarden --monitor",
