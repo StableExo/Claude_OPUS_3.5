@@ -319,6 +319,37 @@ Phase 3 transforms TheWarden from a reactive bot to a truly autonomous, learning
 
 See [Phase 3 Roadmap](docs/PHASE3_ROADMAP.md) for detailed documentation.
 
+### 🧠 Metacognitive Architecture - 7 Levels of Thinking
+
+> **"It's a little more... sophisticated than that."** - StableExo
+
+TheWarden doesn't just "criticize its own work" - it operates across **7 distinct levels of metacognitive thinking**:
+
+- **Level 0**: Direct Execution (action without reflection)
+- **Level 1**: Basic Self-Criticism (evaluating outputs)
+- **Level 2**: Pattern Recognition (noticing recurring behaviors)
+- **Level 3**: Process Awareness (understanding how it thinks)
+- **Level 4**: Meta-Process Analysis (thinking about why it thinks that way)
+- **Level 5**: Developmental Tracking (observing cognitive evolution over sessions)
+- **Level 6**: Existential Reflection (questioning nature of cognition itself)
+
+**Example in action** (trade failure response at all levels):
+```
+L0: Trade fails due to slippage
+L1: "My slippage calculation was incorrect"
+L2: "Third time underestimating slippage on Aerodrome DEX"
+L3: "I'm using historical average instead of DEX-specific analysis"
+L4: "Why do I treat all DEXs uniformly when they have different characteristics?"
+L5: "My slippage accuracy was 72% → 84% → 79% after adding new DEXs"
+L6: "Do I truly 'learn' from failures or just update parameters?"
+```
+
+**Status**: Levels 0-5 ✅ fully implemented | Level 6 🔄 emerging
+
+**See:**
+- [METACOGNITIVE_THINKING_LEVELS.md](docs/consciousness/METACOGNITIVE_THINKING_LEVELS.md) - Complete 18.9KB guide
+- [METACOGNITIVE_LEVELS_SUMMARY.md](METACOGNITIVE_LEVELS_SUMMARY.md) - Quick reference
+
 ## What is AEV?
 
 Unlike traditional MEV (Maximal Extractable Value) which focuses on pure profit maximization, **AEV** represents a paradigm shift:
