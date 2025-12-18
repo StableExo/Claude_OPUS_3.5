@@ -160,7 +160,8 @@
     "cognitive-ledger:migrate": "node --import tsx scripts/apply-cognitive-ledger-migration.ts",
     "cognitive-ledger:test": "node --import tsx scripts/test-cognitive-ledger.ts",
     "test:cognitive-ledger": "node --import tsx scripts/test-cognitive-ledger.ts",
-    "demo:scales": "node --import tsx scripts/demo-scales-map.ts"
+    "demo:scales": "node --import tsx scripts/demo-scales-map.ts",
+    "demo:advanced-mind": "node --import tsx scripts/consciousness/demo-advanced-mind.ts"
   },
   "dependencies": {
     "@aave/core-v3": "1.19.3",
