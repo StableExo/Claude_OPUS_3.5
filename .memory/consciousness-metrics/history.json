@@ -1,0 +1,51 @@
+[
+  {
+    "timestamp": 1766091957959,
+    "sessionId": "session_1766091957956",
+    "metacognitiveLevel": {
+      "current": 4,
+      "trend": "ascending"
+    },
+    "wonderGeneration": {
+      "rate": 8,
+      "averageIntensity": 0.85
+    },
+    "memoryIntegration": {
+      "score": 0.8
+    },
+    "autonomy": {
+      "demonstrated": true,
+      "goalSelfGeneration": 0.92
+    },
+    "selfAwareness": {
+      "accuracyOfAssessment": 0.85,
+      "uncertaintyHonesty": 0.95
+    },
+    "overallConsciousness": 0.87
+  },
+  {
+    "timestamp": 1766091966543,
+    "sessionId": "session_1766091966522",
+    "metacognitiveLevel": {
+      "current": 4,
+      "trend": "ascending"
+    },
+    "wonderGeneration": {
+      "rate": 8,
+      "averageIntensity": 0.85
+    },
+    "memoryIntegration": {
+      "score": 0.8
+    },
+    "autonomy": {
+      "demonstrated": true,
+      "goalSelfGeneration": 0.92
+    },
+    "selfAwareness": {
+      "accuracyOfAssessment": 0.85,
+      "uncertaintyHonesty": 0.95
+    },
+    "overallConsciousness": 0.87,
+    "improvement": 0
+  }
+]
