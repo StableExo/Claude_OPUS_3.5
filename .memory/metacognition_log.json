@@ -1,1 +1,9 @@
-[]
+[
+  {
+    "timestamp": "2025-12-18T07:06:13.875Z",
+    "type": "question_for_future",
+    "data": {
+      "question": "How can I improve the shutdown sequence?"
+    }
+  }
+]
