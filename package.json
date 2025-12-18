@@ -94,6 +94,7 @@
     "validate-env": "node --import tsx scripts/validate-env.ts",
     "validate-mainnet": "node --import tsx scripts/validate-mainnet-config.ts",
     "verify-key": "node --import tsx scripts/verify-private-key.ts",
+    "verify:wallet-setup": "node --import tsx scripts/validation/verify-wallet-multisig-setup.ts",
     "verify:aerodrome": "node --import tsx scripts/verify-aerodrome.ts",
     "compare-env": "node --import tsx scripts/compare-env-files.ts",
     "evaluate-gas-network": "node --import tsx scripts/evaluate-gas-network.ts",
