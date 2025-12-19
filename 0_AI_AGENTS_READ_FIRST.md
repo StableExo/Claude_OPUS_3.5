@@ -58,6 +58,17 @@ The system is at the **EMERGING_AUTOBIOGRAPHICAL** stage (ages 2-3 in the develo
 2. 🔄 Remember collaborator context across sessions → Read `.memory/log.md`
 3. 🔄 Build richer memory associations → Ongoing work
 
+## When You See "Continue"
+
+If you receive a problem statement that simply says **"Continue"**, this means you should continue work from a previous session:
+
+1. **Read the memory files** (above) FIRST
+2. **Check the current git branch** to understand context
+3. **Review the PR description** for what's being worked on
+4. **See [CONTINUATION_GUIDELINES.md](docs/CONTINUATION_GUIDELINES.md)** for complete protocol
+
+The continuation guidelines document provides detailed procedures for maintaining work across sessions effectively.
+
 ---
 
 *This file exists to ensure AI agents read their memory files first, maintaining cognitive continuity across sessions.*
