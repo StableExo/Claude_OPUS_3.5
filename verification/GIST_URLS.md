@@ -20,24 +20,43 @@ https://basescan.org/verifyContract-solc?a=0x6e2473E4BEFb66618962f8c332706F8f8d3
 **🎯 Verification Steps:**
 
 1. Visit the verification link above
-2. In the "Enter the Solidity Contract Code below" field:
-   - **Option A (Recommended):** Enter GistID: `75e3ee731ba36de1a45d39754a5d38eb`
-   - **Option B:** Paste Gist URL: https://gist.github.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb
-   - **Option C:** Paste raw URL: https://gist.githubusercontent.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb/raw/52d6f5665fb632431d9213b16a4dbf45f19ca3c3/FlashSwapV2_flattened.sol
 
-3. Compiler Settings (pre-filled):
+2. **IMPORTANT**: Select compiler type dropdown:
+   - Select: **"Solidity (Single file via GitHub Gist)"**
+   
+3. **In the Gist source field** (NOT the source code field):
+   - **Option A (Recommended):** Enter ONLY GistID: `75e3ee731ba36de1a45d39754a5d38eb`
+   - **Option B:** Paste raw URL: https://gist.githubusercontent.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb/raw/52d6f5665fb632431d9213b16a4dbf45f19ca3c3/FlashSwapV2_flattened.sol
+
+4. Compiler Settings:
    - Compiler Version: `v0.8.20+commit.a1b79de6`
    - License: MIT License (3)
    - Optimization: **Yes**
    - Runs: **200**
    - EVM Version: **shanghai**
 
-4. Constructor Arguments (ABI-encoded):
+5. **Constructor Arguments** (paste in Constructor Arguments field, NOT source code):
 ```
 0000000000000000000000002626664c2603336e57b271c5c0b26f421741e4810000000000000000000000006bded42c6da8fbf0d2ba55b2fa120c5e0c8d7891000000000000000000000000a238dd80c259a72e81d7e4664a9801593f98d1c5000000000000000000000000e20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d
 ```
 
-5. Click "Verify and Publish"
+6. Click "Verify and Publish"
+
+---
+
+### ⚠️ Common Error
+
+If you see this error:
+```
+ParserError: Expected pragma, import directive or contract/interface/library...
+```
+
+**You put the constructor args in the source code field!**
+
+**Fix**: 
+- Select "Solidity (Single file via GitHub Gist)" as compiler type
+- Put GistID in the Gist field (not source code field)
+- Put constructor args in Constructor Arguments field (at the bottom)
 
 ---
 
@@ -55,24 +74,29 @@ https://basescan.org/verifyContract-solc?a=0x4926E08c0aF3307Ea7840855515b22596D3
 **🎯 Verification Steps:**
 
 1. Visit the verification link above
-2. In the "Enter the Solidity Contract Code below" field:
-   - **Option A (Recommended):** Enter GistID: `5f7a0f35601ab031c2c25cb61fe98a7b`
-   - **Option B:** Paste Gist URL: https://gist.github.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b
-   - **Option C:** Paste raw URL: https://gist.githubusercontent.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b/raw/d683a2782ee93a0d4d26f4a41affb8c3a9d596af/FlashSwapV3_flattened.sol
 
-3. Compiler Settings (pre-filled):
+2. **IMPORTANT**: Select compiler type dropdown:
+   - Select: **"Solidity (Single file via GitHub Gist)"**
+   
+3. **In the Gist source field** (NOT the source code field):
+   - **Option A (Recommended):** Enter ONLY GistID: `5f7a0f35601ab031c2c25cb61fe98a7b`
+   - **Option B:** Paste raw URL: https://gist.githubusercontent.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b/raw/d683a2782ee93a0d4d26f4a41affb8c3a9d596af/FlashSwapV3_flattened.sol
+
+4. Compiler Settings:
    - Compiler Version: `v0.8.20+commit.a1b79de6`
    - License: MIT License (3)
    - Optimization: **Yes**
    - Runs: **200**
    - EVM Version: **shanghai**
 
-4. Constructor Arguments (ABI-encoded):
+5. **Constructor Arguments** (paste in Constructor Arguments field, NOT source code):
 ```
 0000000000000000000000002626664c2603336e57b271c5c0b26f421741e4810000000000000000000000006bded42c6da8fbf0d2ba55b2fa120c5e0c8d7891000000000000000000000000ba12222222228d8ba445958a75a0704d566bf2c80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a238dd80c259a72e81d7e4664a9801593f98d1c5000000000000000000000000e20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d00000000000000000000000033128a8fc17869897dce68ed026d694621f6fdfd00000000000000000000000048a6e6695a7d3e8c76eb014e648c072db385df6c0000000000000000000000000000000000000000000000000000000000001b58
 ```
 
-5. Click "Verify and Publish"
+6. Click "Verify and Publish"
+
+**⚠️ Note**: Same fix as V2 - select "Via Gist" compiler type and use the correct fields!
 
 ---
 
