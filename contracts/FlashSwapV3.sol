@@ -319,9 +319,9 @@ contract FlashSwapV3 is
      * @notice Check if Balancer supports the token/amount
      */
     function isBalancerSupported(
-        address token,
-        uint256 amount
-    ) public view returns (bool) {
+        address /* token */,
+        uint256 /* amount */
+    ) public pure returns (bool) {
         // Balancer supports most major tokens on Base/Ethereum
         // For now, return true (can add specific checks later)
         // TODO: Check Balancer vault token balance
@@ -332,8 +332,8 @@ contract FlashSwapV3 is
      * @notice Check if dYdX supports the token/amount
      */
     function isDydxSupported(
-        address token,
-        uint256 amount
+        address /* token */,
+        uint256 /* amount */
     ) public view returns (bool) {
         // dYdX Solo Margin only on Ethereum mainnet
         // Supports WETH (market 0), USDC (market 2), DAI (market 3)
@@ -418,10 +418,10 @@ contract FlashSwapV3 is
 
     // --- dYdX Flash Loan ---
     function _executeDydxFlashLoan(
-        address token,
-        uint256 amount,
-        UniversalSwapPath memory path
-    ) internal {
+        address /* token */,
+        uint256 /* amount */,
+        UniversalSwapPath memory /* path */
+    ) internal pure {
         // dYdX implementation
         // Note: dYdX Solo Margin is Ethereum-only
         revert("FSV3:DNI"); // dYdX not implemented for Base
@@ -431,10 +431,10 @@ contract FlashSwapV3 is
      * @notice dYdX callback (ICallee interface)
      */
     function callFunction(
-        address sender,
-        ISoloMargin.Account memory accountInfo,
-        bytes memory data
-    ) external override {
+        address /* sender */,
+        ISoloMargin.Account memory /* accountInfo */,
+        bytes memory /* data */
+    ) external pure override {
         // dYdX callback implementation
         revert("FSV3:DNI");
     }
@@ -653,10 +653,10 @@ contract FlashSwapV3 is
 
     // --- Uniswap V3 Flash Callback (for compatibility) ---
     function uniswapV3FlashCallback(
-        uint256 fee0,
-        uint256 fee1,
-        bytes calldata data
-    ) external override {
+        uint256 /* fee0 */,
+        uint256 /* fee1 */,
+        bytes calldata /* data */
+    ) external pure override {
         // V3 flash callback (legacy support)
         revert("FSV3:UFL"); // Use executeArbitrage instead
     }

@@ -1,3 +1,4 @@
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
 // Sources flattened with hardhat v3.0.16 https://hardhat.org
 
 // SPDX-License-Identifier: GPL-2.0-or-later AND MIT AND UNLICENSED
@@ -1960,9 +1961,9 @@ contract FlashSwapV3 is
      * @notice Check if Balancer supports the token/amount
      */
     function isBalancerSupported(
-        address token,
-        uint256 amount
-    ) public view returns (bool) {
+        address /* token */,
+        uint256 /* amount */
+    ) public pure returns (bool) {
         // Balancer supports most major tokens on Base/Ethereum
         // For now, return true (can add specific checks later)
         // TODO: Check Balancer vault token balance
@@ -1973,8 +1974,8 @@ contract FlashSwapV3 is
      * @notice Check if dYdX supports the token/amount
      */
     function isDydxSupported(
-        address token,
-        uint256 amount
+        address /* token */,
+        uint256 /* amount */
     ) public view returns (bool) {
         // dYdX Solo Margin only on Ethereum mainnet
         // Supports WETH (market 0), USDC (market 2), DAI (market 3)
@@ -2059,10 +2060,10 @@ contract FlashSwapV3 is
 
     // --- dYdX Flash Loan ---
     function _executeDydxFlashLoan(
-        address token,
-        uint256 amount,
-        UniversalSwapPath memory path
-    ) internal {
+        address /* token */,
+        uint256 /* amount */,
+        UniversalSwapPath memory /* path */
+    ) internal pure {
         // dYdX implementation
         // Note: dYdX Solo Margin is Ethereum-only
         revert("FSV3:DNI"); // dYdX not implemented for Base
@@ -2072,10 +2073,10 @@ contract FlashSwapV3 is
      * @notice dYdX callback (ICallee interface)
      */
     function callFunction(
-        address sender,
-        ISoloMargin.Account memory accountInfo,
-        bytes memory data
-    ) external override {
+        address /* sender */,
+        ISoloMargin.Account memory /* accountInfo */,
+        bytes memory /* data */
+    ) external pure override {
         // dYdX callback implementation
         revert("FSV3:DNI");
     }
@@ -2294,10 +2295,10 @@ contract FlashSwapV3 is
 
     // --- Uniswap V3 Flash Callback (for compatibility) ---
     function uniswapV3FlashCallback(
-        uint256 fee0,
-        uint256 fee1,
-        bytes calldata data
-    ) external override {
+        uint256 /* fee0 */,
+        uint256 /* fee1 */,
+        bytes calldata /* data */
+    ) external pure override {
         // V3 flash callback (legacy support)
         revert("FSV3:UFL"); // Use executeArbitrage instead
     }
@@ -2310,3 +2311,5 @@ contract FlashSwapV3 is
     receive() external payable {}
 }
 
+
+Pragma abicoder directives are defined in some files, but they are not defined in the following ones: contracts/interfaces/IBalancerVault.sol, contracts/interfaces/IDODOV1V2Pool.sol, contracts/interfaces/ISoloMargin.sol, contracts/interfaces/IUniswapV2Router02.sol, contracts/libraries/CallbackValidation.sol, contracts/libraries/PoolAddress.sol, npm/@openzeppelin/contracts@5.4.0/interfaces/IERC1363.sol, npm/@openzeppelin/contracts@5.4.0/interfaces/IERC165.sol, npm/@openzeppelin/contracts@5.4.0/interfaces/IERC20.sol, npm/@openzeppelin/contracts@5.4.0/token/ERC20/IERC20.sol, npm/@openzeppelin/contracts@5.4.0/token/ERC20/utils/SafeERC20.sol, npm/@openzeppelin/contracts@5.4.0/utils/ReentrancyGuard.sol, npm/@openzeppelin/contracts@5.4.0/utils/introspection/IERC165.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/IUniswapV3Factory.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/IUniswapV3Pool.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/callback/IUniswapV3FlashCallback.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/callback/IUniswapV3SwapCallback.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolActions.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolEvents.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolImmutables.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolState.sol
