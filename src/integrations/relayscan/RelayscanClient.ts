@@ -67,9 +67,9 @@ export class RelayscanClient {
 
     // Check cache
     if (this.config.cache.enabled) {
-      const cached = this.cache.get<T>(cacheKey);
+      const cached = this.cache.get(cacheKey);
       if (cached) {
-        return cached;
+        return cached as T;
       }
     }
 
@@ -99,7 +99,7 @@ export class RelayscanClient {
         this.cache.set(cacheKey, data, this.config.cache.ttl);
       }
 
-      return data;
+      return data as T;
     } catch (error) {
       clearTimeout(timeout);
       if ((error as any).name === 'AbortError') {

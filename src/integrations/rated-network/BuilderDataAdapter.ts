@@ -107,15 +107,11 @@ export class BuilderDataAdapter {
       // Update cache
       this.cache.set(builderName, metadata);
 
-      logger.info(`Updated builder metadata for ${builderName}:`, {
-        marketShare: (metadata.marketShare * 100).toFixed(2) + '%',
-        blocksBuilt24h: metadata.blocksBuilt24h,
-        effectiveness: (metadata.performance.effectiveness * 100).toFixed(2) + '%',
-      });
+      logger.info(`Updated builder metadata for ${builderName}: market share ${(metadata.marketShare * 100).toFixed(2)}%, blocks built ${metadata.blocksBuilt24h}, effectiveness ${(metadata.performance.effectiveness * 100).toFixed(2)}%`);
 
       return metadata;
     } catch (error) {
-      logger.error(`Error fetching builder metadata for ${builderName}:`, error);
+      logger.error(`Error fetching builder metadata for ${builderName}:`, error instanceof Error ? error.message : String(error));
       return null;
     }
   }

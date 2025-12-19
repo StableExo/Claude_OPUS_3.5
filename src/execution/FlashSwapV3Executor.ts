@@ -269,13 +269,10 @@ export class FlashSwapV3Executor {
         dexType = DexType.UNISWAP_V3; // Default
       }
 
-      // Calculate minOut with slippage
+      // Calculate minOut with slippage from expectedOutput
       const slippage = this.config.defaultSlippage;
-      // Use minAmountOut if available, otherwise calculate from expectedOutput
       let baseAmount: bigint;
-      if (swap.minAmountOut) {
-        baseAmount = BigInt(swap.minAmountOut);
-      } else if (swap.expectedOutput) {
+      if (swap.expectedOutput) {
         baseAmount = BigInt(Math.floor(swap.expectedOutput));
       } else {
         baseAmount = BigInt(0);

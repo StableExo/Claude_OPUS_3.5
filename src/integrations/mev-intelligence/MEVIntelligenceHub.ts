@@ -138,19 +138,21 @@ export class MEVIntelligenceHub {
       ...config,
     };
 
-    // Initialize clients
+    // Initialize clients with guaranteed cacheTTL value
+    const cacheTTL = this.config.cacheTTL!; // We just set it above so it's guaranteed to be defined
+    
     if (this.config.enableRatedNetwork && this.config.ratedNetworkApiKey) {
       this.ratedClient = createRatedNetworkClient(this.config.ratedNetworkApiKey, {
-        cache: { enabled: true, ttl: this.config.cacheTTL },
+        cache: { enabled: true, ttl: cacheTTL },
       });
     }
 
     this.relayscanClient = createRelayscanClient({
-      cache: { enabled: true, ttl: this.config.cacheTTL },
+      cache: { enabled: true, ttl: cacheTTL },
     });
 
     this.mevboostClient = createMEVBoostPicsClient({
-      cache: { enabled: true, ttl: this.config.cacheTTL },
+      cache: { enabled: true, ttl: cacheTTL },
     });
 
     logger.info('🎯 MEV Intelligence Hub initialized with complete flow visibility');
@@ -252,7 +254,7 @@ export class MEVIntelligenceHub {
 
       return data as UnifiedBuilderIntelligence;
     } catch (error) {
-      logger.error(`Error fetching builder intelligence for ${builderName}:`, error);
+      logger.error(`Error fetching builder intelligence for ${builderName}:`, error instanceof Error ? error.message : String(error));
       return null;
     }
   }
@@ -330,7 +332,7 @@ export class MEVIntelligenceHub {
 
       return analysis;
     } catch (error) {
-      logger.error('Error analyzing MEV flows:', error);
+      logger.error('Error analyzing MEV flows:', error instanceof Error ? error.message : String(error));
       throw error;
     }
   }
@@ -384,7 +386,7 @@ export class MEVIntelligenceHub {
         }
       }
     } catch (error) {
-      logger.error('Error fetching all builders:', error);
+      logger.error('Error fetching all builders:', error instanceof Error ? error.message : String(error));
     }
     
     return builders.sort((a, b) => b.score - a.score);

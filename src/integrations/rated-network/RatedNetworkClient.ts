@@ -131,9 +131,9 @@ export class RatedNetworkClient {
 
     // Check cache
     if (this.config.cache.enabled) {
-      const cached = this.cache.get<RatedAPIResponse<T>>(cacheKey);
+      const cached = this.cache.get(cacheKey);
       if (cached) {
-        return cached;
+        return cached as RatedAPIResponse<T>;
       }
     }
 
@@ -198,11 +198,12 @@ export class RatedNetworkClient {
       clearTimeout(timeout);
 
       if (!response.ok) {
-        const error: RatedAPIError = await response.json().catch(() => ({
+        const errorData = await response.json().catch(() => ({
           error: 'HTTP Error',
           message: response.statusText,
           statusCode: response.status,
         }));
+        const error: RatedAPIError = errorData as RatedAPIError;
         
         const apiError = new Error(error.message) as any;
         apiError.statusCode = error.statusCode;
@@ -211,7 +212,7 @@ export class RatedNetworkClient {
       }
 
       const data = await response.json();
-      return data;
+      return data as RatedAPIResponse<T>;
     } catch (error) {
       clearTimeout(timeout);
       
