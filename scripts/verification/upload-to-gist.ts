@@ -96,7 +96,23 @@ async function createContractGist(
   
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`GitHub API error (${response.status}): ${errorText}`);
+    const errorMsg = `GitHub API error (${response.status}): ${errorText}`;
+    
+    // Provide helpful error message for 403 errors
+    if (response.status === 403) {
+      throw new Error(
+        `${errorMsg}\n\n` +
+        `This error usually means your GitHub token doesn't have the required "gist" scope.\n\n` +
+        `To fix this:\n` +
+        `1. Visit: https://github.com/settings/tokens\n` +
+        `2. Create a new token with the "gist" scope checked\n` +
+        `3. Add it to your .env file:\n` +
+        `   GITHUB_TOKEN=ghp_your_new_token_here\n\n` +
+        `For detailed instructions, see: scripts/verification/GITHUB_TOKEN_SETUP.md`
+      );
+    }
+    
+    throw new Error(errorMsg);
   }
   
   const gist: GistResponse = await response.json();
@@ -303,15 +319,16 @@ async function main() {
   const token = process.env.GITHUB_TOKEN || process.env.GH_PAT_COPILOT;
   
   if (!token) {
-    console.error('❌ Error: GitHub token not found');
-    console.error('\nSetup required:');
-    console.error('  1. Install dependencies: nvm install 22 && nvm use 22 && npm install');
-    console.error('  2. Generate token at: https://github.com/settings/tokens/new');
-    console.error('     Required scope: gist');
-    console.error('  3. Add to .env file:');
-    console.error('     GITHUB_TOKEN=ghp_your_token_here');
-    console.error('     OR');
-    console.error('     GH_PAT_COPILOT=ghp_your_token_here\n');
+    console.error('❌ Error: GitHub token not found\n');
+    console.error('Your GitHub token needs the "gist" scope to create Gists.\n');
+    console.error('Quick setup:');
+    console.error('  1. Visit: https://github.com/settings/tokens/new');
+    console.error('  2. Check the "gist" scope (ONLY this scope is needed)');
+    console.error('  3. Generate token and copy it');
+    console.error('  4. Add to .env file:');
+    console.error('     GITHUB_TOKEN=ghp_your_token_here\n');
+    console.error('For detailed instructions, see:');
+    console.error('  scripts/verification/GITHUB_TOKEN_SETUP.md\n');
     process.exit(1);
   }
   
@@ -346,10 +363,8 @@ async function main() {
     
   } catch (error) {
     console.error('\n❌ Error:', error instanceof Error ? error.message : String(error));
-    console.error('\nTroubleshooting:');
-    console.error('  1. Verify your GitHub token has "gist" scope');
-    console.error('  2. Check that verification files exist in ./verification/');
-    console.error('  3. Ensure you have network connectivity to GitHub API\n');
+    console.error('\n📖 For troubleshooting help, see:');
+    console.error('   scripts/verification/GITHUB_TOKEN_SETUP.md\n');
     process.exit(1);
   }
 }

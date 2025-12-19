@@ -69,11 +69,13 @@ nvm install 22 && nvm use 22 && npm install
 
 # 2. Add GitHub token to .env (needs 'gist' scope)
 # Generate at: https://github.com/settings/tokens/new
+# Check ONLY the "gist" scope
 # Then add to .env:
 GITHUB_TOKEN=ghp_your_token_here
-# OR
-GH_PAT_COPILOT=ghp_your_token_here
 ```
+
+**⚠️ Getting a 403 error?** Your token needs the "gist" scope!
+See: [`../scripts/verification/GITHUB_TOKEN_SETUP.md`](../scripts/verification/GITHUB_TOKEN_SETUP.md)
 
 ### One-Command Solution
 
@@ -88,8 +90,8 @@ This will:
 3. Provide direct links to BaseScan verification pages
 
 **Prerequisites:**
-- Set `GITHUB_TOKEN` or `GH_PAT_COPILOT` in `.env` with a token that has `gist` scope
-- Generate token at: https://github.com/settings/tokens/new
+- Set `GITHUB_TOKEN` in `.env` with a token that has the `gist` scope
+- **Need help?** See: [`../scripts/verification/GITHUB_TOKEN_SETUP.md`](../scripts/verification/GITHUB_TOKEN_SETUP.md)
 
 **After running:**
 - Open `GIST_URLS.md` for step-by-step verification instructions
