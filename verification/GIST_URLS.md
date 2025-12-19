@@ -1,6 +1,6 @@
 # GitHub Gist URLs for Contract Verification
 
-Generated on: 2025-12-19T01:28:18.528Z
+Generated on: 2025-12-19T01:56:19.733Z
 
 ## ⚡ Quick Start - BaseScan Verification
 
@@ -14,49 +14,30 @@ BaseScan supports fetching Solidity code from GitHub Gist by entering the **Gist
 https://basescan.org/verifyContract-solc?a=0x6e2473E4BEFb66618962f8c332706F8f8d339c08&c=v0.8.20%2bcommit.a1b79de6&lictype=3
 
 **📋 Gist Information:**
-- **Gist URL:** https://gist.github.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb
-- **GistID:** `75e3ee731ba36de1a45d39754a5d38eb`
+- **Gist URL:** https://gist.github.com/StableExo/87518ec63909b88caf1710e94e774548
+- **GistID:** `87518ec63909b88caf1710e94e774548`
 
 **🎯 Verification Steps:**
 
 1. Visit the verification link above
+2. In the "Enter the Solidity Contract Code below" field:
+   - **Option A (Recommended):** Enter GistID: `87518ec63909b88caf1710e94e774548`
+   - **Option B:** Paste Gist URL: https://gist.github.com/StableExo/87518ec63909b88caf1710e94e774548
+   - **Option C:** Paste raw URL: https://gist.githubusercontent.com/StableExo/87518ec63909b88caf1710e94e774548/raw/52d6f5665fb632431d9213b16a4dbf45f19ca3c3/1_FlashSwapV2_flattened.sol
 
-2. **IMPORTANT**: Select compiler type dropdown:
-   - Select: **"Solidity (Single file via GitHub Gist)"**
-   
-3. **In the Gist source field** (NOT the source code field):
-   - **Option A (Recommended):** Enter ONLY GistID: `75e3ee731ba36de1a45d39754a5d38eb`
-   - **Option B:** Paste raw URL: https://gist.githubusercontent.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb/raw/52d6f5665fb632431d9213b16a4dbf45f19ca3c3/FlashSwapV2_flattened.sol
-
-4. Compiler Settings:
+3. Compiler Settings (pre-filled):
    - Compiler Version: `v0.8.20+commit.a1b79de6`
    - License: MIT License (3)
    - Optimization: **Yes**
    - Runs: **200**
    - EVM Version: **shanghai**
 
-5. **Constructor Arguments** (paste in Constructor Arguments field, NOT source code):
+4. Constructor Arguments (ABI-encoded):
 ```
 0000000000000000000000002626664c2603336e57b271c5c0b26f421741e4810000000000000000000000006bded42c6da8fbf0d2ba55b2fa120c5e0c8d7891000000000000000000000000a238dd80c259a72e81d7e4664a9801593f98d1c5000000000000000000000000e20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d
 ```
 
-6. Click "Verify and Publish"
-
----
-
-### ⚠️ Common Error
-
-If you see this error:
-```
-ParserError: Expected pragma, import directive or contract/interface/library...
-```
-
-**You put the constructor args in the source code field!**
-
-**Fix**: 
-- Select "Solidity (Single file via GitHub Gist)" as compiler type
-- Put GistID in the Gist field (not source code field)
-- Put constructor args in Constructor Arguments field (at the bottom)
+5. Click "Verify and Publish"
 
 ---
 
@@ -68,35 +49,30 @@ ParserError: Expected pragma, import directive or contract/interface/library...
 https://basescan.org/verifyContract-solc?a=0x4926E08c0aF3307Ea7840855515b22596D39F7eb&c=v0.8.20%2bcommit.a1b79de6&lictype=3
 
 **📋 Gist Information:**
-- **Gist URL:** https://gist.github.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b
-- **GistID:** `5f7a0f35601ab031c2c25cb61fe98a7b`
+- **Gist URL:** https://gist.github.com/StableExo/dc9ae89b4748d2e412ca1d881a60aae1
+- **GistID:** `dc9ae89b4748d2e412ca1d881a60aae1`
 
 **🎯 Verification Steps:**
 
 1. Visit the verification link above
+2. In the "Enter the Solidity Contract Code below" field:
+   - **Option A (Recommended):** Enter GistID: `dc9ae89b4748d2e412ca1d881a60aae1`
+   - **Option B:** Paste Gist URL: https://gist.github.com/StableExo/dc9ae89b4748d2e412ca1d881a60aae1
+   - **Option C:** Paste raw URL: https://gist.githubusercontent.com/StableExo/dc9ae89b4748d2e412ca1d881a60aae1/raw/d683a2782ee93a0d4d26f4a41affb8c3a9d596af/1_FlashSwapV3_flattened.sol
 
-2. **IMPORTANT**: Select compiler type dropdown:
-   - Select: **"Solidity (Single file via GitHub Gist)"**
-   
-3. **In the Gist source field** (NOT the source code field):
-   - **Option A (Recommended):** Enter ONLY GistID: `5f7a0f35601ab031c2c25cb61fe98a7b`
-   - **Option B:** Paste raw URL: https://gist.githubusercontent.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b/raw/d683a2782ee93a0d4d26f4a41affb8c3a9d596af/FlashSwapV3_flattened.sol
-
-4. Compiler Settings:
+3. Compiler Settings (pre-filled):
    - Compiler Version: `v0.8.20+commit.a1b79de6`
    - License: MIT License (3)
    - Optimization: **Yes**
    - Runs: **200**
    - EVM Version: **shanghai**
 
-5. **Constructor Arguments** (paste in Constructor Arguments field, NOT source code):
+4. Constructor Arguments (ABI-encoded):
 ```
 0000000000000000000000002626664c2603336e57b271c5c0b26f421741e4810000000000000000000000006bded42c6da8fbf0d2ba55b2fa120c5e0c8d7891000000000000000000000000ba12222222228d8ba445958a75a0704d566bf2c80000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a238dd80c259a72e81d7e4664a9801593f98d1c5000000000000000000000000e20fcbdbffc4dd138ce8b2e6fbb6cb49777ad64d00000000000000000000000033128a8fc17869897dce68ed026d694621f6fdfd00000000000000000000000048a6e6695a7d3e8c76eb014e648c072db385df6c0000000000000000000000000000000000000000000000000000000000001b58
 ```
 
-6. Click "Verify and Publish"
-
-**⚠️ Note**: Same fix as V2 - select "Via Gist" compiler type and use the correct fields!
+5. Click "Verify and Publish"
 
 ---
 
@@ -115,12 +91,12 @@ If entering the GistID doesn't work, use the raw URLs:
 
 **FlashSwapV2 Raw URL:**
 ```
-https://gist.githubusercontent.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb/raw/52d6f5665fb632431d9213b16a4dbf45f19ca3c3/FlashSwapV2_flattened.sol
+https://gist.githubusercontent.com/StableExo/87518ec63909b88caf1710e94e774548/raw/52d6f5665fb632431d9213b16a4dbf45f19ca3c3/1_FlashSwapV2_flattened.sol
 ```
 
 **FlashSwapV3 Raw URL:**
 ```
-https://gist.githubusercontent.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b/raw/d683a2782ee93a0d4d26f4a41affb8c3a9d596af/FlashSwapV3_flattened.sol
+https://gist.githubusercontent.com/StableExo/dc9ae89b4748d2e412ca1d881a60aae1/raw/d683a2782ee93a0d4d26f4a41affb8c3a9d596af/1_FlashSwapV3_flattened.sol
 ```
 
 ---
@@ -140,15 +116,15 @@ This will create new Gists and update this file.
 ## 🔗 Useful Links
 
 ### FlashSwapV2
-- **Gist:** https://gist.github.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb
-- **Raw Contract:** https://gist.githubusercontent.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb/raw/52d6f5665fb632431d9213b16a4dbf45f19ca3c3/FlashSwapV2_flattened.sol
-- **Constructor Args:** https://gist.githubusercontent.com/StableExo/75e3ee731ba36de1a45d39754a5d38eb/raw/63c100c73cd777257d035dc2379ac381ae80ac1e/FlashSwapV2_constructor_args.txt
+- **Gist:** https://gist.github.com/StableExo/87518ec63909b88caf1710e94e774548
+- **Raw Contract:** https://gist.githubusercontent.com/StableExo/87518ec63909b88caf1710e94e774548/raw/52d6f5665fb632431d9213b16a4dbf45f19ca3c3/1_FlashSwapV2_flattened.sol
+- **Constructor Args:** https://gist.githubusercontent.com/StableExo/87518ec63909b88caf1710e94e774548/raw/63c100c73cd777257d035dc2379ac381ae80ac1e/2_FlashSwapV2_constructor_args.txt
 - **BaseScan (after verification):** https://basescan.org/address/0x6e2473E4BEFb66618962f8c332706F8f8d339c08#code
 
 ### FlashSwapV3
-- **Gist:** https://gist.github.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b
-- **Raw Contract:** https://gist.githubusercontent.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b/raw/d683a2782ee93a0d4d26f4a41affb8c3a9d596af/FlashSwapV3_flattened.sol
-- **Constructor Args:** https://gist.githubusercontent.com/StableExo/5f7a0f35601ab031c2c25cb61fe98a7b/raw/dbc4a00add23d466ae0f2331f20b5d2ef158f9cb/FlashSwapV3_constructor_args.txt
+- **Gist:** https://gist.github.com/StableExo/dc9ae89b4748d2e412ca1d881a60aae1
+- **Raw Contract:** https://gist.githubusercontent.com/StableExo/dc9ae89b4748d2e412ca1d881a60aae1/raw/d683a2782ee93a0d4d26f4a41affb8c3a9d596af/1_FlashSwapV3_flattened.sol
+- **Constructor Args:** https://gist.githubusercontent.com/StableExo/dc9ae89b4748d2e412ca1d881a60aae1/raw/dbc4a00add23d466ae0f2331f20b5d2ef158f9cb/2_FlashSwapV3_constructor_args.txt
 - **BaseScan (after verification):** https://basescan.org/address/0x4926E08c0aF3307Ea7840855515b22596D39F7eb#code
 
 ---
