@@ -124,6 +124,7 @@
     "verify:both": "node --import tsx scripts/validation/verify-both-contracts.ts",
     "verify:autonomous": "node --import tsx scripts/validation/verify-autonomous.ts",
     "verify:upload-gist": "node --import tsx scripts/verification/upload-to-gist.ts",
+    "verify:foundry": "./scripts/verification/verify-contracts-foundry.sh",
     "contract:status": "node --import tsx scripts/etherscan-api.ts status",
     "contract:abi": "node --import tsx scripts/etherscan-api.ts getabi",
     "audit:slither": "slither . --fail-medium",
