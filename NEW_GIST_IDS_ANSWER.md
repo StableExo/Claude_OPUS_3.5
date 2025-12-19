@@ -68,7 +68,7 @@ Quick reference: `GIST_VERIFICATION_QUICK_REF.md`
 
 ## ✅ Summary
 
-**Question:** What are the new Gist IDs to verify v2 and v3 contract?
+**Question:** What are the new Gist IDs to verify v2 and v3 contracts?
 
 **Answer:**
 - **v2 (FlashSwapV2):** `7dbc478be37c7d5766e10cfa375414fe`

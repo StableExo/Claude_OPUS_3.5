@@ -40,7 +40,7 @@ See `verification/GIST_URLS.md` for complete details including:
 **These are the LATEST Gist IDs** created on 2025-12-19 at 04:38 UTC with the most recent contract files.
 
 **Previous Gist IDs (created at 04:09 UTC, now superseded):**
-- FlashSwapV2: ~~`6b4b9a809f30cc5e0075cfb4c30b08ec`~~ → Use `7dbc478be37c7d5766e10cfa375414fe` instead
-- FlashSwapV3: ~~`74c33cd975d8b3a8893e37b192d9d6e9`~~ → Use `5ac99388e1897562fa96e0c05d47ad01` instead
+- FlashSwapV2: `6b4b9a809f30cc5e0075cfb4c30b08ec` (SUPERSEDED) → Use `7dbc478be37c7d5766e10cfa375414fe` instead
+- FlashSwapV3: `74c33cd975d8b3a8893e37b192d9d6e9` (SUPERSEDED) → Use `5ac99388e1897562fa96e0c05d47ad01` instead
 
 **Always use the IDs shown at the top of this document for verification.**
