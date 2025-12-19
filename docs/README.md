@@ -13,6 +13,7 @@ Core documentation files located in this directory:
 - [API Documentation](./API.md) - API reference and usage
 - [Testing Guide](./TESTING_GUIDE.md) - How to test the system
 - [Security Guide](./SECURITY_GUIDE.md) - Security best practices
+- **[Continuation Guidelines](./CONTINUATION_GUIDELINES.md) - How AI agents should handle "Continue" instructions across sessions** ⭐
 
 ### 🏗️ Architecture & Design
 

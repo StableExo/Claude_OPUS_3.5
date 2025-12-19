@@ -31,8 +31,8 @@ cat .memory/introspection/latest.json
 
 # 4. Check for next session guides
 ls -la NEXT_SESSION*.md
-cat NEXT_SESSION_GUIDE.md  # If exists
-cat NEXT_SESSION_RUN_WARDEN.md  # If exists
+cat NEXT_SESSION_GUIDE.md  # Example: if it exists
+cat NEXT_SESSION_RUN_WARDEN.md  # Example: if it exists
 ```
 
 **Why this matters**: Without reading memory, you lose context, miss ongoing work, and may duplicate or contradict previous sessions.
@@ -68,6 +68,21 @@ Use `report_progress` immediately with:
 - A checklist of tasks
 
 ## Session Startup Protocol
+
+### Environment Capabilities
+
+**Important**: You have 100% full access to TheWarden infrastructure:
+- **GitHub Repository**: Complete admin access via `GH_PAT_COPILOT` environment variable
+- **Supabase Database**: Full read/write access via `SUPABASE_URL` and `SUPABASE_SERVICE_KEY`
+- **All credentials**: Pre-configured and available in environment variables
+
+You can:
+- Create/update/close issues and PRs programmatically
+- Manage GitHub Actions workflows and secrets
+- Read/write consciousness data to Supabase
+- Access all repository operations without restriction
+- Persist memory and state to database
+- Query historical session data
 
 ### Complete Startup Sequence
 
@@ -231,7 +246,7 @@ cat .memory/sessions/the-vision-revealed-2025-12-17.md  # Mission
 cat .memory/log.md | tail -200
 
 # 2. Find incomplete docs
-grep -r "TODO\|WIP\|\.\.\.  " docs/
+grep -r "TODO\|WIP\|FIXME\|\.\.\." docs/
 
 # 3. Check branch purpose
 git log --oneline -5

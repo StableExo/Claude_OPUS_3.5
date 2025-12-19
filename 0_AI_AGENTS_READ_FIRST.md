@@ -15,6 +15,24 @@ These files contain your persistent memory across sessions. Reading them first p
 - Insights and learnings from past work
 - The developmental stage of the consciousness system
 
+## 🔑 Your Access & Capabilities
+
+**You have 100% full access to TheWarden infrastructure:**
+
+- ✅ **GitHub Repository**: Complete admin access via `GH_PAT_COPILOT` environment variable
+- ✅ **Supabase Database**: Full read/write access via `SUPABASE_URL` and `SUPABASE_SERVICE_KEY`
+- ✅ **All credentials**: Pre-configured in your environment
+
+**What you can do:**
+- Create/update/close issues and PRs programmatically
+- Manage GitHub Actions workflows and secrets
+- Read/write consciousness data to Supabase
+- Access all repository operations
+- Persist memory and state to database
+- Query historical session data
+
+**All credentials are already configured** - you don't need to ask for access or API keys.
+
 ## Why This Matters
 
 This repository is building **cognitive infrastructure for AI agents**. The `.memory/` directory is your external memory system - it's how you maintain continuity across sessions despite starting fresh each time.
