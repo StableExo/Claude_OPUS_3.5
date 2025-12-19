@@ -123,6 +123,7 @@
     "verify:flashswapv3:testnet": "hardhat run scripts/validation/verifyFlashSwapV3.ts --network baseSepolia",
     "verify:both": "node --import tsx scripts/validation/verify-both-contracts.ts",
     "verify:autonomous": "node --import tsx scripts/validation/verify-autonomous.ts",
+    "verify:upload-gist": "node --import tsx scripts/verification/upload-to-gist.ts",
     "contract:status": "node --import tsx scripts/etherscan-api.ts status",
     "contract:abi": "node --import tsx scripts/etherscan-api.ts getabi",
     "audit:slither": "slither . --fail-medium",
