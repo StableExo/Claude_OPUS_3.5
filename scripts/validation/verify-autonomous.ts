@@ -36,7 +36,9 @@ function flattenContract(contractName: string): string {
     );
     
     // Remove dotenv injection messages and duplicate SPDX license identifiers
-    const lines = output.split('\n');
+    // Also normalize line endings to LF only (remove any CR characters)
+    const normalized = output.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const lines = normalized.split('\n');
     let firstSpdx = true;
     const filtered = lines.filter(line => {
       // Remove dotenv injection messages

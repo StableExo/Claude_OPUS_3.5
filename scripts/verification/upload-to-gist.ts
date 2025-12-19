@@ -61,8 +61,8 @@ async function createContractGist(
     throw new Error(`File not found: ${argsPath}`);
   }
   
-  const flattenedContent = readFileSync(flattenedPath, 'utf8');
-  const argsContent = readFileSync(argsPath, 'utf8');
+  const flattenedContent = readFileSync(flattenedPath, 'utf8').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const argsContent = readFileSync(argsPath, 'utf8').replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim();
   
   console.log(`  ✓ ${flattenedFile} (${flattenedContent.length} chars)`);
   console.log(`  ✓ ${constructorArgsFile} (${argsContent.length} chars)`);

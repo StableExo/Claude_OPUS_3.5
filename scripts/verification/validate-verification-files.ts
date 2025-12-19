@@ -50,6 +50,15 @@ function validateSourceFile(filePath: string, contractName: string): ValidationR
 
   const content = readFileSync(filePath, 'utf8');
 
+  // Check for mixed line endings (CRLF + LF)
+  const hasCRLF = content.includes('\r\n');
+  const hasCR = content.includes('\r');
+  if (hasCRLF || hasCR) {
+    result.warnings.push('File contains Windows-style (CRLF) or Mac-style (CR) line endings');
+    result.warnings.push('Consider normalizing to Unix-style (LF) line endings for better compatibility');
+    result.warnings.push('Run: tr -d "\\r" < file.sol > file_fixed.sol');
+  }
+
   // Check minimum length
   if (content.length < 1000) {
     result.valid = false;

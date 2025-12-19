@@ -6,7 +6,9 @@
 
 **👉 READ: [`IMPORTANT_READ_FIRST.md`](./IMPORTANT_READ_FIRST.md) 👈**
 
-Common mistake: Pasting constructor arguments into the source code field.
+Common mistakes:
+- Pasting constructor arguments into the source code field
+- **Mixed line endings (CRLF/LF) in the flattened file** - See [`LINE_ENDINGS_FIX.md`](./LINE_ENDINGS_FIX.md)
 
 ---
 
