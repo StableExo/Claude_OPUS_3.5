@@ -11,3 +11,4 @@ export * from './GroundZeroImprint';
 export * from './Layer';
 export * from './Category';
 export * from './Web';
+export * from './Organization';
