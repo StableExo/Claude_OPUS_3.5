@@ -22,7 +22,19 @@ BaseScan supports fetching Solidity code directly from GitHub Gist by entering a
 
 ## Quick Start
 
-### Step 1: Setup GitHub Token
+### Step 1: Install Dependencies
+
+Ensure you have the correct Node.js version and dependencies installed:
+
+```bash
+# Install and use Node.js 22
+nvm install 22 && nvm use 22
+
+# Install npm dependencies
+npm install
+```
+
+### Step 2: Setup GitHub Token
 
 Create a GitHub Personal Access Token with `gist` scope:
 
@@ -39,7 +51,7 @@ GH_PAT_COPILOT=ghp_your_token_here
 GITHUB_TOKEN=ghp_your_token_here
 ```
 
-### Step 2: Run Upload Script
+### Step 3: Run Upload Script
 
 ```bash
 npm run verify:upload-gist

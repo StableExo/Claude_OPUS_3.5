@@ -19,6 +19,20 @@ This directory contains all the materials needed to verify the FlashSwapV2 and F
 
 **⚠️ IMPORTANT:** These contracts are **too large** to paste directly into BaseScan's verification form. Use GitHub Gist instead!
 
+### Setup
+
+```bash
+# 1. Install Node.js 22 and dependencies
+nvm install 22 && nvm use 22 && npm install
+
+# 2. Add GitHub token to .env (needs 'gist' scope)
+# Generate at: https://github.com/settings/tokens/new
+# Then add to .env:
+GITHUB_TOKEN=ghp_your_token_here
+# OR
+GH_PAT_COPILOT=ghp_your_token_here
+```
+
 ### One-Command Solution
 
 ```bash

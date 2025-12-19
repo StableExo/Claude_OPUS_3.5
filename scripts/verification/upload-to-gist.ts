@@ -299,11 +299,14 @@ async function main() {
   
   if (!token) {
     console.error('❌ Error: GitHub token not found');
-    console.error('\nPlease set one of:');
-    console.error('  - GITHUB_TOKEN environment variable');
-    console.error('  - GH_PAT_COPILOT environment variable');
-    console.error('\nGenerate a token at: https://github.com/settings/tokens/new');
-    console.error('Required scope: gist\n');
+    console.error('\nSetup required:');
+    console.error('  1. Install dependencies: nvm install 22 && nvm use 22 && npm install');
+    console.error('  2. Generate token at: https://github.com/settings/tokens/new');
+    console.error('     Required scope: gist');
+    console.error('  3. Add to .env file:');
+    console.error('     GITHUB_TOKEN=ghp_your_token_here');
+    console.error('     OR');
+    console.error('     GH_PAT_COPILOT=ghp_your_token_here\n');
     process.exit(1);
   }
   

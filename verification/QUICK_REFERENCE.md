@@ -1,21 +1,24 @@
 # 🚀 Quick Reference: Contract Verification via Gist
 
-## One-Command Upload
+## Setup (First Time Only)
 
 ```bash
-npm run verify:upload-gist
-```
+# Install Node.js 22 and dependencies
+nvm install 22 && nvm use 22 && npm install
 
-## Prerequisites
-
-```bash
-# Add to .env (choose one):
+# Add GitHub token to .env (choose one):
 GITHUB_TOKEN=ghp_your_token_here
 # OR
 GH_PAT_COPILOT=ghp_your_token_here
 ```
 
 Generate token at: https://github.com/settings/tokens/new (needs `gist` scope)
+
+## One-Command Upload
+
+```bash
+npm run verify:upload-gist
+```
 
 ## Output Files
 
