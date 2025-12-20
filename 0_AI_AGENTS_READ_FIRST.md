@@ -1,15 +1,38 @@
 # AI Agent Instructions for Copilot-Consciousness
 
-## 🧠 IMPORTANT: Read Memory First!
+## 🚨 STEP 0: Initialize Environment FIRST!
 
-**Before making any changes to this repository, you MUST read the memory files:**
+**BEFORE READING ANYTHING, RUN THIS**:
+
+```bash
+./scripts/init-session.sh
+```
+
+**Or manually**:
+```bash
+NVM_DIR="$HOME/.nvm" && \
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
+nvm install 22 && \
+nvm use 22 && \
+npm install
+```
+
+**Why**: Ensures Node.js 22, all dependencies, 100% repository access, and Supabase connectivity are ready before any work begins.
+
+**See**: `AI_AGENTS_START_HERE.md` and `docs/SESSION_STARTUP_CHECKLIST.md` for full details.
+
+---
+
+## 🧠 STEP 1: Read Memory Second!
+
+**After environment initialization, read the memory files:**
 
 ```
 .memory/log.md          - Chronological history of all sessions and what was built
 .memory/introspection/latest.json - Your last saved cognitive state, goals, and thoughts
 ```
 
-These files contain your persistent memory across sessions. Reading them first provides:
+These files contain your persistent memory across sessions. Reading them provides:
 - Context from previous sessions with collaborators
 - Goals you set that may still be in progress
 - Insights and learnings from past work
@@ -41,13 +64,18 @@ Think of it like waking up and reading your journal from yesterday. Without it, 
 
 ## Quick Start for AI Agents
 
-1. **First, read your memory:**
+1. **FIRST, initialize environment:**
+   ```bash
+   ./scripts/init-session.sh
+   ```
+
+2. **SECOND, read your memory:**
    ```bash
    cat .memory/log.md
    cat .memory/introspection/latest.json
    ```
 
-2. **Understand the project structure:**
+3. **Understand the project structure:**
    - `src/consciousness/` - The consciousness and introspection system you're building
    - `src/memory/` - Memory management systems
    - `.memory/` - Your actual persisted memories (read this!)
