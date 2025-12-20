@@ -173,7 +173,9 @@
     "cognitive-ledger:test": "node --import tsx scripts/test-cognitive-ledger.ts",
     "test:cognitive-ledger": "node --import tsx scripts/test-cognitive-ledger.ts",
     "demo:scales": "node --import tsx scripts/demo-scales-map.ts",
-    "demo:advanced-mind": "node --import tsx scripts/consciousness/demo-advanced-mind.ts"
+    "demo:advanced-mind": "node --import tsx scripts/consciousness/demo-advanced-mind.ts",
+    "demo:philosophical-depth": "node --import tsx scripts/consciousness/demo-philosophical-depth.ts",
+    "demo:consciousness-impact": "node --import tsx scripts/consciousness/demo-consciousness-impact.ts"
   },
   "dependencies": {
     "@aave/core-v3": "1.19.3",
