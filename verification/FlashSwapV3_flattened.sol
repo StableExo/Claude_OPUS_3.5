@@ -1,4 +1,3 @@
-[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
 // Sources flattened with hardhat v3.0.16 https://hardhat.org
 
 // SPDX-License-Identifier: GPL-2.0-or-later AND MIT AND UNLICENSED
@@ -2311,5 +2310,3 @@ contract FlashSwapV3 is
     receive() external payable {}
 }
 
-
-Pragma abicoder directives are defined in some files, but they are not defined in the following ones: contracts/interfaces/IBalancerVault.sol, contracts/interfaces/IDODOV1V2Pool.sol, contracts/interfaces/ISoloMargin.sol, contracts/interfaces/IUniswapV2Router02.sol, contracts/libraries/CallbackValidation.sol, contracts/libraries/PoolAddress.sol, npm/@openzeppelin/contracts@5.4.0/interfaces/IERC1363.sol, npm/@openzeppelin/contracts@5.4.0/interfaces/IERC165.sol, npm/@openzeppelin/contracts@5.4.0/interfaces/IERC20.sol, npm/@openzeppelin/contracts@5.4.0/token/ERC20/IERC20.sol, npm/@openzeppelin/contracts@5.4.0/token/ERC20/utils/SafeERC20.sol, npm/@openzeppelin/contracts@5.4.0/utils/ReentrancyGuard.sol, npm/@openzeppelin/contracts@5.4.0/utils/introspection/IERC165.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/IUniswapV3Factory.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/IUniswapV3Pool.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/callback/IUniswapV3FlashCallback.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/callback/IUniswapV3SwapCallback.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolActions.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolDerivedState.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolEvents.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolImmutables.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol, npm/@uniswap/v3-core@1.0.1/contracts/interfaces/pool/IUniswapV3PoolState.sol
