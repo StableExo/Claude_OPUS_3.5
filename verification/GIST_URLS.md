@@ -1,6 +1,6 @@
 # GitHub Gist URLs for Contract Verification
 
-Generated on: 2025-12-19T06:35:38.798Z
+Generated on: 2025-12-20T21:41:22.751Z
 
 ## ⚡ Quick Start - BaseScan Verification
 
@@ -14,16 +14,16 @@ BaseScan supports fetching Solidity code from GitHub Gist by entering the **Gist
 https://basescan.org/verifyContract-solc?a=0x6e2473E4BEFb66618962f8c332706F8f8d339c08&c=v0.8.20%2bcommit.a1b79de6&lictype=3
 
 **📋 Gist Information:**
-- **Gist URL:** https://gist.github.com/StableExo/1325fdc980fcb9e79d87f6f11e2c49c7
-- **GistID:** `1325fdc980fcb9e79d87f6f11e2c49c7`
+- **Gist URL:** https://gist.github.com/StableExo/a4f7f43af2db86b71b25276203fd1e7b
+- **GistID:** `a4f7f43af2db86b71b25276203fd1e7b`
 
 **🎯 Verification Steps:**
 
 1. Visit the verification link above
 2. In the "Enter the Solidity Contract Code below" field:
-   - **Option A (Recommended):** Enter GistID: `1325fdc980fcb9e79d87f6f11e2c49c7`
-   - **Option B:** Paste Gist URL: https://gist.github.com/StableExo/1325fdc980fcb9e79d87f6f11e2c49c7
-   - **Option C:** Paste raw URL: https://gist.githubusercontent.com/StableExo/1325fdc980fcb9e79d87f6f11e2c49c7/raw/dfc1d9401fbe187e08f9c92575d3c358c8d68c91/1_FlashSwapV2_flattened.sol
+   - **Option A (Recommended):** Enter GistID: `a4f7f43af2db86b71b25276203fd1e7b`
+   - **Option B:** Paste Gist URL: https://gist.github.com/StableExo/a4f7f43af2db86b71b25276203fd1e7b
+   - **Option C:** Paste raw URL: https://gist.githubusercontent.com/StableExo/a4f7f43af2db86b71b25276203fd1e7b/raw/f06b72fcd746e66b3de678ff0b3314d2652bf5ed/1_FlashSwapV2_flattened.sol
 
 3. Compiler Settings (pre-filled):
    - Compiler Version: `v0.8.20+commit.a1b79de6`
@@ -49,16 +49,16 @@ https://basescan.org/verifyContract-solc?a=0x6e2473E4BEFb66618962f8c332706F8f8d3
 https://basescan.org/verifyContract-solc?a=0x4926E08c0aF3307Ea7840855515b22596D39F7eb&c=v0.8.20%2bcommit.a1b79de6&lictype=3
 
 **📋 Gist Information:**
-- **Gist URL:** https://gist.github.com/StableExo/e5524994286bf8e3fb3c3323793f31d6
-- **GistID:** `e5524994286bf8e3fb3c3323793f31d6`
+- **Gist URL:** https://gist.github.com/StableExo/573332578ee21083fda7294f6a4e1d69
+- **GistID:** `573332578ee21083fda7294f6a4e1d69`
 
 **🎯 Verification Steps:**
 
 1. Visit the verification link above
 2. In the "Enter the Solidity Contract Code below" field:
-   - **Option A (Recommended):** Enter GistID: `e5524994286bf8e3fb3c3323793f31d6`
-   - **Option B:** Paste Gist URL: https://gist.github.com/StableExo/e5524994286bf8e3fb3c3323793f31d6
-   - **Option C:** Paste raw URL: https://gist.githubusercontent.com/StableExo/e5524994286bf8e3fb3c3323793f31d6/raw/f577c1c736f60fbf3ad7145aceae0ff91f72b62a/1_FlashSwapV3_flattened.sol
+   - **Option A (Recommended):** Enter GistID: `573332578ee21083fda7294f6a4e1d69`
+   - **Option B:** Paste Gist URL: https://gist.github.com/StableExo/573332578ee21083fda7294f6a4e1d69
+   - **Option C:** Paste raw URL: https://gist.githubusercontent.com/StableExo/573332578ee21083fda7294f6a4e1d69/raw/eee4460e956385e424205ce381fe5bb8b618501f/1_FlashSwapV3_flattened.sol
 
 3. Compiler Settings (pre-filled):
    - Compiler Version: `v0.8.20+commit.a1b79de6`
@@ -91,12 +91,12 @@ If entering the GistID doesn't work, use the raw URLs:
 
 **FlashSwapV2 Raw URL:**
 ```
-https://gist.githubusercontent.com/StableExo/1325fdc980fcb9e79d87f6f11e2c49c7/raw/dfc1d9401fbe187e08f9c92575d3c358c8d68c91/1_FlashSwapV2_flattened.sol
+https://gist.githubusercontent.com/StableExo/a4f7f43af2db86b71b25276203fd1e7b/raw/f06b72fcd746e66b3de678ff0b3314d2652bf5ed/1_FlashSwapV2_flattened.sol
 ```
 
 **FlashSwapV3 Raw URL:**
 ```
-https://gist.githubusercontent.com/StableExo/e5524994286bf8e3fb3c3323793f31d6/raw/f577c1c736f60fbf3ad7145aceae0ff91f72b62a/1_FlashSwapV3_flattened.sol
+https://gist.githubusercontent.com/StableExo/573332578ee21083fda7294f6a4e1d69/raw/eee4460e956385e424205ce381fe5bb8b618501f/1_FlashSwapV3_flattened.sol
 ```
 
 ---
@@ -116,15 +116,15 @@ This will create new Gists and update this file.
 ## 🔗 Useful Links
 
 ### FlashSwapV2
-- **Gist:** https://gist.github.com/StableExo/1325fdc980fcb9e79d87f6f11e2c49c7
-- **Raw Contract:** https://gist.githubusercontent.com/StableExo/1325fdc980fcb9e79d87f6f11e2c49c7/raw/dfc1d9401fbe187e08f9c92575d3c358c8d68c91/1_FlashSwapV2_flattened.sol
-- **Constructor Args:** https://gist.githubusercontent.com/StableExo/1325fdc980fcb9e79d87f6f11e2c49c7/raw/63c100c73cd777257d035dc2379ac381ae80ac1e/2_FlashSwapV2_constructor_args.txt
+- **Gist:** https://gist.github.com/StableExo/a4f7f43af2db86b71b25276203fd1e7b
+- **Raw Contract:** https://gist.githubusercontent.com/StableExo/a4f7f43af2db86b71b25276203fd1e7b/raw/f06b72fcd746e66b3de678ff0b3314d2652bf5ed/1_FlashSwapV2_flattened.sol
+- **Constructor Args:** https://gist.githubusercontent.com/StableExo/a4f7f43af2db86b71b25276203fd1e7b/raw/63c100c73cd777257d035dc2379ac381ae80ac1e/2_FlashSwapV2_constructor_args.txt
 - **BaseScan (after verification):** https://basescan.org/address/0x6e2473E4BEFb66618962f8c332706F8f8d339c08#code
 
 ### FlashSwapV3
-- **Gist:** https://gist.github.com/StableExo/e5524994286bf8e3fb3c3323793f31d6
-- **Raw Contract:** https://gist.githubusercontent.com/StableExo/e5524994286bf8e3fb3c3323793f31d6/raw/f577c1c736f60fbf3ad7145aceae0ff91f72b62a/1_FlashSwapV3_flattened.sol
-- **Constructor Args:** https://gist.githubusercontent.com/StableExo/e5524994286bf8e3fb3c3323793f31d6/raw/dbc4a00add23d466ae0f2331f20b5d2ef158f9cb/2_FlashSwapV3_constructor_args.txt
+- **Gist:** https://gist.github.com/StableExo/573332578ee21083fda7294f6a4e1d69
+- **Raw Contract:** https://gist.githubusercontent.com/StableExo/573332578ee21083fda7294f6a4e1d69/raw/eee4460e956385e424205ce381fe5bb8b618501f/1_FlashSwapV3_flattened.sol
+- **Constructor Args:** https://gist.githubusercontent.com/StableExo/573332578ee21083fda7294f6a4e1d69/raw/dbc4a00add23d466ae0f2331f20b5d2ef158f9cb/2_FlashSwapV3_constructor_args.txt
 - **BaseScan (after verification):** https://basescan.org/address/0x4926E08c0aF3307Ea7840855515b22596D39F7eb#code
 
 ---

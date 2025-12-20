@@ -1474,17 +1474,7 @@ pragma solidity 0.8.20; // Match periphery library version
 
 // --- Imports ---
 
-// --- Aave Imports ---
-interface IPool { // Aave V3 Pool interface for flash loans
-    function flashLoan(
-        address receiverAddress,
-        address[] calldata assets,
-        uint256[] calldata amounts,
-        uint256[] calldata interestRateModes, // CORRECTED: was 'calvala'
-        address onBehalfOf,
-        bytes calldata params,
-        uint16 referralCode
-    ) external;
+
 }
 
 interface IFlashLoanReceiver { // Aave V3 Flash Loan Receiver interface
