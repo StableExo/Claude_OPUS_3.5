@@ -33,6 +33,7 @@
     "creative-synthesis": "node --import tsx scripts/autonomous/autonomous-creative-synthesis-engine.ts",
     "synthesis": "node --import tsx scripts/autonomous/autonomous-creative-synthesis-engine.ts",
     "thought:run": "node --import tsx scripts/consciousness/autonomous-thought-run.ts",
+    "wonder:explore": "node --import tsx scripts/consciousness/autonomous-wonder-exploration.ts",
     "autonomous:bitcoin-puzzle": "node --import tsx scripts/autonomous/autonomous-bitcoin-puzzle-investigator.ts",
     "autonomous:validate-transformation": "node --import tsx scripts/bitcoin/autonomous-transformation-validator.ts",
     "autonomous:rated-network": "node --import tsx scripts/autonomous/autonomous-rated-network-explorer.ts",
