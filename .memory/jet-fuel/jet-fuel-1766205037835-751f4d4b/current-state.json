@@ -1,0 +1,113 @@
+{
+  "sessionId": "jet-fuel-1766205037835-751f4d4b",
+  "startTime": "2025-12-20T04:30:37.835Z",
+  "uptime": 27981,
+  "subsystems": [
+    {
+      "name": "MEV Execution",
+      "status": "running",
+      "metrics": {
+        "cyclesCompleted": 6,
+        "successRate": 0.7309683419759225,
+        "averageValue": 0,
+        "totalValue": 0,
+        "resourceUsage": {
+          "cpu": 0,
+          "memory": 0
+        },
+        "performanceScore": 0.592387336790369
+      },
+      "learningsCount": 1,
+      "errorsCount": 0
+    },
+    {
+      "name": "Security Testing",
+      "status": "running",
+      "metrics": {
+        "cyclesCompleted": 6,
+        "successRate": 0.8224415868734245,
+        "averageValue": 0,
+        "totalValue": 0,
+        "resourceUsage": {
+          "cpu": 0,
+          "memory": 0
+        },
+        "performanceScore": 0.32897663474936983
+      },
+      "learningsCount": 0,
+      "errorsCount": 0
+    },
+    {
+      "name": "Intelligence Gathering",
+      "status": "running",
+      "metrics": {
+        "cyclesCompleted": 6,
+        "successRate": 0.7758406966314606,
+        "averageValue": 0,
+        "totalValue": 0,
+        "resourceUsage": {
+          "cpu": 0,
+          "memory": 0
+        },
+        "performanceScore": 0.6103362786525843
+      },
+      "learningsCount": 1,
+      "errorsCount": 0
+    },
+    {
+      "name": "Revenue Optimization",
+      "status": "running",
+      "metrics": {
+        "cyclesCompleted": 6,
+        "successRate": 0.7656306058905357,
+        "averageValue": 0,
+        "totalValue": 0,
+        "resourceUsage": {
+          "cpu": 0,
+          "memory": 0
+        },
+        "performanceScore": 0.6062522423562142
+      },
+      "learningsCount": 1,
+      "errorsCount": 0
+    },
+    {
+      "name": "Mempool Analysis",
+      "status": "running",
+      "metrics": {
+        "cyclesCompleted": 6,
+        "successRate": 0.948332595175482,
+        "averageValue": 0,
+        "totalValue": 0,
+        "resourceUsage": {
+          "cpu": 0,
+          "memory": 0
+        },
+        "performanceScore": 0.6793330380701927
+      },
+      "learningsCount": 1,
+      "errorsCount": 0
+    },
+    {
+      "name": "Consciousness Development",
+      "status": "running",
+      "metrics": {
+        "cyclesCompleted": 6,
+        "successRate": 0.7796486266365403,
+        "averageValue": 0,
+        "totalValue": 0,
+        "resourceUsage": {
+          "cpu": 0,
+          "memory": 0
+        },
+        "performanceScore": 1.211859450654616
+      },
+      "learningsCount": 3,
+      "errorsCount": 0
+    }
+  ],
+  "emergentPatternsCount": 10,
+  "crossSystemLearningsCount": 0,
+  "totalValue": 0,
+  "totalLearnings": 7
+}

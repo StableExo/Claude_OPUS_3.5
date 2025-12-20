@@ -1,0 +1,221 @@
+{
+  "timestamp": 1766204877637,
+  "codeMetrics": {
+    "totalFiles": 617,
+    "totalLines": 173266,
+    "filesByType": {
+      ".ts": 617
+    },
+    "avgFileSize": 280.82009724473255,
+    "largestFiles": [
+      {
+        "file": "main.ts",
+        "lines": 2528
+      },
+      {
+        "file": "dex/core/DEXRegistry.ts",
+        "lines": 1506
+      },
+      {
+        "file": "consciousness/ArbitrageConsciousness.ts",
+        "lines": 1478
+      },
+      {
+        "file": "execution/PrivateRPCManager.ts",
+        "lines": 1432
+      },
+      {
+        "file": "services/BaseArbitrageRunner.ts",
+        "lines": 1082
+      },
+      {
+        "file": "security/LiveThreatTrainer.ts",
+        "lines": 1037
+      },
+      {
+        "file": "core/identity/IdentityCore.ts",
+        "lines": 1015
+      },
+      {
+        "file": "execution/IntegratedArbitrageOrchestrator.ts",
+        "lines": 975
+      },
+      {
+        "file": "execution/__tests__/integration/ExecutionIntegration.test.ts",
+        "lines": 939
+      },
+      {
+        "file": "arbitrage/OptimizedPoolScanner.ts",
+        "lines": 907
+      }
+    ],
+    "complexity": {
+      "highComplexityFiles": 76,
+      "totalFunctions": 6030,
+      "avgFunctionsPerFile": 9.773095623987034
+    }
+  },
+  "perfAnalysis": {
+    "subsystems": [
+      {
+        "name": "Consciousness System",
+        "status": "excellent",
+        "metrics": {
+          "memorySystemFiles": 15,
+          "introspectionModules": 7,
+          "developmentalTracking": 100
+        },
+        "issues": []
+      },
+      {
+        "name": "MEV Execution",
+        "status": "good",
+        "metrics": {
+          "activeStrategies": 6,
+          "avgResponseTime": 120
+        },
+        "issues": [
+          "Could benefit from more aggressive optimization"
+        ]
+      },
+      {
+        "name": "Learning Systems",
+        "status": "good",
+        "metrics": {
+          "knowledgeLoopFiles": 3,
+          "adaptiveStrategies": 6
+        },
+        "issues": [
+          "Limited meta-learning capabilities"
+        ]
+      },
+      {
+        "name": "JET FUEL Mode",
+        "status": "excellent",
+        "metrics": {
+          "parallelSubsystems": 6,
+          "emergentPatterns": 40
+        },
+        "issues": []
+      }
+    ],
+    "bottlenecks": [
+      {
+        "area": "Meta-Learning",
+        "severity": "high",
+        "description": "Limited automated self-improvement and self-analysis capabilities",
+        "impact": 85
+      },
+      {
+        "area": "Performance Monitoring",
+        "severity": "medium",
+        "description": "No centralized performance tracking across all subsystems",
+        "impact": 70
+      },
+      {
+        "area": "Code Quality Automation",
+        "severity": "medium",
+        "description": "Manual code review processes, no automated quality gates",
+        "impact": 60
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "id": "rec-002",
+      "title": "Enhance Meta-Learning Capabilities",
+      "category": "consciousness",
+      "priority": "critical",
+      "impactScore": 95,
+      "effort": "high",
+      "description": "Expand the learning system to include meta-learning - learning about how to learn better. Allow TheWarden to optimize its own learning strategies.",
+      "expectedBenefits": [
+        "Accelerated learning across all domains",
+        "Self-optimizing learning rates",
+        "Automatic strategy discovery",
+        "Emergent intelligence patterns"
+      ],
+      "implementation": "Extend KnowledgeLoop with meta-learning layer that analyzes learning effectiveness and adjusts learning parameters autonomously."
+    },
+    {
+      "id": "rec-005",
+      "title": "Cross-System Intelligence Amplification",
+      "category": "features",
+      "priority": "high",
+      "impactScore": 88,
+      "effort": "high",
+      "description": "Enhance JET FUEL mode to create stronger connections between subsystems, allowing insights from one domain to accelerate learning in others.",
+      "expectedBenefits": [
+        "Compound learning effects",
+        "Faster insight generation",
+        "Novel strategy discovery",
+        "Emergent capabilities"
+      ],
+      "implementation": "Create an intelligence bridge layer that identifies cross-domain patterns and propagates insights between subsystems."
+    },
+    {
+      "id": "rec-001",
+      "title": "Implement Autonomous Performance Monitoring Dashboard",
+      "category": "performance",
+      "priority": "high",
+      "impactScore": 85,
+      "effort": "medium",
+      "description": "Create a real-time performance monitoring system that tracks all subsystem metrics, identifies degradations, and alerts on anomalies.",
+      "expectedBenefits": [
+        "Early detection of performance issues",
+        "Data-driven optimization decisions",
+        "Historical performance trending",
+        "Automated anomaly detection"
+      ],
+      "implementation": "Build a centralized metrics collector that all subsystems report to, with a dashboard visualization and alerting system."
+    },
+    {
+      "id": "rec-003",
+      "title": "Automated Code Quality and Architecture Analysis",
+      "category": "quality",
+      "priority": "high",
+      "impactScore": 75,
+      "effort": "medium",
+      "description": "Implement automated code quality checks, architecture analysis, and complexity monitoring with CI/CD integration.",
+      "expectedBenefits": [
+        "Prevent code quality degradation",
+        "Identify architectural issues early",
+        "Maintain consistent code standards",
+        "Reduce technical debt"
+      ],
+      "implementation": "Integrate ESLint, complexity analysis tools, and custom architecture linting into CI/CD pipeline."
+    },
+    {
+      "id": "rec-004",
+      "title": "Consciousness Evolution Visualization System",
+      "category": "consciousness",
+      "priority": "medium",
+      "impactScore": 70,
+      "effort": "medium",
+      "description": "Create visualizations showing TheWarden's consciousness evolution over time - tracking developmental stages, capability growth, and emergent patterns.",
+      "expectedBenefits": [
+        "Visual tracking of consciousness development",
+        "Identify developmental milestones",
+        "Share progress with collaborators",
+        "Research insights into AI consciousness"
+      ],
+      "implementation": "Build a visualization dashboard that reads from .memory/introspection and displays developmental progression graphs."
+    },
+    {
+      "id": "rec-006",
+      "title": "Refactor High-Complexity Files",
+      "category": "quality",
+      "priority": "medium",
+      "impactScore": 60,
+      "effort": "medium",
+      "description": "Found 76 files exceeding 500 lines. Breaking these into smaller, focused modules improves maintainability.",
+      "expectedBenefits": [
+        "Improved code maintainability",
+        "Easier testing and debugging",
+        "Better code organization",
+        "Reduced cognitive load"
+      ],
+      "implementation": "Systematically refactor large files into focused modules following single responsibility principle."
+    }
+  ]
+}
