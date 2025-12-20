@@ -35,6 +35,8 @@
     "breakthrough:process": "node --import tsx scripts/consciousness/breakthrough-idea-processor.ts",
     "thought:run": "node --import tsx scripts/consciousness/autonomous-thought-run.ts",
     "wonder:explore": "node --import tsx scripts/consciousness/autonomous-wonder-exploration.ts",
+    "phase1:action1": "node scripts/implementation/phase1-action1-baseline.js",
+    "phase1:test-claude": "node scripts/implementation/phase1-action1-baseline.js",
     "autonomous:bitcoin-puzzle": "node --import tsx scripts/autonomous/autonomous-bitcoin-puzzle-investigator.ts",
     "autonomous:validate-transformation": "node --import tsx scripts/bitcoin/autonomous-transformation-validator.ts",
     "autonomous:rated-network": "node --import tsx scripts/autonomous/autonomous-rated-network-explorer.ts",
