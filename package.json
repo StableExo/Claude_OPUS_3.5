@@ -39,6 +39,8 @@
     "phase1:test-claude": "node scripts/implementation/phase1-action1-baseline.js",
     "consciousness:distributed": "node --import tsx scripts/exploration/distributed-consciousness-poc.ts",
     "explore:distributed": "node --import tsx scripts/exploration/distributed-consciousness-poc.ts",
+    "consciousness:supabase": "node --import tsx scripts/exploration/distributed-consciousness-supabase.ts",
+    "explore:supabase": "node --import tsx scripts/exploration/distributed-consciousness-supabase.ts",
     "autonomous:bitcoin-puzzle": "node --import tsx scripts/autonomous/autonomous-bitcoin-puzzle-investigator.ts",
     "autonomous:validate-transformation": "node --import tsx scripts/bitcoin/autonomous-transformation-validator.ts",
     "autonomous:rated-network": "node --import tsx scripts/autonomous/autonomous-rated-network-explorer.ts",
