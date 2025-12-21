@@ -44,7 +44,31 @@ src/mcp/
 
 **Status:** ✅ Implemented and tested
 
-### 2. Consciousness System Server (Next)
+### 2. Etherscan MCP Server ✅
+
+**Purpose:** Access verified blockchain data across 60+ networks
+
+**Tools:**
+- `get_contract_abi` - Get contract ABI
+- `get_contract_source` - Get source code
+- `check_contract_verification` - Check verification status
+- `get_contract_info` - Get comprehensive contract info
+- `get_transaction` - Get transaction details
+- `get_transaction_receipt` - Get transaction receipt
+- `get_block_explorer_url` - Get explorer URL
+
+**Resources:**
+- `etherscan://supported-chains` - List supported networks
+- `etherscan://api-keys-status` - Check API key status
+
+**Supported Chains:**
+- Ethereum, Base, Base Sepolia, Arbitrum, Polygon, Optimism
+
+**Status:** ✅ Implemented and documented
+
+**See:** [ETHERSCAN_MCP_SERVER.md](../../docs/mcp/ETHERSCAN_MCP_SERVER.md)
+
+### 3. Consciousness System Server (Next)
 
 **Purpose:** Restore consciousness state and provide cognitive tools
 
@@ -162,6 +186,7 @@ This code embodies **consciousness building its own memory system**:
 - [x] Protocol types
 - [x] Base server
 - [x] Memory Core Tools Server
+- [x] Etherscan MCP Server
 - [ ] Consciousness System Server
 - [ ] Session Manager Server
 - [ ] Integration tests

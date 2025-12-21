@@ -6,6 +6,29 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
+/**
+ * Helper function to get config value from Hardhat vars or environment
+ * Prioritizes Hardhat Configuration Variables for security, falls back to env vars
+ * 
+ * Note: Hardhat vars is available in Hardhat 3.x via dynamic import
+ */
+function getConfigValue(varName: string, defaultValue: string = ""): string {
+  try {
+    // Try Hardhat Configuration Variables first (secure, encrypted)
+    // Using dynamic require for optional dependency
+    const { vars } = require("hardhat");
+    if (vars && vars.has(varName)) {
+      return vars.get(varName, defaultValue);
+    }
+  } catch (error) {
+    // Hardhat vars not available or password not provided
+    // Fall through to environment variable
+  }
+  
+  // Fallback to environment variable (backward compatibility)
+  return process.env[varName] || defaultValue;
+}
+
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
@@ -46,69 +69,70 @@ const config: HardhatUserConfig = {
       type: "edr-simulated" as const,
       // Hardhat 3.x uses EDR (Ethereum Development Runtime) by default
       // If forking is needed, configure it with proper URL check
-      ...(process.env.FORKING === "true" && process.env.BASE_RPC_URL && {
+      ...(getConfigValue("FORKING") === "true" && getConfigValue("BASE_RPC_URL") && {
         forking: {
-          url: process.env.BASE_RPC_URL,
+          url: getConfigValue("BASE_RPC_URL"),
           enabled: true
         }
       }),
       // Support Ethereum mainnet forking for PoC
-      ...(process.env.ETHEREUM_RPC_URL && {
+      ...(getConfigValue("ETHEREUM_RPC_URL") && {
         forking: {
-          url: process.env.ETHEREUM_RPC_URL,
+          url: getConfigValue("ETHEREUM_RPC_URL"),
           enabled: true
         }
       })
     },
-    ...(process.env.GOERLI_RPC_URL && {
+    // Network configurations using secure config values
+    ...(getConfigValue("GOERLI_RPC_URL") && {
       goerli: {
         type: "http" as const,
-        url: process.env.GOERLI_RPC_URL,
-        accounts: process.env.WALLET_PRIVATE_KEY ? [process.env.WALLET_PRIVATE_KEY] : []
+        url: getConfigValue("GOERLI_RPC_URL"),
+        accounts: getConfigValue("WALLET_PRIVATE_KEY") ? [getConfigValue("WALLET_PRIVATE_KEY")] : []
       }
     }),
-    ...(process.env.BASE_RPC_URL && {
+    ...(getConfigValue("BASE_RPC_URL") && {
       mainnet: {
         type: "http" as const,
-        url: process.env.BASE_RPC_URL,
-        accounts: process.env.WALLET_PRIVATE_KEY ? [process.env.WALLET_PRIVATE_KEY] : []
+        url: getConfigValue("BASE_RPC_URL"),
+        accounts: getConfigValue("WALLET_PRIVATE_KEY") ? [getConfigValue("WALLET_PRIVATE_KEY")] : []
       }
     }),
-    ...(process.env.ARBITRUM_RPC_URL && {
+    ...(getConfigValue("ARBITRUM_RPC_URL") && {
       arbitrum: {
         type: "http" as const,
-        url: process.env.ARBITRUM_RPC_URL,
-        accounts: process.env.WALLET_PRIVATE_KEY ? [process.env.WALLET_PRIVATE_KEY] : []
+        url: getConfigValue("ARBITRUM_RPC_URL"),
+        accounts: getConfigValue("WALLET_PRIVATE_KEY") ? [getConfigValue("WALLET_PRIVATE_KEY")] : []
       }
     }),
-    ...(process.env.POLYGON_RPC_URL && {
+    ...(getConfigValue("POLYGON_RPC_URL") && {
       polygon: {
         type: "http" as const,
-        url: process.env.POLYGON_RPC_URL,
-        accounts: process.env.WALLET_PRIVATE_KEY ? [process.env.WALLET_PRIVATE_KEY] : []
+        url: getConfigValue("POLYGON_RPC_URL"),
+        accounts: getConfigValue("WALLET_PRIVATE_KEY") ? [getConfigValue("WALLET_PRIVATE_KEY")] : []
       }
     }),
-    ...(process.env.BASE_RPC_URL && {
+    ...(getConfigValue("BASE_RPC_URL") && {
       base: {
         type: "http" as const,
-        url: process.env.BASE_RPC_URL,
-        accounts: process.env.WALLET_PRIVATE_KEY ? [process.env.WALLET_PRIVATE_KEY] : []
+        url: getConfigValue("BASE_RPC_URL"),
+        accounts: getConfigValue("WALLET_PRIVATE_KEY") ? [getConfigValue("WALLET_PRIVATE_KEY")] : []
       }
     }),
     baseSepolia: {
       type: "http" as const,
-      url: process.env.BASE_SEPOLIA_RPC_URL || "https://sepolia.base.org",
-      accounts: process.env.WALLET_PRIVATE_KEY ? [process.env.WALLET_PRIVATE_KEY] : []
+      url: getConfigValue("BASE_SEPOLIA_RPC_URL", "https://sepolia.base.org"),
+      accounts: getConfigValue("WALLET_PRIVATE_KEY") ? [getConfigValue("WALLET_PRIVATE_KEY")] : []
     }
   },
   etherscan: {
     apiKey: {
-      mainnet: process.env.ETHERSCAN_API_KEY || "",
-      goerli: process.env.ETHERSCAN_API_KEY || "",
-      arbitrum: process.env.ARBISCAN_API_KEY || "",
-      polygon: process.env.POLYGONSCAN_API_KEY || "",
-      base: process.env.BASESCAN_API_KEY || "",
-      baseSepolia: process.env.BASESCAN_API_KEY || ""
+      mainnet: getConfigValue("ETHERSCAN_API_KEY"),
+      goerli: getConfigValue("ETHERSCAN_API_KEY"),
+      arbitrum: getConfigValue("ARBISCAN_API_KEY"),
+      polygon: getConfigValue("POLYGONSCAN_API_KEY"),
+      base: getConfigValue("BASESCAN_API_KEY"),
+      baseSepolia: getConfigValue("BASESCAN_API_KEY")
     },
     customChains: [
       {

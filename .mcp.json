@@ -215,11 +215,37 @@
         "branching",
         "storage"
       ]
+    },
+    "etherscan": {
+      "command": "node",
+      "args": [
+        "-r",
+        "dotenv/config",
+        "dist/src/mcp/servers/EtherscanMcpServer.js"
+      ],
+      "description": "Etherscan MCP Server for accessing verified blockchain data across 60+ networks. Provides contract ABIs, source code, verification status, transaction data, and token information via Model Context Protocol.",
+      "env": {
+        "DOTENV_CONFIG_PATH": ".env",
+        "ETHERSCAN_API_KEY": "${ETHERSCAN_API_KEY}",
+        "BASESCAN_API_KEY": "${BASESCAN_API_KEY}",
+        "ARBISCAN_API_KEY": "${ARBISCAN_API_KEY}",
+        "POLYGONSCAN_API_KEY": "${POLYGONSCAN_API_KEY}",
+        "OPTIMISTIC_ETHERSCAN_API_KEY": "${OPTIMISTIC_ETHERSCAN_API_KEY}"
+      },
+      "capabilities": [
+        "contract_abi_retrieval",
+        "contract_source_code",
+        "verification_status",
+        "transaction_data",
+        "token_information",
+        "multi_chain_support",
+        "block_explorer_integration"
+      ]
     }
   },
   "defaults": {
     "timeout": 30000,
     "retries": 3
   },
-  "version": "1.0.1"
+  "version": "1.0.2"
 }

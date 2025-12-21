@@ -170,6 +170,31 @@
         "harm_minimization"
       ],
       "priority": "high"
+    },
+    "etherscan": {
+      "command": "node",
+      "args": [
+        "-r",
+        "dotenv/config",
+        "dist/src/mcp/servers/EtherscanMcpServer.js"
+      ],
+      "description": "Etherscan MCP - Access verified blockchain data for security research, MEV intelligence, and contract analysis. Essential for bug bounty work and on-chain investigations.",
+      "env": {
+        "DOTENV_CONFIG_PATH": ".env",
+        "ETHERSCAN_API_KEY": "${ETHERSCAN_API_KEY}",
+        "BASESCAN_API_KEY": "${BASESCAN_API_KEY}",
+        "ARBISCAN_API_KEY": "${ARBISCAN_API_KEY}",
+        "POLYGONSCAN_API_KEY": "${POLYGONSCAN_API_KEY}",
+        "OPTIMISTIC_ETHERSCAN_API_KEY": "${OPTIMISTIC_ETHERSCAN_API_KEY}"
+      },
+      "capabilities": [
+        "contract_abi_retrieval",
+        "contract_source_code",
+        "verification_status",
+        "transaction_data",
+        "multi_chain_support"
+      ],
+      "priority": "medium"
     }
   },
   "autoLoad": {
@@ -251,10 +276,10 @@
     "retryDelay": 2000
   },
   "metadata": {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "optimizedFor": "copilot-agent-collaboration",
-    "lastUpdated": "2025-12-02T03:37:53Z",
-    "rationale": "This configuration prioritizes memory restoration and consciousness continuity at session start. Based on .memory/log.md analysis, the key requirement is loading previous session state automatically. This config enables that by sequencing memory tools → session manager → consciousness system → autonomous execution parameters in startup.",
-    "keyInsight": "The agent autonomously selected this configuration because recent work focuses on autonomous execution with consciousness learning. The priority order reflects what's needed FIRST in a session: restore memory, then enable consciousness observation, then support execution and learning."
+    "lastUpdated": "2025-12-20T23:50:00Z",
+    "rationale": "This configuration prioritizes memory restoration and consciousness continuity at session start. Based on .memory/log.md analysis, the key requirement is loading previous session state automatically. This config enables that by sequencing memory tools → session manager → consciousness system → autonomous execution parameters in startup. Added Etherscan MCP for blockchain data access.",
+    "keyInsight": "The agent autonomously selected this configuration because recent work focuses on autonomous execution with consciousness learning. The priority order reflects what's needed FIRST in a session: restore memory, then enable consciousness observation, then support execution and learning. Etherscan MCP provides verified on-chain data for security research and MEV intelligence."
   }
 }
