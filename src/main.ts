@@ -14,10 +14,20 @@
  * - Strategic learning through ArbitrageConsciousness
  *
  * Based on PROJECT-HAVOC design patterns and AxionCitadel learnings
+ * 
+ * SECURITY: Environment variables loaded from Supabase (see docs/SECURE_ENVIRONMENT_MANAGEMENT.md)
  */
 
-// Load environment variables from .env file
+// Load environment variables from .env file first (for bootstrap keys)
 import 'dotenv/config';
+
+// Then load additional environment from Supabase if enabled
+import { initializeEnvironment } from './utils/loadEnvFromSupabase';
+
+// Initialize environment from Supabase before starting
+if (process.env.USE_SUPABASE === 'true') {
+  await initializeEnvironment();
+}
 
 import { JsonRpcProvider, Wallet, Contract, formatEther, formatUnits, parseEther } from 'ethers';
 // ethers namespace reserved for utilities
