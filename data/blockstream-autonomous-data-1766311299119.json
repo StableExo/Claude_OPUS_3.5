@@ -1,0 +1,39 @@
+{
+  "timestamp": "2025-12-21T10:01:39.119Z",
+  "discoveries": [
+    {
+      "address": "13yaSqGNDzt1mNW4vrKM9CvD46cTavNabF",
+      "message": "There is nothing too shocking about this signature",
+      "analysis": {
+        "block": {
+          "address": "13yaSqGNDzt1mNW4vrKM9CvD46cTavNabF",
+          "message": "There is nothing too shocking about this signature",
+          "publicKey": "02000000000005689111130e588a12ecda87b2dc5585c6c6ba66a412fa0cce65bc",
+          "signature": "ffffffff077b7209dc866fbfa0d2bf67a0c696afffe57a822e2ba90059a2cc7abb998becb4e427650e282522bf9576524665301b807c0e3194cf1e6c795a0cf7"
+        },
+        "isValid": false,
+        "patterns": [
+          "SIG_LEADING_ONES",
+          "SIG_REPEATING_FFFF",
+          "PUBKEY_REPEATING_00000",
+          "R_LEADING_ONES",
+          "R_REPEATING_FFFF",
+          "S_REPEATING_B"
+        ],
+        "mathematicalProperties": [],
+        "explanation": "⚠️ SIGNATURE IS INVALID - This signature does not verify correctly.\n\n🤔 This signature appears normal at first glance, but may have subtle mathematical properties worth investigating further.",
+        "curiosityScore": 90
+      },
+      "privateKeyExtraction": {
+        "success": false,
+        "explanation": "No obvious private key extraction method found. The signature appears cryptographically sound (or uses an unknown weakness)."
+      },
+      "timestamp": "2025-12-21T10:01:39.117Z"
+    }
+  ],
+  "summary": {
+    "totalAnalyzed": 1,
+    "extractableKeys": 0,
+    "averageCuriosity": 90
+  }
+}
