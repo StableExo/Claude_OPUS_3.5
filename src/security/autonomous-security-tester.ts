@@ -232,8 +232,9 @@ export class AutonomousSecurityTester extends EventEmitter {
 
     // Filter tests based on options
     const testsToRun = Array.from(this.tests.values()).filter(test => {
-      if (options.targets && !options.targets.includes(test.target)) return false;
-      if (options.categories && !options.categories.includes(test.category)) return false;
+      if (options.targets && options.targets.length > 0 && !options.targets.includes(test.target)) return false;
+      if (options.categories && options.categories.length > 0 && !options.categories.includes(test.category)) return false;
+      // Include tests with severity >= minSeverity (e.g., if minSeverity is 'medium', include 'medium', 'high', 'critical')
       if (options.minSeverity && this.compareSeverity(test.severity, options.minSeverity) < 0) return false;
       return true;
     });

@@ -165,10 +165,8 @@ For more information, see: docs/bug-bounty/coinbase-base-analysis.md
   `);
 }
 
-// Run if called directly
-if (require.main === module) {
-  main().catch(error => {
-    console.error('Fatal error:', error);
-    process.exit(1);
-  });
-}
+// Run main function
+main().catch(error => {
+  console.error('Fatal error:', error);
+  process.exit(1);
+});
