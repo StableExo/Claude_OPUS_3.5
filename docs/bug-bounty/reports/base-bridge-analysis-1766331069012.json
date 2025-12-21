@@ -1,0 +1,146 @@
+{
+  "timestamp": "2025-12-21T15:31:08.696Z",
+  "network": "Ethereum Mainnet (via Alchemy)",
+  "totalContracts": 3,
+  "results": [
+    {
+      "contract": "L1StandardBridge",
+      "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+      "network": "Ethereum",
+      "tests": [
+        {
+          "name": "Nonce Validation",
+          "vulnerable": false,
+          "confidence": 0.95,
+          "reasoning": "Official Base L2 bridge - audited and verified",
+          "evidence": [
+            "Contract contains storage operations (potential nonce tracking)",
+            "Contract matches known safe implementation"
+          ]
+        },
+        {
+          "name": "Withdrawal Tracking",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Finalization tracking mechanisms detected",
+          "evidence": []
+        },
+        {
+          "name": "Proof Consumption",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Proof consumption mechanisms appear implemented",
+          "evidence": []
+        },
+        {
+          "name": "Reentrancy Guards",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Reentrancy protection detected",
+          "evidence": []
+        },
+        {
+          "name": "Integer Overflow Protection",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Overflow protection appears implemented",
+          "evidence": [
+            "Overflow protection mechanisms detected"
+          ]
+        }
+      ]
+    },
+    {
+      "contract": "OptimismPortal",
+      "address": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
+      "network": "Ethereum",
+      "tests": [
+        {
+          "name": "Nonce Validation",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "No clear vulnerability indicators found",
+          "evidence": [
+            "Contract contains storage operations (potential nonce tracking)"
+          ]
+        },
+        {
+          "name": "Withdrawal Tracking",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Finalization tracking mechanisms detected",
+          "evidence": []
+        },
+        {
+          "name": "Proof Consumption",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Proof consumption mechanisms appear implemented",
+          "evidence": []
+        },
+        {
+          "name": "Reentrancy Guards",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Reentrancy protection detected",
+          "evidence": []
+        },
+        {
+          "name": "Integer Overflow Protection",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Overflow protection appears implemented",
+          "evidence": [
+            "Overflow protection mechanisms detected"
+          ]
+        }
+      ]
+    },
+    {
+      "contract": "L2OutputOracle",
+      "address": "0x56315b90c40730925ec5485cf004d835058518A0",
+      "network": "Ethereum",
+      "tests": [
+        {
+          "name": "Nonce Validation",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "No clear vulnerability indicators found",
+          "evidence": [
+            "Contract contains storage operations (potential nonce tracking)"
+          ]
+        },
+        {
+          "name": "Withdrawal Tracking",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Finalization tracking mechanisms detected",
+          "evidence": []
+        },
+        {
+          "name": "Proof Consumption",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Proof consumption mechanisms appear implemented",
+          "evidence": []
+        },
+        {
+          "name": "Reentrancy Guards",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Reentrancy protection detected",
+          "evidence": []
+        },
+        {
+          "name": "Integer Overflow Protection",
+          "vulnerable": false,
+          "confidence": 0.5,
+          "reasoning": "Overflow protection appears implemented",
+          "evidence": [
+            "Overflow protection mechanisms detected"
+          ]
+        }
+      ]
+    }
+  ]
+}
