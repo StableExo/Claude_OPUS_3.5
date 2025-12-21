@@ -78,7 +78,8 @@ async function verifyContractViaAPI(
       formData.append(key, value);
     }
 
-    const response = await fetch('https://api.basescan.org/v2/api', {
+    // Use unified Etherscan API v2 endpoint with chainid parameter for Base (8453)
+    const response = await fetch('https://api.etherscan.io/v2/api?chainid=8453', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -116,7 +117,8 @@ async function checkVerificationStatus(
   apiKey: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    const url = `https://api.basescan.org/v2/api?module=contract&action=checkverifystatus&guid=${guid}&apikey=${apiKey}`;
+    // Use unified Etherscan API v2 endpoint with chainid parameter for Base (8453)
+    const url = `https://api.etherscan.io/v2/api?chainid=8453&module=contract&action=checkverifystatus&guid=${guid}&apikey=${apiKey}`;
     const response = await fetch(url);
     const data = await response.json();
     

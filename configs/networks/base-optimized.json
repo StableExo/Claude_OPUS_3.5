@@ -33,7 +33,7 @@
       "decimals": 18
     },
     "explorer": "https://basescan.org",
-    "explorerApi": "https://api.basescan.org/api"
+    "explorerApi": "https://api.etherscan.io/v2/api?chainid=8453"
   },
 
   "gas": {

@@ -95,7 +95,7 @@ async function checkVerificationStatus(address: string): Promise<{
       return { isVerified: false };
     }
 
-    const url = `https://api.basescan.org/api?module=contract&action=getsourcecode&address=${address}&apikey=${apiKey}`;
+    const url = `https://api.etherscan.io/v2/api?chainid=8453&module=contract&action=getsourcecode&address=${address}&apikey=${apiKey}`;
     const response = await fetch(url);
     const data = await response.json();
 

@@ -37,6 +37,7 @@ const TARGET_CONTRACT = '0x84db6eE82b7Cf3b47E8F19270abdE5718B936670';
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || '';
 
 // Etherscan V2 API (Multichain) - Single API key works across all chains
+// Unified endpoint: https://api.etherscan.io/v2/api with chainid parameter
 // Supported chains: https://docs.etherscan.io/supported-chains
 const ETHERSCAN_V2_CONFIG = {
   ethereum: {
@@ -44,23 +45,23 @@ const ETHERSCAN_V2_CONFIG = {
     chainid: '1',
   },
   base: {
-    url: 'https://api.basescan.org/v2/api',
+    url: 'https://api.etherscan.io/v2/api',
     chainid: '8453',
   },
   optimism: {
-    url: 'https://api-optimistic.etherscan.io/v2/api',
+    url: 'https://api.etherscan.io/v2/api',
     chainid: '10',
   },
   arbitrum: {
-    url: 'https://api.arbiscan.io/v2/api',
+    url: 'https://api.etherscan.io/v2/api',
     chainid: '42161',
   },
   polygon: {
-    url: 'https://api.polygonscan.com/v2/api',
+    url: 'https://api.etherscan.io/v2/api',
     chainid: '137',
   },
   bsc: {
-    url: 'https://api.bscscan.com/v2/api',
+    url: 'https://api.etherscan.io/v2/api',
     chainid: '56',
   },
 };

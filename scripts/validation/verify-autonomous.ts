@@ -76,7 +76,8 @@ function encodeConstructorArgs(types: string[], args: any[]): string {
  * Check if contract is verified on BaseScan
  */
 async function checkVerificationStatus(address: string, apiKey: string): Promise<boolean> {
-  const url = `https://api.basescan.org/api?module=contract&action=getsourcecode&address=${address}&apikey=${apiKey}`;
+  // Use unified Etherscan API v2 endpoint with chainid parameter for Base (8453)
+  const url = `https://api.etherscan.io/v2/api?chainid=8453&module=contract&action=getsourcecode&address=${address}&apikey=${apiKey}`;
   
   try {
     const response = await fetch(url);
