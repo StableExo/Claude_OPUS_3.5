@@ -94,9 +94,10 @@ export async function loadEnvFromSupabase(
     }
 
     // Check if Supabase credentials are available
-    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY;
+    if (!process.env.SUPABASE_URL || !supabaseKey) {
       result.errors.push('Supabase credentials not found in environment');
-      logger.warn('Cannot load from Supabase: missing SUPABASE_URL or SUPABASE_ANON_KEY');
+      logger.warn('Cannot load from Supabase: missing SUPABASE_URL or SUPABASE_SERVICE_KEY/SUPABASE_ANON_KEY');
       return result;
     }
 
@@ -104,6 +105,8 @@ export async function loadEnvFromSupabase(
 
     // Initialize Supabase storage
     const storage = new SupabaseEnvStorage({
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: supabaseKey,
       encryptionKey: encryptionKey,
     });
 
