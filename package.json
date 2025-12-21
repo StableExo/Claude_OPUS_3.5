@@ -194,7 +194,8 @@
     "demo:advanced-mind": "node --import tsx scripts/consciousness/demo-advanced-mind.ts",
     "demo:philosophical-depth": "node --import tsx scripts/consciousness/demo-philosophical-depth.ts",
     "demo:consciousness-impact": "node --import tsx scripts/consciousness/demo-consciousness-impact.ts",
-    "explore:autonomous": "node --import tsx scripts/consciousness/autonomous-exploration.ts"
+    "explore:autonomous": "node --import tsx scripts/consciousness/autonomous-exploration.ts",
+    "env:upload": "node --import tsx scripts/env-management/upload-env-to-supabase.ts"
   },
   "dependencies": {
     "@aave/core-v3": "1.19.3",
