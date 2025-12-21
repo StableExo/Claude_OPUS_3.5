@@ -1189,6 +1189,8 @@ TheWarden's security intelligence system will be significantly strengthened thro
 **Analysis Date**: December 21, 2025
 
 **Related Documentation**:
-- [HACKERONE_CRYPTO_BOUNTY_ANALYSIS.md](./HACKERONE_CRYPTO_BOUNTY_ANALYSIS.md) - Crypto.com program analysis
-- [AUTONOMOUS_SECURITY_RESEARCH_PLAN.md](./AUTONOMOUS_SECURITY_RESEARCH_PLAN.md) - Research implementation plan
-- [CDCETH_IMPLEMENTATION_ANALYSIS.md](./CDCETH_IMPLEMENTATION_ANALYSIS.md) - Contract-specific deep dive
+- [HACKERONE_CRYPTO_BOUNTY_ANALYSIS.md](./HACKERONE_CRYPTO_BOUNTY_ANALYSIS.md) - Crypto.com program analysis (existing)
+- [HACKERONE_STRATEGIC_COMPARISON.md](./HACKERONE_STRATEGIC_COMPARISON.md) - Strategic comparison (this PR)
+- [HACKERONE_COINBASE_QUICK_REF.md](./HACKERONE_COINBASE_QUICK_REF.md) - Quick reference (this PR)
+- [AUTONOMOUS_SECURITY_RESEARCH_PLAN.md](./AUTONOMOUS_SECURITY_RESEARCH_PLAN.md) - Research implementation plan (to be created)
+- [CDCETH_IMPLEMENTATION_ANALYSIS.md](./CDCETH_IMPLEMENTATION_ANALYSIS.md) - Contract-specific deep dive (to be created)

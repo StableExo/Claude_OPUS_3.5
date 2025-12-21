@@ -22,7 +22,7 @@ This document provides a side-by-side comparison of major HackerOne bug bounty p
 | **Program Type** | Public, Dual-focus | Public, Smart Contract Focus |
 | **Launch Date** | Established (years) | Active |
 | **Max Bounty** | $5,000,000 USDC | $1,000,000 USD |
-| **Total Paid (Public)** | $2,3M+ | Unknown |
+| **Total Paid (Public)** | $2.3M+ | Unknown |
 | **Disclosed Reports** | 82+ | Unknown |
 | **Response Time** | 4-48 hours | 24-48 hours |
 | **Response Rank** | Top efficiency | Standard |
@@ -475,6 +475,6 @@ By systematically analyzing these programs and extracting security patterns, The
 **Last Updated**: December 21, 2025
 
 **Related Documentation**:
-- [HACKERONE_COINBASE_ANALYSIS.md](./HACKERONE_COINBASE_ANALYSIS.md)
-- [HACKERONE_CRYPTO_BOUNTY_ANALYSIS.md](./HACKERONE_CRYPTO_BOUNTY_ANALYSIS.md)
-- [AUTONOMOUS_SECURITY_RESEARCH_PLAN.md](./AUTONOMOUS_SECURITY_RESEARCH_PLAN.md)
+- [HACKERONE_COINBASE_ANALYSIS.md](./HACKERONE_COINBASE_ANALYSIS.md) - Complete Coinbase program analysis
+- [HACKERONE_CRYPTO_BOUNTY_ANALYSIS.md](./HACKERONE_CRYPTO_BOUNTY_ANALYSIS.md) - Crypto.com CDCETH analysis (existing)
+- [AUTONOMOUS_SECURITY_RESEARCH_PLAN.md](./AUTONOMOUS_SECURITY_RESEARCH_PLAN.md) - Implementation plan (to be created)
