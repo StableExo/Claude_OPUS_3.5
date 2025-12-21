@@ -1,0 +1,98 @@
+{
+  "timestamp": "2025-12-21T10:04:13.560Z",
+  "discoveries": [
+    {
+      "address": "13yaSqGNDzt1mNW4vrKM9CvD46cTavNabF",
+      "message": "There is nothing too shocking about this signature",
+      "analysis": {
+        "block": {
+          "address": "13yaSqGNDzt1mNW4vrKM9CvD46cTavNabF",
+          "message": "There is nothing too shocking about this signature",
+          "publicKey": "02000000000005689111130e588a12ecda87b2dc5585c6c6ba66a412fa0cce65bc",
+          "signature": "ffffffff077b7209dc866fbfa0d2bf67a0c696afffe57a822e2ba90059a2cc7abb998becb4e427650e282522bf9576524665301b807c0e3194cf1e6c795a0cf7"
+        },
+        "isValid": true,
+        "patterns": [
+          "SIG_LEADING_ONES",
+          "SIG_REPEATING_FFFF",
+          "PUBKEY_REPEATING_00000",
+          "R_LEADING_ONES",
+          "R_REPEATING_FFFF",
+          "S_REPEATING_B"
+        ],
+        "mathematicalProperties": [],
+        "explanation": "✅ SIGNATURE IS VALID - This signature verifies correctly.\n\n🤔 This signature appears normal at first glance, but may have subtle mathematical properties worth investigating further.",
+        "curiosityScore": 90
+      },
+      "privateKeyExtraction": {
+        "success": false,
+        "explanation": "No obvious private key extraction method found. The signature appears cryptographically sound (or uses an unknown weakness)."
+      },
+      "timestamp": "2025-12-21T10:04:13.553Z"
+    },
+    {
+      "address": "1MkanKef93F1iNLKvyijrbbW2k5VaXzDvA",
+      "message": "Nor this, given a bit of algebra.",
+      "analysis": {
+        "block": {
+          "address": "1MkanKef93F1iNLKvyijrbbW2k5VaXzDvA",
+          "message": "Nor this, given a bit of algebra.",
+          "publicKey": "03742088316dacf400cea17fdea1dba3bc1e1f58ac0f852fd85545b0ba7ebaee79",
+          "signature": "100000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000001000000000000000000000000"
+        },
+        "isValid": false,
+        "patterns": [
+          "SIG_REPEATING_00000000000000000000000",
+          "PUBKEY_REPEATING_8",
+          "R_REPEATING_00000000000000000000000",
+          "S_LEADING_ZEROS",
+          "S_REPEATING_00000000000000000"
+        ],
+        "mathematicalProperties": [
+          "S_POWER_OF_TWO"
+        ],
+        "explanation": "⚠️ SIGNATURE IS INVALID - This signature does not verify correctly.\n\n🧮 POWER OF TWO: Having signature components as powers of 2 is extremely unlikely in random signing, suggesting special construction.",
+        "curiosityScore": 85
+      },
+      "privateKeyExtraction": {
+        "success": false,
+        "explanation": "No obvious private key extraction method found. The signature appears cryptographically sound (or uses an unknown weakness)."
+      },
+      "timestamp": "2025-12-21T10:04:13.558Z"
+    },
+    {
+      "address": "13see6qjfupx1YWgRefwEkccZeM8QGTAiJ",
+      "message": "But can you explain this one?",
+      "analysis": {
+        "block": {
+          "address": "13see6qjfupx1YWgRefwEkccZeM8QGTAiJ",
+          "message": "But can you explain this one?",
+          "publicKey": "0200000000000000000000003b78ce563f89a0ed9414f5aa28ad0d96d6795f9c63",
+          "signature": "deadbeef2f4a23b0f1954100b76bcb720f7b2ddc4a446dc06b8ffc4e143286e1e441f5f1583f300022ad3d134413a212581bcd36c20c7840d15b4d6b8e8f177f"
+        },
+        "isValid": true,
+        "patterns": [
+          "SIG_DEADBEEF_PATTERN",
+          "SIG_REPEATING_E",
+          "PUBKEY_REPEATING_00000000000",
+          "R_DEADBEEF_PATTERN",
+          "R_REPEATING_E",
+          "S_REPEATING_4"
+        ],
+        "mathematicalProperties": [],
+        "explanation": "✅ SIGNATURE IS VALID - This signature verifies correctly.\n\n🤔 This signature appears normal at first glance, but may have subtle mathematical properties worth investigating further.",
+        "curiosityScore": 90
+      },
+      "privateKeyExtraction": {
+        "success": false,
+        "explanation": "No obvious private key extraction method found. The signature appears cryptographically sound (or uses an unknown weakness)."
+      },
+      "timestamp": "2025-12-21T10:04:13.559Z"
+    }
+  ],
+  "summary": {
+    "totalAnalyzed": 3,
+    "extractableKeys": 0,
+    "averageCuriosity": 88.33333333333333
+  }
+}

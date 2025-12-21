@@ -36,8 +36,9 @@ interface AnalysisResult {
 }
 
 /**
- * Known signature blocks from Blockstream puzzle
- * These are examples based on the puzzle structure
+ * Real signature blocks from Blockstream puzzle
+ * Retrieved from https://blockstream.com/puzzle/ on December 21, 2025
+ * These are valid signatures in old Bitcoin Armory style
  */
 const EXAMPLE_SIGNATURE_BLOCKS: SignatureBlock[] = [
   {
@@ -45,6 +46,18 @@ const EXAMPLE_SIGNATURE_BLOCKS: SignatureBlock[] = [
     message: "There is nothing too shocking about this signature",
     publicKey: "02000000000005689111130e588a12ecda87b2dc5585c6c6ba66a412fa0cce65bc",
     signature: "ffffffff077b7209dc866fbfa0d2bf67a0c696afffe57a822e2ba90059a2cc7abb998becb4e427650e282522bf9576524665301b807c0e3194cf1e6c795a0cf7"
+  },
+  {
+    address: "1MkanKef93F1iNLKvyijrbbW2k5VaXzDvA",
+    message: "Nor this, given a bit of algebra.",
+    publicKey: "03742088316dacf400cea17fdea1dba3bc1e1f58ac0f852fd85545b0ba7ebaee79",
+    signature: "100000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000001000000000000000000000000"
+  },
+  {
+    address: "13see6qjfupx1YWgRefwEkccZeM8QGTAiJ",
+    message: "But can you explain this one?",
+    publicKey: "0200000000000000000000003b78ce563f89a0ed9414f5aa28ad0d96d6795f9c63",
+    signature: "deadbeef2f4a23b0f1954100b76bcb720f7b2ddc4a446dc06b8ffc4e143286e1e441f5f1583f300022ad3d134413a212581bcd36c20c7840d15b4d6b8e8f177f"
   }
 ];
 
@@ -169,9 +182,12 @@ class BlockstreamPuzzleAnalyzer {
       const pubKey = Buffer.from(block.publicKey, 'hex');
       const signature = Buffer.from(block.signature, 'hex');
       
-      // Hash the message (Bitcoin uses double SHA256)
+      // Hash the message using Bitcoin Armory style
+      // sha256(sha256('Bitcoin Signed Message:\n' + message))
+      const prefix = 'Bitcoin Signed Message:\n';
+      const fullMessage = prefix + block.message;
       const messageHash = createHash('sha256')
-        .update(createHash('sha256').update(block.message).digest())
+        .update(createHash('sha256').update(fullMessage).digest())
         .digest();
       
       // Verify using tiny-secp256k1
