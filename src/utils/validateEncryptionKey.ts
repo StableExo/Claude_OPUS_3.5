@@ -92,6 +92,11 @@ export function validateSecretsEncryptionKey(key?: string): EncryptionKeyValidat
 
 /**
  * Test encryption function (matches SupabaseEnvStorage implementation)
+ * 
+ * Note: This uses the first 32 characters of the key as UTF-8, not hex conversion.
+ * This matches the current SupabaseEnvStorage.encrypt() implementation.
+ * While the key is expected to be 64 hex characters, the implementation
+ * treats it as a UTF-8 string and uses slice(0, 32) for the cipher key.
  */
 function testEncrypt(text: string, key: string): string {
   const algorithm = 'aes-256-cbc';
@@ -107,6 +112,9 @@ function testEncrypt(text: string, key: string): string {
 
 /**
  * Test decryption function (matches SupabaseEnvStorage implementation)
+ * 
+ * Note: This uses the first 32 characters of the key as UTF-8, not hex conversion.
+ * This matches the current SupabaseEnvStorage.decrypt() implementation.
  */
 function testDecrypt(encryptedText: string, key: string): string {
   const algorithm = 'aes-256-cbc';
