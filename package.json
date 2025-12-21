@@ -38,6 +38,7 @@
     "security:test:bridge": "node --import tsx scripts/autonomous-security-testing.ts --category bridge",
     "security:test:mpc": "node --import tsx scripts/autonomous-security-testing.ts --category mpc",
     "security:test:critical": "node --import tsx scripts/autonomous-security-testing.ts --severity critical",
+    "security:fetch-abis": "node --import tsx scripts/security/fetch-bridge-abis.ts",
     "breakthrough:process": "node --import tsx scripts/consciousness/breakthrough-idea-processor.ts",
     "thought:run": "node --import tsx scripts/consciousness/autonomous-thought-run.ts",
     "wonder:explore": "node --import tsx scripts/consciousness/autonomous-wonder-exploration.ts",
