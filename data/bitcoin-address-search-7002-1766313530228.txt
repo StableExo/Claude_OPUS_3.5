@@ -1,0 +1,155 @@
+═══════════════════════════════════════════════════════════════════
+   BITCOIN ADDRESS SEARCH - 7,002 BTC FROM 2011
+═══════════════════════════════════════════════════════════════════
+
+Search Date: 2025-12-21T10:38:50.227Z
+Target: Address with 7,002 BTC from 2011
+Results Found: 9
+
+═══════════════════════════════════════════════════════════════════
+   SEARCH RESULTS
+═══════════════════════════════════════════════════════════════════
+
+Result #1:
+   Address: 1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx
+   Current Balance: 0.01235477 BTC
+   Total Received: 208210.48663120 BTC
+   Total Sent: 208210.47427643 BTC
+   Transactions: 263
+   Source: Known Early Addresses
+   Match Reason: Large address - Balance: 0.01 BTC, Received: 208210.49 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx
+   🔗 View on mempool.space: https://mempool.space/address/1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx
+
+─────────────────────────────────────────────────────────────────
+
+Result #2:
+   Address: 1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF
+   Current Balance: 79957.26820659 BTC
+   Total Received: 79957.26820659 BTC
+   Total Sent: 0.00000000 BTC
+   Transactions: 666
+   Source: Known Early Addresses
+   Match Reason: Large address - Balance: 79957.27 BTC, Received: 79957.27 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF
+   🔗 View on mempool.space: https://mempool.space/address/1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF
+
+─────────────────────────────────────────────────────────────────
+
+Result #3:
+   Address: 1LdRcdxfbSnmCYYNdeYpUnztiYzVfBEQeC
+   Current Balance: 53880.06618587 BTC
+   Total Received: 53880.06618587 BTC
+   Total Sent: 0.00000000 BTC
+   Transactions: 232
+   Source: Known Early Addresses
+   Match Reason: Large address - Balance: 53880.07 BTC, Received: 53880.07 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/1LdRcdxfbSnmCYYNdeYpUnztiYzVfBEQeC
+   🔗 View on mempool.space: https://mempool.space/address/1LdRcdxfbSnmCYYNdeYpUnztiYzVfBEQeC
+
+─────────────────────────────────────────────────────────────────
+
+Result #4:
+   Address: 1AC4fMwgY8j9onSbXEWeH6Zan8QGMSdmtA
+   Current Balance: 51830.40136074 BTC
+   Total Received: 51830.40136074 BTC
+   Total Sent: 0.00000000 BTC
+   Transactions: 156
+   Source: Known Early Addresses
+   Match Reason: Large address - Balance: 51830.40 BTC, Received: 51830.40 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/1AC4fMwgY8j9onSbXEWeH6Zan8QGMSdmtA
+   🔗 View on mempool.space: https://mempool.space/address/1AC4fMwgY8j9onSbXEWeH6Zan8QGMSdmtA
+
+─────────────────────────────────────────────────────────────────
+
+Result #5:
+   Address: 1JArS6jzE3AJ9sZ3aFij1BmTcpFGgN86hA
+   Current Balance: 0.00000000 BTC
+   Total Received: 6318.28432482 BTC
+   Total Sent: 6318.28432482 BTC
+   Transactions: 2483
+   Source: Known Early Addresses
+   Match Reason: Large address - Balance: 0.00 BTC, Received: 6318.28 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/1JArS6jzE3AJ9sZ3aFij1BmTcpFGgN86hA
+   🔗 View on mempool.space: https://mempool.space/address/1JArS6jzE3AJ9sZ3aFij1BmTcpFGgN86hA
+
+─────────────────────────────────────────────────────────────────
+
+Result #6:
+   Address: 1DkyBEKt5S2GDtv7aQw6rQepAvnsRyHoYM
+   Current Balance: 0.68105351 BTC
+   Total Received: 613326.99836442 BTC
+   Total Sent: 613326.31731091 BTC
+   Transactions: 781
+   Source: Known Early Addresses
+   Match Reason: Large address - Balance: 0.68 BTC, Received: 613327.00 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/1DkyBEKt5S2GDtv7aQw6rQepAvnsRyHoYM
+   🔗 View on mempool.space: https://mempool.space/address/1DkyBEKt5S2GDtv7aQw6rQepAvnsRyHoYM
+
+─────────────────────────────────────────────────────────────────
+
+Result #7:
+   Address: 1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+   Current Balance: 1.24768262 BTC
+   Total Received: 144343.55978516 BTC
+   Total Sent: 144342.31210254 BTC
+   Transactions: 1057
+   Source: Famous Historical Addresses
+   Match Reason: Large address - Balance: 1.25 BTC, Received: 144343.56 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+   🔗 View on mempool.space: https://mempool.space/address/1FfmbHfnpaZjKFvyi1okTjJJusN455paPH
+
+─────────────────────────────────────────────────────────────────
+
+Result #8:
+   Address: 1933phfhK3ZgFQNLGSDXvqCn32k2buXY8a
+   Current Balance: 0.00118280 BTC
+   Total Received: 111114.65148955 BTC
+   Total Sent: 111114.65030675 BTC
+   Transactions: 152
+   Source: Famous Historical Addresses
+   Match Reason: Large address - Balance: 0.00 BTC, Received: 111114.65 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/1933phfhK3ZgFQNLGSDXvqCn32k2buXY8a
+   🔗 View on mempool.space: https://mempool.space/address/1933phfhK3ZgFQNLGSDXvqCn32k2buXY8a
+
+─────────────────────────────────────────────────────────────────
+
+Result #9:
+   Address: 12tkqA9xSoowkzoERHMWNKsTey55YEBqkv
+   Current Balance: 28151.05982378 BTC
+   Total Received: 28151.05982378 BTC
+   Total Sent: 0.00000000 BTC
+   Transactions: 195
+   Source: Famous Historical Addresses
+   Match Reason: Large address - Balance: 28151.06 BTC, Received: 28151.06 BTC
+
+   🔗 View on blockchain.info: https://blockchain.info/address/12tkqA9xSoowkzoERHMWNKsTey55YEBqkv
+   🔗 View on mempool.space: https://mempool.space/address/12tkqA9xSoowkzoERHMWNKsTey55YEBqkv
+
+─────────────────────────────────────────────────────────────────
+
+═══════════════════════════════════════════════════════════════════
+   ADDITIONAL INFORMATION
+═══════════════════════════════════════════════════════════════════
+
+If searching for a specific address with exactly 7,002 BTC from 2011:
+
+1. Check major Bitcoin puzzle addresses
+2. Review early Bitcoin mining pools from 2011
+3. Search for famous Bitcoin heists/events from 2011
+4. Check addresses associated with Mt. Gox (operational in 2011)
+5. Look for addresses in early Bitcoin forums/documentation
+
+The exact amount of 7,002 BTC suggests this might be:
+• A specific puzzle or challenge address
+• Part of a known Bitcoin historical event
+• An early exchange cold wallet
+• A reward or bounty address

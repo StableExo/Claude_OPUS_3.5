@@ -1,0 +1,98 @@
+{
+  "searchDate": "2025-12-21T10:38:50.228Z",
+  "targetBalance": 7002,
+  "targetYear": 2011,
+  "resultsCount": 9,
+  "results": [
+    {
+      "address": "1HQ3Go3ggs8pFnXuHVHRytPCq5fGG8Hbhx",
+      "balance": 1235477,
+      "balanceBTC": 0.01235477,
+      "totalReceived": 20821048663120,
+      "totalSent": 20821047427643,
+      "txCount": 263,
+      "source": "Known Early Addresses",
+      "matchReason": "Large address - Balance: 0.01 BTC, Received: 208210.49 BTC"
+    },
+    {
+      "address": "1FeexV6bAHb8ybZjqQMjJrcCrHGW9sb6uF",
+      "balance": 7995726820659,
+      "balanceBTC": 79957.26820659,
+      "totalReceived": 7995726820659,
+      "totalSent": 0,
+      "txCount": 666,
+      "source": "Known Early Addresses",
+      "matchReason": "Large address - Balance: 79957.27 BTC, Received: 79957.27 BTC"
+    },
+    {
+      "address": "1LdRcdxfbSnmCYYNdeYpUnztiYzVfBEQeC",
+      "balance": 5388006618587,
+      "balanceBTC": 53880.06618587,
+      "totalReceived": 5388006618587,
+      "totalSent": 0,
+      "txCount": 232,
+      "source": "Known Early Addresses",
+      "matchReason": "Large address - Balance: 53880.07 BTC, Received: 53880.07 BTC"
+    },
+    {
+      "address": "1AC4fMwgY8j9onSbXEWeH6Zan8QGMSdmtA",
+      "balance": 5183040136074,
+      "balanceBTC": 51830.40136074,
+      "totalReceived": 5183040136074,
+      "totalSent": 0,
+      "txCount": 156,
+      "source": "Known Early Addresses",
+      "matchReason": "Large address - Balance: 51830.40 BTC, Received: 51830.40 BTC"
+    },
+    {
+      "address": "1JArS6jzE3AJ9sZ3aFij1BmTcpFGgN86hA",
+      "balance": 0,
+      "balanceBTC": 0,
+      "totalReceived": 631828432482,
+      "totalSent": 631828432482,
+      "txCount": 2483,
+      "source": "Known Early Addresses",
+      "matchReason": "Large address - Balance: 0.00 BTC, Received: 6318.28 BTC"
+    },
+    {
+      "address": "1DkyBEKt5S2GDtv7aQw6rQepAvnsRyHoYM",
+      "balance": 68105351,
+      "balanceBTC": 0.68105351,
+      "totalReceived": 61332699836442,
+      "totalSent": 61332631731091,
+      "txCount": 781,
+      "source": "Known Early Addresses",
+      "matchReason": "Large address - Balance: 0.68 BTC, Received: 613327.00 BTC"
+    },
+    {
+      "address": "1FfmbHfnpaZjKFvyi1okTjJJusN455paPH",
+      "balance": 124768262,
+      "balanceBTC": 1.24768262,
+      "totalReceived": 14434355978516,
+      "totalSent": 14434231210254,
+      "txCount": 1057,
+      "source": "Famous Historical Addresses",
+      "matchReason": "Large address - Balance: 1.25 BTC, Received: 144343.56 BTC"
+    },
+    {
+      "address": "1933phfhK3ZgFQNLGSDXvqCn32k2buXY8a",
+      "balance": 118280,
+      "balanceBTC": 0.0011828,
+      "totalReceived": 11111465148955,
+      "totalSent": 11111465030675,
+      "txCount": 152,
+      "source": "Famous Historical Addresses",
+      "matchReason": "Large address - Balance: 0.00 BTC, Received: 111114.65 BTC"
+    },
+    {
+      "address": "12tkqA9xSoowkzoERHMWNKsTey55YEBqkv",
+      "balance": 2815105982378,
+      "balanceBTC": 28151.05982378,
+      "totalReceived": 2815105982378,
+      "totalSent": 0,
+      "txCount": 195,
+      "source": "Famous Historical Addresses",
+      "matchReason": "Large address - Balance: 28151.06 BTC, Received: 28151.06 BTC"
+    }
+  ]
+}
