@@ -3,9 +3,13 @@
  * 
  * Enables autonomous security testing of Base L2 Bridge contracts
  * and other bug bounty targets identified in the Coinbase program.
+ * 
+ * NOTE: All credentials (API keys, RPC endpoints, etc.) are stored in Supabase.
+ * Retrieve from Supabase when needed rather than searching .env files.
  */
 
 import { EventEmitter } from 'events';
+import { VulnerabilityDetector } from './VulnerabilityDetector.js';
 
 export interface SecurityTest {
   id: string;
@@ -52,10 +56,12 @@ export class AutonomousSecurityTester extends EventEmitter {
   private results: SecurityTestResult[] = [];
   private reports: BugBountyReport[] = [];
   private sessionStartTime: Date;
+  private vulnerabilityDetector: VulnerabilityDetector;
 
-  constructor() {
+  constructor(rpcUrl?: string) {
     super();
     this.sessionStartTime = new Date();
+    this.vulnerabilityDetector = new VulnerabilityDetector(rpcUrl);
     this.initializeTests();
   }
 
@@ -1010,87 +1016,173 @@ export class AutonomousSecurityTester extends EventEmitter {
   // HELPER METHODS FOR VULNERABILITY CHECKS
   // =========================================================================
 
+  /**
+   * Bridge contract addresses for Base L2
+   * NOTE: These addresses are official and verified
+   * Source: https://docs.base.org/base-chain/network-information/base-contracts
+   */
+  private readonly BRIDGE_CONTRACTS = {
+    L1StandardBridge: '0x3154Cf16ccdb4C6d922629664174b904d80F2C35',
+    OptimismPortal: '0x49048044D57e1C92A77f79988d21Fa8fAF74E97e',
+    L2OutputOracle: '0x56315b90c40730925ec5485cf004d835058518A0',
+    L1CrossDomainMessenger: '0x866E82a600A1414e583f7F13623F1aC5d58b0Afa',
+    L2StandardBridge: '0x4200000000000000000000000000000000000010',
+    L2CrossDomainMessenger: '0x4200000000000000000000000000000000000007',
+  };
+
   private async checkForNonceValidation(contract: string, method: string): Promise<boolean> {
-    // Simulate checking for nonce validation
-    // In production, this would analyze contract bytecode or source
-    return Math.random() > 0.3; // 30% chance of missing nonce validation
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true; // Unknown contract, assume safe
+    
+    const result = await this.vulnerabilityDetector.checkForNonceValidation(contractAddress, method);
+    return !result.isVulnerable;
   }
 
   private async checkMessageHashValidation(contract: string): Promise<boolean> {
-    return Math.random() > 0.25;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkMessageHashValidation(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkWithdrawalFinalizedTracking(contract: string): Promise<boolean> {
-    return Math.random() > 0.2;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkWithdrawalFinalizedTracking(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkProofConsumption(contract: string): Promise<boolean> {
-    return Math.random() > 0.25;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkProofConsumption(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkProofVerificationStrength(contract: string): Promise<boolean> {
-    return Math.random() > 0.3;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkProofVerificationStrength(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkIntegerOverflowProtection(contract: string): Promise<boolean> {
-    return Math.random() > 0.35;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkIntegerOverflowProtection(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkProposerAuthorization(contract: string): Promise<boolean> {
-    return Math.random() > 0.2;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkProposerAuthorization(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkStateRootValidation(contract: string): Promise<boolean> {
-    return Math.random() > 0.28;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkStateRootValidation(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkTimestampManipulationResistance(contract: string): Promise<boolean> {
-    return Math.random() > 0.32;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkTimestampManipulationResistance(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkChallengePeriodEnforcement(contract: string): Promise<boolean> {
-    return Math.random() > 0.35;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkChallengePeriodEnforcement(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkReentrancyGuards(contract: string): Promise<boolean> {
-    return Math.random() > 0.25;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkReentrancyGuards(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkMessageExecutionTracking(contract: string): Promise<boolean> {
-    return Math.random() > 0.3;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkMessageExecutionTracking(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkMessageSenderAuthentication(contract: string): Promise<boolean> {
-    return Math.random() > 0.22;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkMessageSenderAuthentication(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async checkMessageReplayProtection(contract: string): Promise<boolean> {
-    return Math.random() > 0.28;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return true;
+    
+    const result = await this.vulnerabilityDetector.checkMessageReplayProtection(contractAddress);
+    return !result.isVulnerable;
   }
 
   private async analyzeTimingVariance(protocol: string): Promise<number> {
-    // Simulate timing analysis - returns variance percentage
-    return Math.random() * 0.3; // 0-30% variance
+    // Timing analysis requires execution profiling
+    // This would need to be run in a testing environment with multiple runs
+    // For now, return neutral result indicating deeper analysis needed
+    return 0.05; // Low variance = good, high variance = potential vulnerability
   }
 
   private async checkCacheTimingPatterns(protocol: string): Promise<boolean> {
-    return Math.random() > 0.4; // 40% chance of cache vulnerability
+    // Cache timing attacks require hardware-level analysis
+    // Would need specialized testing tools
+    return true; // Assume safe for now, requires manual security audit
   }
 
   private async checkProtocolComposition(protocol: string): Promise<boolean> {
-    return Math.random() > 0.45;
+    // Protocol composition security requires formal verification
+    // Beyond scope of automated testing
+    return true; // Assume safe, requires cryptography expert review
   }
 
   private async checkReentrancyVulnerability(contract: string): Promise<boolean> {
-    return Math.random() > 0.3;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return false; // Unknown contract, may be vulnerable
+    
+    const result = await this.vulnerabilityDetector.checkReentrancyGuards(contractAddress);
+    return result.isVulnerable;
   }
 
   private async checkAccessControl(contract: string): Promise<boolean> {
-    return Math.random() > 0.25;
+    const contractAddress = this.BRIDGE_CONTRACTS[contract as keyof typeof this.BRIDGE_CONTRACTS];
+    if (!contractAddress) return false;
+    
+    // Access control check similar to proposer authorization
+    const result = await this.vulnerabilityDetector.checkProposerAuthorization(contractAddress);
+    return result.isVulnerable;
   }
 
   private async checkSignatureMalleability(contract: string): Promise<boolean> {
-    return Math.random() > 0.35;
+    // Signature malleability requires analyzing ECDSA implementation
+    // Modern contracts using OpenZeppelin are generally safe
+    // Would need bytecode analysis for ecrecover usage patterns
+    return false; // Assume safe with modern implementations
   }
 
   /**
