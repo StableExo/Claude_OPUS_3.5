@@ -1,0 +1,165 @@
+# Jekyll Configuration for TheWarden GitHub Pages
+# https://docs.github.com/en/pages
+
+# Site settings
+title: "AEV - TheWarden"
+description: "Autonomous Extracted Value - Intelligent autonomous agent system competing with traditional MEV through learning-based value extraction"
+author: "StableExo"
+email: ""
+baseurl: "/Claude_OPUS_3.5"
+url: "https://stableexo.github.io"
+
+# Theme settings
+theme: jekyll-theme-primer
+remote_theme: pages-themes/primer@v0.6.0
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+# SEO and social
+logo: ""
+twitter:
+  username: ""
+  card: summary
+social:
+  name: StableExo
+  links:
+    - https://github.com/StableExo/Claude_OPUS_3.5
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    default_lang: javascript
+
+# Navigation structure
+nav_links:
+  - title: Home
+    url: /
+  - title: Documentation
+    url: /docs/
+  - title: Getting Started
+    url: /docs/guides/quick-start/MAINNET_QUICKSTART.html
+  - title: API Reference
+    url: /docs/API.html
+  - title: Contributing
+    url: /CONTRIBUTING.html
+  - title: GitHub
+    url: https://github.com/StableExo/Claude_OPUS_3.5
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: "docs"
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "default"
+
+# Exclude from processing
+exclude:
+  - node_modules/
+  - .git/
+  - .github/
+  - .memory/
+  - .memory-exports/
+  - scripts/
+  - src/
+  - test/
+  - tests/
+  - forge-tests/
+  - frontend/
+  - contracts/
+  - abis/
+  - deployment/
+  - infrastructure/
+  - k8s/
+  - helm/
+  - docker/
+  - bin/
+  - archive/
+  - data/
+  - logs_*.zip
+  - "*.ts"
+  - "*.js"
+  - "*.json"
+  - "*.yml"
+  - "*.yaml"
+  - "*.sh"
+  - "*.toml"
+  - "*.config.*"
+  - package*.json
+  - tsconfig.json
+  - vitest.config.ts
+  - hardhat.config.ts
+  - foundry.toml
+  - ecosystem.config.json
+  - docker-compose.yml
+  - vercel.json
+  - requirements.txt
+  - remappings.txt
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - .sass-cache/
+  - _site/
+  - .jekyll-cache/
+  - .env*
+  - .npmrc
+  - .nvmrc
+  - .prettierrc
+  - .prettierignore
+  - .cursor
+  - .devcontainer
+  - .thewarden
+  - TheWarden
+  - "*.docx"
+  - "*.txt"
+  - "*.zip"
+
+# Include specific files
+include:
+  - _config.yml
+  - README.md
+  - CONTRIBUTING.md
+  - CODE_OF_CONDUCT.md
+  - SECURITY.md
+  - LICENSE
+  - CHANGELOG.md
+
+# Show excerpts
+show_excerpts: true
+
+# Pagination (if needed)
+paginate: 10
+paginate_path: "/page:num/"
+
+# Footer
+footer_content: "© 2025 StableExo. Licensed under the <a href='https://opensource.org/licenses/MIT'>MIT License</a>."
+
+# Google Analytics (add tracking ID if needed)
+# google_analytics: UA-XXXXXXXX-X
+
+# Disqus comments (add shortname if needed)
+# disqus:
+#   shortname: your-disqus-shortname

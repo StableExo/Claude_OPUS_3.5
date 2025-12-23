@@ -1,0 +1,90 @@
+<nav class="navigation" role="navigation">
+  <div class="nav-container">
+    <div class="nav-header">
+      <a href="{{ site.baseurl }}/" class="nav-title">
+        <strong>{{ site.title }}</strong>
+      </a>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a href="{{ site.baseurl }}/">Home</a></li>
+      <li><a href="{{ site.baseurl }}/docs/">Documentation</a></li>
+      <li><a href="{{ site.baseurl }}/docs/guides/quick-start/MAINNET_QUICKSTART.html">Getting Started</a></li>
+      <li><a href="{{ site.baseurl }}/docs/API.html">API</a></li>
+      <li><a href="{{ site.baseurl }}/CONTRIBUTING.html">Contributing</a></li>
+      <li><a href="https://github.com/StableExo/Claude_OPUS_3.5" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+.navigation {
+  background-color: #24292e;
+  color: #ffffff;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #0366d6;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-title {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-right: 2rem;
+}
+
+.nav-title:hover {
+  color: #58a6ff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.nav-links li {
+  margin: 0;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #58a6ff;
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .nav-title {
+    margin-bottom: 1rem;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+</style>
