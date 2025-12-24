@@ -1,0 +1,250 @@
+name: Autonomous Lightning Network Testing ⚡
+
+on:
+  # Run on schedule (every 6 hours)
+  schedule:
+    - cron: '0 */6 * * *'
+  
+  # Allow manual trigger from GitHub UI or phone
+  workflow_dispatch:
+    inputs:
+      duration:
+        description: 'Test duration in seconds'
+        required: false
+        default: '60'
+      test_scenarios:
+        description: 'Test scenarios (comma-separated: invoice,payment,stats,all)'
+        required: false
+        default: 'all'
+  
+  # Run on push to main for continuous testing
+  push:
+    branches:
+      - main
+      - copilot/ride-the-lightning
+    paths:
+      - 'src/lightning/**'
+      - 'scripts/lightning/**'
+      - '.github/workflows/autonomous-lightning-testing.yml'
+
+jobs:
+  autonomous-lightning-test:
+    name: Autonomous Lightning Integration Testing
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    env:
+      NODE_ENV: test
+      LIGHTNING_MOCK: true
+      LIGHTNING_NETWORK: testnet
+      LIGHTNING_API_PORT: 3001
+      LIGHTNING_API_HOST: 0.0.0.0
+      LIGHTNING_API_KEYS: ${{ secrets.LIGHTNING_TEST_API_KEY || 'test-key-github-actions' }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+    
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: 📦 Install Dependencies
+        run: |
+          npm ci
+          npm run build
+      
+      - name: ⚡ Start Lightning API Server (Background)
+        run: |
+          echo "Starting Lightning API in mock mode..."
+          npm run lightning:api:mock &
+          echo $! > lightning-api.pid
+          
+          # Wait for server to be ready
+          echo "Waiting for server to start..."
+          for i in {1..30}; do
+            if curl -s http://localhost:3001/health > /dev/null; then
+              echo "✅ Server is ready!"
+              break
+            fi
+            echo "Waiting... ($i/30)"
+            sleep 2
+          done
+      
+      - name: 🧪 Test 1 - Health Check
+        id: test_health
+        run: |
+          echo "Testing health endpoint..."
+          RESPONSE=$(curl -s http://localhost:3001/health)
+          echo "Response: $RESPONSE"
+          
+          # Check if response contains "healthy"
+          if echo "$RESPONSE" | grep -q '"status":"healthy"'; then
+            echo "✅ Health check passed"
+            echo "result=passed" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Health check failed"
+            echo "result=failed" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+      
+      - name: 🧪 Test 2 - Create Invoice
+        id: test_invoice
+        run: |
+          echo "Creating test invoice..."
+          RESPONSE=$(curl -s -X POST http://localhost:3001/api/invoice \
+            -H "X-API-Key: test-key-github-actions" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "serviceType": "ai-query",
+              "amountSats": 50,
+              "description": "Autonomous test invoice from GitHub Actions"
+            }')
+          
+          echo "Response: $RESPONSE"
+          
+          # Extract transaction ID
+          TRANSACTION_ID=$(echo "$RESPONSE" | grep -o '"transactionId":"[^"]*"' | cut -d'"' -f4)
+          echo "Transaction ID: $TRANSACTION_ID"
+          echo "transaction_id=$TRANSACTION_ID" >> $GITHUB_OUTPUT
+          
+          # Check if invoice was created successfully
+          if echo "$RESPONSE" | grep -q '"success":true'; then
+            echo "✅ Invoice created successfully"
+            echo "result=passed" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Invoice creation failed"
+            echo "result=failed" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+      
+      - name: 🧪 Test 3 - Payment Statistics
+        id: test_stats
+        run: |
+          echo "Checking payment statistics..."
+          
+          # Wait for mock payment to process
+          sleep 2
+          
+          RESPONSE=$(curl -s http://localhost:3001/api/stats \
+            -H "X-API-Key: test-key-github-actions")
+          
+          echo "Response: $RESPONSE"
+          
+          # Check revenue allocation
+          if echo "$RESPONSE" | grep -q '"debtAllocationPercent":70'; then
+            echo "✅ Revenue allocation correct (70%)"
+            echo "result=passed" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Revenue allocation incorrect"
+            echo "result=failed" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+      
+      - name: 🧪 Test 4 - Node Information
+        id: test_node_info
+        run: |
+          echo "Fetching node information..."
+          RESPONSE=$(curl -s http://localhost:3001/api/node/info \
+            -H "X-API-Key: test-key-github-actions")
+          
+          echo "Response: $RESPONSE"
+          
+          # Check if node info is returned
+          if echo "$RESPONSE" | grep -q '"success":true'; then
+            echo "✅ Node info retrieved"
+            echo "result=passed" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Node info retrieval failed"
+            echo "result=failed" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+      
+      - name: 📊 Store Results in Supabase
+        if: always()
+        run: |
+          cat > /tmp/test-results.json << EOF
+          {
+            "test_run_id": "${{ github.run_id }}",
+            "test_run_number": ${{ github.run_number }},
+            "workflow": "autonomous-lightning-testing",
+            "triggered_by": "${{ github.event_name }}",
+            "branch": "${{ github.ref_name }}",
+            "commit_sha": "${{ github.sha }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "tests": {
+              "health_check": "${{ steps.test_health.outputs.result }}",
+              "invoice_creation": "${{ steps.test_invoice.outputs.result }}",
+              "payment_stats": "${{ steps.test_stats.outputs.result }}",
+              "node_info": "${{ steps.test_node_info.outputs.result }}"
+            },
+            "transaction_id": "${{ steps.test_invoice.outputs.transaction_id }}",
+            "environment": "github-actions",
+            "mock_mode": true
+          }
+          EOF
+          
+          echo "Test results:"
+          cat /tmp/test-results.json
+          
+          # Store in Supabase if credentials available
+          if [ -n "${{ secrets.SUPABASE_URL }}" ] && [ -n "${{ secrets.SUPABASE_SERVICE_KEY }}" ]; then
+            echo "Storing results in Supabase..."
+            
+            curl -X POST "${{ secrets.SUPABASE_URL }}/rest/v1/lightning_test_results" \
+              -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+              -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+              -H "Content-Type: application/json" \
+              -H "Prefer: return=minimal" \
+              -d @/tmp/test-results.json \
+              && echo "✅ Results stored in Supabase" \
+              || echo "⚠️ Could not store in Supabase (table may not exist yet)"
+          else
+            echo "⚠️ Supabase credentials not available, skipping storage"
+          fi
+      
+      - name: 🛑 Stop Lightning API Server
+        if: always()
+        run: |
+          if [ -f lightning-api.pid ]; then
+            PID=$(cat lightning-api.pid)
+            echo "Stopping Lightning API (PID: $PID)..."
+            kill $PID || true
+            rm lightning-api.pid
+          fi
+      
+      - name: 📝 Generate Summary
+        if: always()
+        run: |
+          echo "## ⚡ Lightning Network Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Triggered by:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Test | Result |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Health Check | ${{ steps.test_health.outputs.result == 'passed' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Invoice Creation | ${{ steps.test_invoice.outputs.result == 'passed' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Payment Statistics | ${{ steps.test_stats.outputs.result == 'passed' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Node Information | ${{ steps.test_node_info.outputs.result == 'passed' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Details" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Transaction ID:** ${{ steps.test_invoice.outputs.transaction_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Revenue Allocation:** 70% to US debt fund" >> $GITHUB_STEP_SUMMARY
+          echo "- **Mode:** Mock Lightning (testnet simulation)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "View detailed results in Supabase dashboard 📊" >> $GITHUB_STEP_SUMMARY
+      
+      - name: ✅ All Tests Passed
+        if: steps.test_health.outputs.result == 'passed' && steps.test_invoice.outputs.result == 'passed' && steps.test_stats.outputs.result == 'passed' && steps.test_node_info.outputs.result == 'passed'
+        run: |
+          echo "🎉 All Lightning Network tests passed!"
+          echo "⚡ TheWarden Lightning integration is operational"
