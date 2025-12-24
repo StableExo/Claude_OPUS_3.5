@@ -9,35 +9,93 @@ This module integrates Core Lightning with TheWarden's consciousness system, ena
 - **Bitcoin Payment Acceptance**: Instant, low-fee Lightning payments for AI services
 - **Micropayment Revenue Streams**: Pay-per-query, streaming payments, subscriptions
 - **Automatic Revenue Allocation**: 70% to US debt reduction, 30% operational
+- **REST API & WebSocket**: Production-ready API for invoice creation and payment notifications
+- **Mock Mode**: Complete testing without real Bitcoin/Lightning nodes
+- **Docker Deployment**: One-command setup with docker-compose
 - **Consciousness Integration**: All Lightning activity recorded and analyzed
 - **Cross-Chain Opportunities**: BTC<->Base arbitrage via Lightning speed advantage
 
+## Phase Status
+
+### ✅ Phase 1: Foundation (COMPLETE)
+- [x] Core Lightning client wrapper
+- [x] Payment processor with revenue allocation
+- [x] Consciousness integration hooks
+- [x] TypeScript types (200+ lines)
+- [x] Demo script and setup automation
+
+### ✅ Phase 2: REST API & Deployment (COMPLETE)
+- [x] REST API server with 9 endpoints
+- [x] WebSocket server for real-time notifications
+- [x] Authentication and rate limiting
+- [x] Mock Lightning client for testing
+- [x] Docker/docker-compose deployment
+- [x] Complete deployment guide
+- [x] API reference documentation
+- [x] Production deployment checklist
+
+### Phase 3-5: See full roadmap below
+
 ## Quick Start
 
-### Prerequisites
-
-- Node.js 22+
-- Bitcoin Core (testnet for development)
-- Core Lightning (testnet for development)
-- TheWarden repository cloned
-
-### Installation
+### Option 1: Docker (Recommended)
 
 ```bash
-# 1. Set up Bitcoin Core and Core Lightning testnet
-./scripts/lightning/setup-testnet.sh
+# Start all services (Bitcoin, Lightning, API)
+docker-compose -f docker/docker-compose.lightning.yml up -d
 
-# 2. Start Bitcoin Core (testnet)
-bitcoind -testnet -daemon
-
-# 3. Start Core Lightning (testnet)
-lightningd --network=testnet --daemon
-
-# 4. Check Lightning node status
-lightning-cli --testnet getinfo
+# View logs
+docker-compose -f docker/docker-compose.lightning.yml logs -f
 ```
 
-### Basic Usage
+See [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for complete instructions.
+
+### Option 2: Mock Mode (No Bitcoin Required)
+
+```bash
+# Start API in mock mode
+npm run lightning:api:mock
+
+# Test the API
+curl -X POST http://localhost:3001/api/invoice \
+  -H "X-API-Key: demo-key-12345" \
+  -H "Content-Type: application/json" \
+  -d '{"serviceType":"ai-query","amountSats":50,"description":"Test"}'
+```
+
+### Option 3: Manual Setup
+
+```bash
+# 1. Set up Bitcoin & Lightning testnet
+npm run lightning:setup
+
+# 2. Start Bitcoin Core
+bitcoind -testnet -daemon
+
+# 3. Start Core Lightning
+lightningd --network=testnet --daemon
+
+# 4. Start API server
+npm run lightning:api
+```
+
+## API Endpoints
+
+```
+POST   /api/invoice         - Create Lightning invoice
+GET    /api/invoice/:id     - Get invoice status
+GET    /api/invoices        - List recent invoices
+GET    /api/node/info       - Get node information
+GET    /api/stats           - Get payment statistics
+GET    /api/wallet/balance  - Get wallet balance
+GET    /api/channels        - List Lightning channels
+POST   /api/invoice/decode  - Decode BOLT11 invoice
+GET    /health              - Health check (no auth)
+```
+
+WebSocket for real-time payment notifications at `ws://host:port`
+
+## Basic Usage
 
 ```typescript
 import { CoreLightningClient, LightningPaymentProcessor } from './src/lightning/index.js';

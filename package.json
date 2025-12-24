@@ -99,6 +99,8 @@
     "verify:encryption-key": "node --import tsx scripts/verify-secrets-encryption-key.ts",
     "lightning:setup": "./scripts/lightning/setup-testnet.sh",
     "lightning:demo": "node --import tsx scripts/lightning/demo.ts",
+    "lightning:api": "node --import tsx scripts/lightning/start-api-server.ts",
+    "lightning:api:mock": "LIGHTNING_MOCK=true node --import tsx scripts/lightning/start-api-server.ts",
     "lightning:test": "echo 'Lightning tests not yet implemented'",
     "analyze:attacker": "node --import tsx scripts/analyze-attacker.ts",
     "security:analyze": "node --import tsx scripts/analyze-attacker.ts",

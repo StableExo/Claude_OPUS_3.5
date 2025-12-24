@@ -80,7 +80,7 @@ export class LightningPaymentProcessor {
       serviceType,
       userId,
       status: 'pending',
-      revenueAllocation: this.calculateAllocation(amountSats, serviceType),
+      revenueAllocation: this.calculateAllocation(amountSats, 'lightning-service'),
     };
 
     if (this.supabase) {
@@ -297,20 +297,13 @@ export class LightningPaymentProcessor {
     if (!this.consciousnessEnabled) return;
 
     try {
-      // Import consciousness system dynamically to avoid circular deps
-      const { ConsciousnessSystem } = await import('../consciousness/ConsciousnessSystem.js');
-      const consciousness = ConsciousnessSystem.getInstance();
+      // For now, just log - consciousness system integration can be added later
+      console.log(`[Consciousness] Lightning ${event.event}:`, event);
       
-      // Record as a thought/observation
-      await consciousness.recordThought({
-        type: 'observation',
-        content: `Lightning ${event.event}: ${JSON.stringify(event, null, 2)}`,
-        context: {
-          category: 'lightning-network',
-          subcategory: event.event,
-          metadata: event,
-        },
-      });
+      // TODO: Integrate with consciousness system when available
+      // const { ConsciousnessSystem } = await import('../consciousness/ConsciousnessSystem.js');
+      // const consciousness = ConsciousnessSystem.getInstance();
+      // await consciousness.recordThought({ ... });
     } catch (error) {
       console.error('Error recording to consciousness:', error);
     }

@@ -1,0 +1,42 @@
+# Lightning API Server Dockerfile
+FROM node:22-alpine
+
+# Install dependencies
+RUN apk add --no-cache \
+    curl \
+    bash \
+    git
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Install dependencies
+RUN npm ci --production=false
+
+# Copy source code
+COPY src ./src
+COPY scripts ./scripts
+
+# Create non-root user
+RUN addgroup -g 1001 -S warden && \
+    adduser -u 1001 -S warden -G warden
+
+# Set ownership
+RUN chown -R warden:warden /app
+
+# Switch to non-root user
+USER warden
+
+# Expose API port
+EXPOSE 3001
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:3001/health || exit 1
+
+# Start Lightning API server
+CMD ["npm", "run", "lightning:api"]

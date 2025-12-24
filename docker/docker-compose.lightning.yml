@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # Bitcoin Core testnet node
+  bitcoind:
+    image: btcpayserver/bitcoin:27.0
+    container_name: warden-bitcoind-testnet
+    command:
+      - bitcoind
+      - -testnet=1
+      - -server=1
+      - -rpcallowip=0.0.0.0/0
+      - -rpcbind=0.0.0.0
+      - -rpcuser=lightning
+      - -rpcpassword=lightning
+      - -txindex=1
+      - -zmqpubrawblock=tcp://0.0.0.0:28332
+      - -zmqpubrawtx=tcp://0.0.0.0:28333
+    ports:
+      - "18332:18332"  # RPC port
+      - "18333:18333"  # P2P port
+    volumes:
+      - bitcoin-data:/data
+    networks:
+      - lightning-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "bitcoin-cli", "-testnet", "-rpcuser=lightning", "-rpcpassword=lightning", "getblockchaininfo"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Core Lightning testnet node
+  lightningd:
+    image: elementsproject/lightningd:v24.02.2
+    container_name: warden-lightningd-testnet
+    command:
+      - lightningd
+      - --network=testnet
+      - --bitcoin-rpcconnect=bitcoind
+      - --bitcoin-rpcport=18332
+      - --bitcoin-rpcuser=lightning
+      - --bitcoin-rpcpassword=lightning
+      - --log-level=info
+      - --bind-addr=0.0.0.0:9735
+      - --announce-addr=${PUBLIC_IP}:9735
+      - --alias=TheWarden-Node
+    ports:
+      - "9735:9735"   # P2P Lightning port
+    volumes:
+      - lightning-data:/root/.lightning
+    networks:
+      - lightning-network
+    depends_on:
+      bitcoind:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      - LIGHTNINGD_NETWORK=testnet
+
+  # TheWarden Lightning API Server
+  lightning-api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.lightning-api
+    container_name: warden-lightning-api
+    ports:
+      - "3001:3001"   # API/WebSocket port
+    volumes:
+      - lightning-data:/root/.lightning:ro  # Read-only access to Lightning data
+      - ./src:/app/src:ro
+      - ./scripts:/app/scripts:ro
+    networks:
+      - lightning-network
+    depends_on:
+      - lightningd
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - LIGHTNING_NETWORK=testnet
+      - LIGHTNING_DIR=/root/.lightning
+      - LIGHTNING_API_PORT=3001
+      - LIGHTNING_API_HOST=0.0.0.0
+      - LIGHTNING_API_KEYS=${LIGHTNING_API_KEYS:-demo-key-12345}
+      - LIGHTNING_MOCK=false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  lightning-network:
+    driver: bridge
+
+volumes:
+  bitcoin-data:
+    driver: local
+  lightning-data:
+    driver: local
