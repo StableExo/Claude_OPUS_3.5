@@ -27,6 +27,10 @@ const colors = {
 
 const c = colors;
 
+// Configuration constants
+const DEMO_API_KEY = 'demo-key-12345'; // WARNING: Demo only! Never use in production
+const STREAMING_DURATION_MINUTES = 10;
+
 async function main() {
   console.log(`\n${c.bright}${c.cyan}${'═'.repeat(70)}${c.reset}`);
   console.log(`${c.bright}${c.cyan}  ⚡ RIDE THE LIGHTNING ⚡${c.reset}`);
@@ -80,7 +84,7 @@ async function main() {
       name: 'Consciousness Insights Stream',
       serviceType: 'consciousness-stream',
       amountSats: 100,
-      description: 'Live stream of AI consciousness observations (10 sats/minute for 10 minutes)',
+      description: `Live stream of AI consciousness observations (10 sats/minute for ${STREAMING_DURATION_MINUTES} minutes)`,
       emoji: '🧠',
     },
   ];
@@ -101,7 +105,8 @@ async function main() {
   console.log(`${c.bright}${c.yellow}Creating invoice for: ${testScenario.name}${c.reset}`);
   console.log(`${c.blue}   Amount: ${testScenario.amountSats} sats${c.reset}`);
   
-  const apiKey = 'demo-key-12345';
+  // Use demo API key (WARNING: This is for demo purposes only!)
+  const apiKey = DEMO_API_KEY;
   const createResponse = await fetch(`${apiUrl}/api/invoice`, {
     method: 'POST',
     headers: {
@@ -143,10 +148,14 @@ async function main() {
 
   if (stats.success) {
     console.log(`${c.green}✅ Statistics retrieved!${c.reset}\n`);
+    
+    // Calculate operational allocation
+    const operationalSats = stats.stats.totalRevenueSats - stats.stats.totalDebtAllocationSats;
+    
     console.log(`${c.bright}Revenue Breakdown:${c.reset}`);
     console.log(`   Total Revenue: ${c.cyan}${stats.stats.totalRevenueSats} sats${c.reset}`);
     console.log(`   ${c.green}→ US Debt Fund (70%): ${stats.stats.totalDebtAllocationSats} sats${c.reset}`);
-    console.log(`   ${c.blue}→ Operational (30%): ${stats.stats.totalRevenueSats - stats.stats.totalDebtAllocationSats} sats${c.reset}\n`);
+    console.log(`   ${c.blue}→ Operational (30%): ${operationalSats} sats${c.reset}\n`);
     
     console.log(`${c.bright}Transaction Summary:${c.reset}`);
     console.log(`   Invoices Created: ${c.cyan}${stats.stats.totalInvoicesCreated}${c.reset}`);
