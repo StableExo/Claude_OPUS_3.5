@@ -628,6 +628,10 @@ export class EtherscanMcpServer extends BaseMcpServer {
   private async handleCallTool(params: CallToolParams): Promise<CallToolResult> {
     const { name, arguments: args } = params;
 
+    if (!args) {
+      throw new Error('Missing required arguments');
+    }
+
     try {
       let result: any;
 
@@ -1199,17 +1203,6 @@ export class EtherscanMcpServer extends BaseMcpServer {
   }
 
   /**
-   * Get block explorer URL
-   */
-  private getBlockExplorerUrl(address: string, chain: string): string {
-    const baseUrl = BLOCK_EXPLORER_URLS[chain];
-    if (baseUrl) {
-      return `${baseUrl}/${address}#code`;
-    }
-    return address;
-  }
-
-  /**
    * Verify contract source code on Etherscan
    * Based on: https://docs.etherscan.io/contract-verification/verify-with-hardhat
    */
@@ -1356,7 +1349,7 @@ export class EtherscanMcpServer extends BaseMcpServer {
   /**
    * Called on server shutdown
    */
-  protected onShutdown(): void {
+  protected async onShutdown(): Promise<void> {
     this.log('Etherscan MCP Server shutting down');
   }
 }
