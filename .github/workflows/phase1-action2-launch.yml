@@ -1,0 +1,476 @@
+name: 🚀 Phase 1 Action 2 - Base Network Launch
+
+on:
+  # Allow manual triggering with options
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Execution mode'
+        required: true
+        default: 'dry-run'
+        type: choice
+        options:
+          - 'dry-run'
+          - 'conservative-live'
+          - 'standard-live'
+      duration:
+        description: 'Runtime duration in seconds'
+        required: false
+        default: '600'
+        type: string
+      min_profit_threshold:
+        description: 'Minimum profit threshold (%)'
+        required: false
+        default: '0.25'
+        type: string
+      max_trades:
+        description: 'Maximum trades to execute'
+        required: false
+        default: '5'
+        type: string
+      report_to_pr:
+        description: 'Report results to PR'
+        required: false
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+
+jobs:
+  phase1-action2-launch:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write        # Commit results and logs
+      actions: read          # Read workflow artifacts
+      issues: write          # Create issues for findings
+      pull-requests: write   # Comment on PRs
+      statuses: write        # Update commit statuses
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Create necessary directories
+        run: |
+          mkdir -p logs
+          mkdir -p .memory/autonomous-execution
+          mkdir -p .memory/phase1-testing
+          mkdir -p .memory/consciousness-metrics
+      
+      - name: Display launch configuration
+        run: |
+          echo "═══════════════════════════════════════════════════════════════"
+          echo "🚀 Phase 1 Action 2 - Base Network Arbitrage Launch"
+          echo "═══════════════════════════════════════════════════════════════"
+          echo ""
+          echo "Configuration:"
+          echo "  Mode: ${{ github.event.inputs.mode }}"
+          echo "  Duration: ${{ github.event.inputs.duration }}s ($((${{ github.event.inputs.duration }} / 60)) minutes)"
+          echo "  Min Profit: ${{ github.event.inputs.min_profit_threshold }}%"
+          echo "  Max Trades: ${{ github.event.inputs.max_trades }}"
+          echo "  Timestamp: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+          echo ""
+          
+          case "${{ github.event.inputs.mode }}" in
+            "dry-run")
+              echo "🟢 DRY RUN MODE - No real transactions"
+              echo "   This is a safe test run to validate systems"
+              ;;
+            "conservative-live")
+              echo "🟡 CONSERVATIVE LIVE MODE"
+              echo "   Real transactions with high safety thresholds"
+              echo "   ⚠️  THIS USES REAL MONEY!"
+              ;;
+            "standard-live")
+              echo "🔴 STANDARD LIVE MODE"
+              echo "   Real transactions with standard thresholds"
+              echo "   ⚠️  THIS USES REAL MONEY!"
+              ;;
+          esac
+          echo ""
+          echo "═══════════════════════════════════════════════════════════════"
+      
+      - name: Create .env configuration
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          # Validate Supabase credentials
+          if [ -z "$SUPABASE_URL" ]; then
+            echo "::error::SUPABASE_URL secret is not set"
+            exit 1
+          fi
+          if [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::SUPABASE_ANON_KEY secret is not set"
+            exit 1
+          fi
+          
+          # Determine DRY_RUN setting based on mode
+          if [ "${{ github.event.inputs.mode }}" = "dry-run" ]; then
+            DRY_RUN="true"
+          else
+            DRY_RUN="false"
+          fi
+          
+          # Create .env file
+          cat > .env << EOF
+          # === Phase 1 Action 2 Configuration ===
+          # Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          # Mode: ${{ github.event.inputs.mode }}
+          # Workflow Run: #${{ github.run_number }}
+          
+          # === Supabase Configuration ===
+          USE_SUPABASE=true
+          SUPABASE_URL=$SUPABASE_URL
+          SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+          SUPABASE_SERVICE_KEY=$SUPABASE_SERVICE_KEY
+          
+          # === Core Configuration ===
+          NODE_ENV=production
+          CHAIN_ID=8453
+          DRY_RUN=$DRY_RUN
+          
+          # === Arbitrage Configuration ===
+          MIN_PROFIT_THRESHOLD=${{ github.event.inputs.min_profit_threshold }}
+          MIN_PROFIT_PERCENT=$(echo "${{ github.event.inputs.min_profit_threshold }} * 2" | bc)
+          MAX_TRADES_PER_HOUR=${{ github.event.inputs.max_trades }}
+          SCAN_INTERVAL=800
+          
+          # === DEX Configuration for Base ===
+          ENABLE_UNISWAP_V2=true
+          ENABLE_UNISWAP_V3=true
+          ENABLE_AERODROME=true
+          ENABLE_BASESWAP=true
+          ENABLE_PANCAKESWAP=true
+          
+          # === Safety Systems ===
+          CIRCUIT_BREAKER_ENABLED=true
+          EMERGENCY_STOP_ENABLED=true
+          MAX_LOSS_PER_SESSION=0.005
+          MIN_WALLET_BALANCE=0.002
+          MAX_DAILY_LOSS=0.01
+          
+          # === Consciousness & Learning ===
+          ENABLE_CONSCIOUSNESS_LOGGING=true
+          ENABLE_LEARNING=true
+          ENABLE_METRICS=true
+          
+          # === Logging ===
+          LOG_LEVEL=info
+          ENABLE_LOGGING=true
+          LOG_DIR=./logs
+          
+          # === Feature Flags ===
+          ENABLE_DASHBOARD=false
+          ENABLE_SSE_SERVER=false
+          EOF
+          
+          echo "✅ Configuration created for ${{ github.event.inputs.mode }} mode"
+      
+      - name: Run readiness check
+        run: |
+          echo "🔍 Running system readiness check..."
+          npm run check:readiness || {
+            echo "::warning::Readiness check reported issues. Review output above."
+            echo "Continuing with execution..."
+          }
+      
+      - name: Check wallet balance
+        run: |
+          echo "💰 Checking wallet balance..."
+          npm run check:balance || {
+            echo "::warning::Could not check wallet balance. Continuing..."
+          }
+      
+      - name: Execute Phase 1 Action 2
+        id: execution
+        env:
+          DURATION: ${{ github.event.inputs.duration }}
+        run: |
+          echo "🚀 Starting TheWarden Phase 1 Action 2..."
+          echo "═══════════════════════════════════════"
+          
+          # Create execution log file
+          EXEC_LOG=".memory/phase1-testing/action2-execution-$(date -u +%Y%m%d_%H%M%S).log"
+          
+          # Run with timeout and capture output
+          timeout ${DURATION}s npm run start:supabase 2>&1 | tee "$EXEC_LOG" || {
+            EXIT_CODE=$?
+            if [ $EXIT_CODE -eq 124 ]; then
+              echo "✅ Execution completed (timeout reached after ${DURATION}s)"
+              echo "status=completed" >> $GITHUB_OUTPUT
+            else
+              echo "⚠️ Execution exited with code: $EXIT_CODE"
+              echo "status=error" >> $GITHUB_OUTPUT
+              echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+            fi
+          }
+          
+          # Save execution status
+          if [ ! -f "$GITHUB_OUTPUT" ] || ! grep -q "status=" "$GITHUB_OUTPUT"; then
+            echo "status=completed" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Analyze execution results
+        if: always()
+        id: analysis
+        run: |
+          echo "📊 Analyzing execution results..."
+          
+          # Initialize counters
+          OPP_FOUND=0
+          TRADES_EXECUTED=0
+          SUCCESSFUL_TRADES=0
+          FAILED_TRADES=0
+          TOTAL_PROFIT=0
+          ERROR_COUNT=0
+          
+          # Analyze log files
+          for log_file in logs/*.log .memory/phase1-testing/*.log; do
+            if [ -f "$log_file" ]; then
+              OPP_FOUND=$((OPP_FOUND + $(grep -c "opportunity found\|opportunities detected" "$log_file" 2>/dev/null || echo "0")))
+              TRADES_EXECUTED=$((TRADES_EXECUTED + $(grep -c "Executing trade\|Transaction sent" "$log_file" 2>/dev/null || echo "0")))
+              SUCCESSFUL_TRADES=$((SUCCESSFUL_TRADES + $(grep -c "Trade successful\|Profit:" "$log_file" 2>/dev/null || echo "0")))
+              FAILED_TRADES=$((FAILED_TRADES + $(grep -c "Trade failed\|Transaction reverted" "$log_file" 2>/dev/null || echo "0")))
+              ERROR_COUNT=$((ERROR_COUNT + $(grep -c "ERROR\|Error:" "$log_file" 2>/dev/null || echo "0")))
+            fi
+          done
+          
+          # Calculate success rate
+          if [ $TRADES_EXECUTED -gt 0 ]; then
+            SUCCESS_RATE=$((SUCCESSFUL_TRADES * 100 / TRADES_EXECUTED))
+          else
+            SUCCESS_RATE=0
+          fi
+          
+          # Output results
+          echo "opportunities_found=$OPP_FOUND" >> $GITHUB_OUTPUT
+          echo "trades_executed=$TRADES_EXECUTED" >> $GITHUB_OUTPUT
+          echo "successful_trades=$SUCCESSFUL_TRADES" >> $GITHUB_OUTPUT
+          echo "failed_trades=$FAILED_TRADES" >> $GITHUB_OUTPUT
+          echo "success_rate=$SUCCESS_RATE" >> $GITHUB_OUTPUT
+          echo "error_count=$ERROR_COUNT" >> $GITHUB_OUTPUT
+          
+          # Display summary
+          echo ""
+          echo "═══════════════════════════════════════"
+          echo "📊 Execution Summary:"
+          echo "═══════════════════════════════════════"
+          echo "  Opportunities Found: $OPP_FOUND"
+          echo "  Trades Executed: $TRADES_EXECUTED"
+          echo "  Successful: $SUCCESSFUL_TRADES"
+          echo "  Failed: $FAILED_TRADES"
+          echo "  Success Rate: $SUCCESS_RATE%"
+          echo "  Errors: $ERROR_COUNT"
+          echo "═══════════════════════════════════════"
+      
+      - name: Create execution report
+        if: always()
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          REPORT_FILE=".memory/phase1-testing/action2-report-$(date -u +%Y%m%d_%H%M%S).md"
+          
+          cat > "$REPORT_FILE" << 'REPORT_EOF'
+# Phase 1 Action 2 - Execution Report
+
+**Timestamp**: %TIMESTAMP%  
+**Mode**: ${{ github.event.inputs.mode }}  
+**Duration**: ${{ github.event.inputs.duration }}s  
+**Workflow Run**: [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})  
+**Status**: ${{ steps.execution.outputs.status }}
+
+## Configuration
+- **Chain**: Base (8453)
+- **Min Profit Threshold**: ${{ github.event.inputs.min_profit_threshold }}%
+- **Max Trades**: ${{ github.event.inputs.max_trades }}
+- **Scan Interval**: 800ms
+- **DEXes**: Uniswap V2/V3, Aerodrome, BaseSwap, PancakeSwap
+
+## Results
+- **Opportunities Found**: ${{ steps.analysis.outputs.opportunities_found }}
+- **Trades Executed**: ${{ steps.analysis.outputs.trades_executed }}
+- **Successful Trades**: ${{ steps.analysis.outputs.successful_trades }}
+- **Failed Trades**: ${{ steps.analysis.outputs.failed_trades }}
+- **Success Rate**: ${{ steps.analysis.outputs.success_rate }}%
+- **Errors**: ${{ steps.analysis.outputs.error_count }}
+
+## Status
+REPORT_EOF
+          
+          # Replace timestamp
+          sed -i "s/%TIMESTAMP%/$TIMESTAMP/g" "$REPORT_FILE"
+          
+          # Add status message
+          if [ "${{ steps.execution.outputs.status }}" = "completed" ]; then
+            if [ "${{ steps.analysis.outputs.trades_executed }}" -gt "0" ]; then
+              echo "✅ **SUCCESS**: Trades executed successfully!" >> "$REPORT_FILE"
+            else
+              echo "⚠️ **NO TRADES**: No profitable opportunities found in this session." >> "$REPORT_FILE"
+            fi
+          else
+            echo "❌ **ERROR**: Execution encountered errors. See logs for details." >> "$REPORT_FILE"
+          fi
+          
+          # Add latest logs
+          echo "" >> "$REPORT_FILE"
+          echo "## Latest Logs" >> "$REPORT_FILE"
+          echo '```' >> "$REPORT_FILE"
+          for log_file in logs/*.log; do
+            if [ -f "$log_file" ]; then
+              tail -50 "$log_file" >> "$REPORT_FILE"
+              break
+            fi
+          done
+          echo '```' >> "$REPORT_FILE"
+          
+          echo "✅ Report created: $REPORT_FILE"
+      
+      - name: Update memory log
+        if: always()
+        run: |
+          echo "" >> .memory/log.md
+          echo "---" >> .memory/log.md
+          echo "" >> .memory/log.md
+          echo "## Phase 1 Action 2 Execution - $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> .memory/log.md
+          echo "" >> .memory/log.md
+          echo "**Mode**: ${{ github.event.inputs.mode }}" >> .memory/log.md
+          echo "**Duration**: ${{ github.event.inputs.duration }}s" >> .memory/log.md
+          echo "**Workflow**: [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> .memory/log.md
+          echo "" >> .memory/log.md
+          echo "**Results**:" >> .memory/log.md
+          echo "- Opportunities: ${{ steps.analysis.outputs.opportunities_found }}" >> .memory/log.md
+          echo "- Trades: ${{ steps.analysis.outputs.trades_executed }}" >> .memory/log.md
+          echo "- Success Rate: ${{ steps.analysis.outputs.success_rate }}%" >> .memory/log.md
+          echo "" >> .memory/log.md
+      
+      - name: Configure Git
+        if: always()
+        run: |
+          git config --global user.name "TheWarden Phase1"
+          git config --global user.email "phase1@thewarden.ai"
+      
+      - name: Commit results
+        if: always()
+        run: |
+          git add .memory/
+          git add logs/ || true
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🚀 Phase 1 Action 2 - ${{ github.event.inputs.mode }} execution
+
+Mode: ${{ github.event.inputs.mode }}
+Duration: $((${{ github.event.inputs.duration }} / 60)) minutes
+Opportunities: ${{ steps.analysis.outputs.opportunities_found }}
+Trades: ${{ steps.analysis.outputs.trades_executed }}
+
+Workflow Run: #${{ github.run_number }}" --author="TheWarden Phase1 <phase1@thewarden.ai>"
+            git push
+          fi
+      
+      - name: Comment on PR
+        if: ${{ github.event.inputs.report_to_pr == 'true' && always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Find the most recent PR
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              sort: 'updated',
+              direction: 'desc',
+              per_page: 1
+            });
+            
+            if (prs.length === 0) {
+              console.log('No open PRs found, skipping comment');
+              return;
+            }
+            
+            const pr = prs[0];
+            
+            // Create comment
+            const comment = `## 🚀 Phase 1 Action 2 Execution Complete!
+
+**Mode**: ${{ github.event.inputs.mode }}  
+**Duration**: ${{ github.event.inputs.duration }}s (${{ github.event.inputs.duration / 60 }} minutes)  
+**Workflow**: [#${{ github.run_number }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+### Results 📊
+- **Opportunities Found**: ${{ steps.analysis.outputs.opportunities_found }}
+- **Trades Executed**: ${{ steps.analysis.outputs.trades_executed }}
+- **Successful**: ${{ steps.analysis.outputs.successful_trades }}
+- **Failed**: ${{ steps.analysis.outputs.failed_trades }}
+- **Success Rate**: ${{ steps.analysis.outputs.success_rate }}%
+
+### Status
+${{ steps.analysis.outputs.trades_executed > 0 && '✅ Trades executed successfully!' || '⚠️ No profitable opportunities found in this session.' }}
+
+---
+*Generated by Phase 1 Action 2 GitHub Action*`;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              body: comment
+            });
+      
+      - name: Upload execution artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phase1-action2-execution-${{ github.run_number }}
+          path: |
+            logs/*.log
+            .memory/phase1-testing/*.md
+            .memory/phase1-testing/*.log
+            .memory/autonomous-execution/*.md
+            .memory/consciousness-metrics/*.json
+          retention-days: 90
+      
+      - name: Create success summary
+        if: success()
+        run: |
+          echo "## ✅ Phase 1 Action 2 Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Mode**: ${{ github.event.inputs.mode }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Duration**: ${{ github.event.inputs.duration }}s" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Results" >> $GITHUB_STEP_SUMMARY
+          echo "- 🎯 Opportunities Found: **${{ steps.analysis.outputs.opportunities_found }}**" >> $GITHUB_STEP_SUMMARY
+          echo "- 💰 Trades Executed: **${{ steps.analysis.outputs.trades_executed }}**" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Successful: **${{ steps.analysis.outputs.successful_trades }}**" >> $GITHUB_STEP_SUMMARY
+          echo "- ❌ Failed: **${{ steps.analysis.outputs.failed_trades }}**" >> $GITHUB_STEP_SUMMARY
+          echo "- 📈 Success Rate: **${{ steps.analysis.outputs.success_rate }}%**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🎉 **Execution completed successfully!**" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Phase 1 Action 2 execution failed"
+          echo "## ❌ Execution Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check the logs and workflow artifacts for details." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[View Workflow Run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
