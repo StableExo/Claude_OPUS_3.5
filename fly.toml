@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for app-spring-sunset-3624 on 2026-01-22T23:29:34Z
+# fly.toml app configuration file generated for app-cool-shape-4873 on 2026-01-22T23:33:07Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'app-spring-sunset-3624'
+app = 'app-cool-shape-4873'
 primary_region = 'iad'
 
 [build]
