@@ -1,0 +1,49 @@
+name: Deploy FlashSwapV3 Contract
+
+on:
+  workflow_dispatch:
+    inputs:
+      network:
+        description: 'Network to deploy to'
+        required: true
+        default: 'base'
+        type: choice
+        options:
+          - base
+          - base-sepolia
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Compile contracts
+        run: npm run compile
+        
+      - name: Deploy FlashSwapV3
+        env:
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+          BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
+          VERIFY_CONTRACT: true
+        run: |
+          npx hardhat run scripts/deployFlashSwapV3.ts --network ${{ inputs.network }}
+          
+      - name: Save deployment info
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-info
+          path: |
+            deployments/
+            .openzeppelin/
